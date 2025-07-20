@@ -1,15 +1,63 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\PresenceController;
+use App\Http\Controllers\Admin\UserController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Welcome');
+    $totalUsers = User::count();
+    $users = User::with('socialMedias')->get()->map(function ($user) {
+        $user->setAttribute('socialMedias', $user->socialMedias ?? []);
+
+        return $user;
+    });
+
+    return Inertia::render('Welcome', compact('totalUsers', 'users'));
 })->name('home');
 
-Route::get('dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('dashboard', [UserController::class, 'index'])->middleware(['auth', 'verified', 'prevent-back'])->name('dashboard');
+Route::get('dashboard/presence-list-user', [UserController::class, 'list'])->middleware(['auth', 'verified', 'prevent-back'])->name('list');
+
+Route::middleware(['auth', 'verified', 'role:admin'])->group(function (): void {
+    Route::get('admin/dashboard', [DashboardController::class, 'admin'])->name('admin.dashboard');
+    Route::prefix('gestions')->name('users.')->group(function (): void {
+        Route::get('users', [UserController::class, 'index'])->name('index');
+        Route::get('users/create', [UserController::class, 'create'])->name('create');
+        Route::post('users', [UserController::class, 'store'])->name('store');
+    });
+});
+
+Route::middleware(['auth', 'verified', 'role:superadmin'])->group(function (): void {
+    Route::get('/superadmin/dashboard', [DashboardController::class, 'superadmin'])->name('dashboard.superadmin');
+    Route::prefix('gestions')->name('users.')->group(function (): void {
+        Route::get('users', [UserController::class, 'indexlist'])->name('index');
+        Route::get('users/create', [UserController::class, 'create'])->name('create');
+        Route::post('users', [UserController::class, 'store'])->name('store');
+        Route::get('users/{user}/edit', [UserController::class, 'edit'])->name('edit');
+        Route::put('users/{user}', [UserController::class, 'update'])->name('update');
+        Route::delete('users/{user}', [UserController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('presences')->group(function (): void {
+        Route::get('/excel', [PresenceController::class, 'excel'])->name('presences.excel');
+        Route::get('/download-all', [PresenceController::class, 'downloadAll'])->name('presences.downloadAll');
+        Route::get('/users', [PresenceController::class, 'index'])->name('presences');
+        Route::get('/add', [PresenceController::class, 'add'])->name('presences.add');
+        Route::post('/store', [PresenceController::class, 'store'])->name('presences.store');
+        Route::get('/{id}/edit', [PresenceController::class, 'edit'])->name('presences.edit');
+        Route::put('/{id}', [PresenceController::class, 'update'])->name('presences.update');
+        Route::delete('/{presence}', [PresenceController::class, 'destroy'])
+            ->name('presences.destroy');
+    });
+
+});
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
+
+Route::get('/{any}', function () {
+    return Inertia::render('NotFoundPage');
+})->where('any', '.*')->name('notfound');

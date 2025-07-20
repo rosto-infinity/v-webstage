@@ -17,10 +17,16 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
-    protected $fillable = [
+     protected $fillable = [
         'name',
         'email',
         'password',
+        'role',
+        'avatar',
+    ];
+
+    protected $casts = [
+        'role' => 'string',
     ];
 
     /**
@@ -50,5 +56,11 @@ class User extends Authenticatable
     {
         return $this->role === env('SUPERADMIN_ROLE', 'lolo');
 
+    }
+
+    // Ajoutez dans app/Models/User.php
+    public function socialMedias()
+    {
+        return $this->hasMany(SocialMedia::class);
     }
 }
