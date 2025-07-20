@@ -45,4 +45,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+     public function isSuperAdmin()
+    {
+        return $this->role === env('SUPERADMIN_ROLE', 'lolo');
+
+    }
 }
