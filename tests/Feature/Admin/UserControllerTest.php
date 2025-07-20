@@ -5,26 +5,26 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-beforeEach(function () {
+beforeEach(function (): void {
     $this->admin = User::factory()->create(['role' => 'superadmin']);
     $this->actingAs($this->admin);
 });
 
-it('affiche la liste des utilisateurs', function () {
+it('affiche la liste des utilisateurs', function (): void {
     $response = $this->get(route('users.index'));
     $response->assertOk();
     // Correction ici : adapte le nom du composant à celui retourné par ton contrôleur
     $response->assertInertia(fn ($page) => $page->component('SuperAdmin/Users/UserIndex'));
 });
 
-it('refuse l\'accès aux non-admin', function () {
+it('refuse l\'accès aux non-admin', function (): void {
     $user = User::factory()->create(['role' => 'user']);
     $this->actingAs($user);
     $response = $this->get(route('users.index'));
     $response->assertForbidden(); // ou assertRedirect selon ta politique
 });
 
-it('peut créer un utilisateur', function () {
+it('peut créer un utilisateur', function (): void {
     $data = [
         'name' => 'Test User',
         'email' => 'testuser@example.com',
@@ -36,7 +36,7 @@ it('peut créer un utilisateur', function () {
     $this->assertDatabaseHas('users', ['email' => 'testuser@example.com']);
 });
 
-it('peut éditer un utilisateur', function () {
+it('peut éditer un utilisateur', function (): void {
     $user = User::factory()->create();
     $response = $this->get(route('users.edit', $user));
     $response->assertOk();
@@ -44,7 +44,7 @@ it('peut éditer un utilisateur', function () {
     $response->assertInertia(fn ($page) => $page->component('SuperAdmin/Users/UserEdit'));
 });
 
-it('peut mettre à jour un utilisateur', function () {
+it('peut mettre à jour un utilisateur', function (): void {
     $user = User::factory()->create();
     $response = $this->put(route('users.update', $user), [
         'name' => 'Updated Name',
@@ -54,7 +54,7 @@ it('peut mettre à jour un utilisateur', function () {
     $this->assertDatabaseHas('users', ['id' => $user->id, 'name' => 'Updated Name']);
 });
 
-it('peut supprimer un utilisateur', function () {
+it('peut supprimer un utilisateur', function (): void {
     $user = User::factory()->create();
     $response = $this->delete(route('users.destroy', $user));
     $response->assertRedirect();

@@ -1,31 +1,32 @@
 <?php
-use App\Models\User;
-use App\Models\Presence;
+
 use App\Models\AbsenceReason;
+use App\Models\Presence;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-beforeEach(function () {
+beforeEach(function (): void {
     $this->admin = User::factory()->create(['role' => 'superadmin']);
     $this->actingAs($this->admin);
 });
 
-\it('affiche la liste des présences', function () {
+\it('affiche la liste des présences', function (): void {
     $response = $this->get(route('presences'));
     $response->assertOk();
     $response->assertInertia(fn ($page) => $page
-     ->component('SuperAdmin/Presence/PresenceIndex'));
+        ->component('SuperAdmin/Presence/PresenceIndex'));
 });
 
-it('refuse l\'accès aux non-admin', function () {
+it('refuse l\'accès aux non-admin', function (): void {
     $user = User::factory()->create(['role' => 'user']);
     $this->actingAs($user);
     $response = $this->get(route('presences'));
     $response->assertForbidden(); // ou -- assertRedirect selon ta politique
 });
 
-it('peut créer une présence', function () {
+it('peut créer une présence', function (): void {
     $user = User::factory()->create(['role' => 'user']);
     $data = [
         'user_id' => $user->id,
@@ -43,19 +44,17 @@ it('peut créer une présence', function () {
     $this->assertDatabaseHas('presences', ['user_id' => $user->id, 'date' => $data['date']]);
 });
 
-it('peut éditer une présence', function () {
+it('peut éditer une présence', function (): void {
     $presence = Presence::factory()->create();
     $response = $this->get(route('presences.edit', $presence));
     $response->assertOk();
     $response->assertInertia();
 });
 
-
-
-it('peut mettre à jour une présence absente', function () {
+it('peut mettre à jour une présence absente', function (): void {
     $presence = Presence::factory()->create(['absent' => 0]);
     $reason = AbsenceReason::factory()->create(); // <-- Ajout de cette ligne
-    
+
     $data = [
         'user_id' => $presence->user_id,
         'date' => $presence->date,
@@ -67,17 +66,15 @@ it('peut mettre à jour une présence absente', function () {
         'en_retard' => 0,
         'absence_reason_id' => $reason->id, // <-- Utilisation de $reason
     ];
-    
+
     $response = $this->put(route('presences.update', $presence), $data);
     $response->assertRedirect();
     $this->assertDatabaseHas('presences', ['id' => $presence->id, 'absent' => 1]);
 });
 
-
-it('peut supprimer une présence', function () {
+it('peut supprimer une présence', function (): void {
     $presence = Presence::factory()->create();
     $response = $this->delete(route('presences.destroy', $presence));
     $response->assertRedirect();
     $this->assertDatabaseMissing('presences', ['id' => $presence->id]);
 });
-

@@ -17,7 +17,7 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
-     protected $fillable = [
+    protected $fillable = [
         'name',
         'email',
         'password',
@@ -52,7 +52,7 @@ class User extends Authenticatable
         ];
     }
 
-     public function isSuperAdmin()
+    public function isSuperAdmin()
     {
         return $this->role === env('SUPERADMIN_ROLE', 'lolo');
 
