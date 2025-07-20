@@ -4,27 +4,91 @@ import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
-import { Link } from '@inertiajs/vue3';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-vue-next';
+import { Link, usePage } from '@inertiajs/vue3';
+import { BookOpen, CalendarCheck, Folder, Home, LayoutGrid, List, Settings, UserPlus } from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
+
+interface PageProps {
+    auth: {
+        user?: {
+            role: string;
+            // Ajoutez ici d'autres propriétés utilisateur si nécessaire
+        };
+    };
+}
+
+const { props } = usePage<PageProps>();
+const userRole = props.auth?.user?.role || 'user';
 
 const mainNavItems: NavItem[] = [
     {
+        title: 'Home',
+        href: '/',
+        icon: Home, // Icône appropriée pour un tableau de bord
+    },
+
+    {
         title: 'Dashboard',
-        href: '/dashboard',
+        href: 'dashboard',
         icon: LayoutGrid,
     },
 ];
 
+const adminNavItems: NavItem[] = [
+    {
+        title: 'Dashboard Users',
+        href: '/admin/dashboard',
+        icon: LayoutGrid,
+    },
+    {
+        title: 'Dashboard Admin',
+        href: '/gestions/users',
+        icon: Settings,
+    },
+];
+
+const superAdminNavItems: NavItem[] = [
+    {
+        title: 'Dashboard Sup_Admin',
+        href: '/superadmin/dashboard',
+        icon: LayoutGrid,
+    },
+    {
+        title: 'Presences users',
+        href: '/presences/users',
+        icon: CalendarCheck, // Mieux adapté pour la gestion des présences
+    },
+    {
+        title: 'Add Presences',
+        href: '/presences/add',
+        icon: UserPlus, // Représente mieux l'ajout d'utilisateurs/présences
+    },
+    {
+        title: 'Users',
+        href: '/gestions/users',
+        icon: List, // Plus adapté pour une liste que l'icône Users
+    },
+];
+
+let roleBasedNavItems = [...mainNavItems];
+
+if (userRole === 'admin') {
+    roleBasedNavItems = [...adminNavItems];
+}
+if (userRole === 'superadmin') {
+    roleBasedNavItems = [...roleBasedNavItems, ...superAdminNavItems];
+}
+
 const footerNavItems: NavItem[] = [
     {
         title: 'Github Repo',
-        href: 'https://github.com/laravel/vue-starter-kit',
+        href: '#',
         icon: Folder,
     },
+
     {
         title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#vue',
+        href: '#',
         icon: BookOpen,
     },
 ];
@@ -45,11 +109,11 @@ const footerNavItems: NavItem[] = [
         </SidebarHeader>
 
         <SidebarContent>
-            <NavMain :items="mainNavItems" />
+            <NavMain :items="roleBasedNavItems" />
         </SidebarContent>
 
         <SidebarFooter>
-            <NavFooter :items="footerNavItems" />
+            <NavFooter :items="footerNavItems" className="mt-auto" />
             <NavUser />
         </SidebarFooter>
     </Sidebar>

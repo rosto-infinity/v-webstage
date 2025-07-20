@@ -5,22 +5,23 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createSSRApp, DefineComponent, h } from 'vue';
 import { ZiggyVue } from 'ziggy-js';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || 'WebStage';
 
-createServer((page) =>
-    createInertiaApp({
-        page,
-        render: renderToString,
-        title: (title) => title ? `${title} - ${appName}` : appName,
-        resolve: resolvePage,
-        setup: ({ App, props, plugin }) =>
-            createSSRApp({ render: () => h(App, props) })
-                .use(plugin)
-                .use(ZiggyVue, {
-                    ...page.props.ziggy,
-                    location: new URL(page.props.ziggy.location),
-                }),
-    }),
+createServer(
+    (page) =>
+        createInertiaApp({
+            page,
+            render: renderToString,
+            title: (title) => (title ? `${title} - ${appName}` : appName),
+            resolve: resolvePage,
+            setup: ({ App, props, plugin }) =>
+                createSSRApp({ render: () => h(App, props) })
+                    .use(plugin)
+                    .use(ZiggyVue, {
+                        ...page.props.ziggy,
+                        location: new URL(page.props.ziggy.location),
+                    }),
+        }),
     { cluster: true },
 );
 

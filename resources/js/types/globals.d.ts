@@ -1,6 +1,7 @@
 import { AppPageProps } from '@/types/index';
+import type { PageProps as InertiaPageProps } from '@inertiajs/core';
 
-// Extend ImportMeta interface for Vite...
+// Extension de l'interface ImportMeta pour Vite
 declare module 'vite/client' {
     interface ImportMetaEnv {
         readonly VITE_APP_NAME: string;
@@ -13,11 +14,28 @@ declare module 'vite/client' {
     }
 }
 
-declare module '@inertiajs/core' {
-    interface PageProps extends InertiaPageProps, AppPageProps {}
+// Déclaration des données partagées
+export interface SharedData {
+    auth: {
+        user?: {
+            id: number;
+            name: string;
+            email: string;
+            role: string;
+        };
+    };
+    // Ajoutez ici d'autres données partagées si nécessaire
 }
 
-declare module 'vue' {
+// Extension des propriétés de page Inertia avec les données partagées
+export type PageProps<T = object> = InertiaPageProps & SharedData & T;
+
+// Extension des modules pour Inertia et Vue
+declare module '@inertiajs/core' {
+    interface PageProps extends InertiaPageProps, AppPageProps, SharedData {}
+}
+
+declare module '@vue/runtime-core' {
     interface ComponentCustomProperties {
         $inertia: typeof Router;
         $page: Page;
