@@ -1,7 +1,10 @@
 <?php
 
 return [
-
+    'superadmin' => [
+        'name' => env('SUPERADMIN_NAME', 'Admin Default'),
+        'email' => env('SUPERADMIN_EMAIL', 'admin@example.com'),
+    ],
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -52,7 +55,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'https://stage.devinsto.com'),
 
     /*
     |--------------------------------------------------------------------------

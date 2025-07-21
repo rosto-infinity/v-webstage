@@ -1,8 +1,21 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}"  @class(['dark' => ($appearance ?? 'system') == 'dark'])>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" @class(['dark' => ($appearance ?? 'system') == 'dark'])>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        {{-- Meta Description pour le référencement et l'accessibilité --}}
+        <meta name="description" content="Optimisez votre suivi de présence avec WebStage. Une solution moderne et intuitive pour gérer les présences, analyser les données et améliorer la productivité. Développée avec Laravel, Vue.js, Inertia.js, Tailwind CSS et Chart.js.">
+        <meta name="keywords" content="WebStage, suivi de présence, gestion des présences, productivité, analyse de données, Laravel, Vue.js, Inertia.js, Tailwind CSS, Chart.js">
+        <meta name="author" content="Équipe WebStage">
+        <meta name="robots" content="index, follow">
+
+        {{-- Open Graph Meta Tags pour les réseaux sociaux --}}
+        <meta property="og:title" content="WebStage - Suivi de Présence Moderne et Intuitif">
+        <meta property="og:description" content="Optimisez votre suivi de présence avec WebStage. Une solution moderne et intuitive pour gérer les présences, analyser les données et améliorer la productivité.">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="{{ config('app.url') }}">
+        
 
         {{-- Inline script to detect system dark mode preference and apply it immediately --}}
         <script>

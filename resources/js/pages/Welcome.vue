@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import AppearanceTabs from '@/components/AppearanceTabs.vue';
+
 import { Head, Link } from '@inertiajs/vue3';
 import { onMounted, ref } from 'vue';
 
@@ -46,10 +47,9 @@ onMounted(() => {
 
     <div class="min-h-screen bg-gradient-to-b from-background/10 to-background">
         <!-- Header -->
-        <header class="mx-auto mb-6 w-full max-w-[335px] text-sm not-has-[nav]:hidden lg:max-w-4xl">
-            <nav class="flex items-center justify-end gap-4 py-6">
-                <AppearanceTabs />
-
+        <header class="mx-auto mb-0 w-full max-w-[335px] text-sm not-has-[nav]:hidden lg:max-w-4xl">
+            <nav class="flex items-center justify-center gap-4 py-6">
+                <AppearanceTabs class="" />
                 <Link
                     v-if="$page.props.auth.user"
                     :href="route('dashboard')"
@@ -62,40 +62,29 @@ onMounted(() => {
                     <Link
                         :href="route('login')"
                         prefetch
-                        class="inline-block rounded-lg px-5 py-2 text-sm leading-normal text-primary transition-colors hover:bg-primary/5 hover:text-primary/90"
-                    >
-                        Connexion
-                    </Link>
-                    <Link
-                        :href="route('register')"
-                        prefetch
                         class="inline-block rounded-lg bg-primary px-5 py-2 text-sm leading-normal text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
                     >
-                        Inscription
+                        Connexion
                     </Link>
                 </template>
             </nav>
         </header>
 
         <!-- Section Hero -->
-        <section class="welcome-section relative overflow-hidden">
-            <div class="absolute inset-0 z-0 bg-background/20 backdrop-blur-sm"></div>
-
-            <div class="relative z-10 mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
+        <section class="welcome-section relative overflow-hidden pb-7 text-center">
+            <div class="relative z-10 mx-auto max-w-7xl px-6 py-0 sm:py-32 lg:px-8">
                 <div class="parallax-layer" data-depth="0.2">
-                    <h1 class="mb-6 text-5xl font-bold tracking-tight text-foreground md:text-6xl lg:text-7xl">
-                        Bienvenue chez <span class="text-primary">Web Stage</span>
+                    <h1 class="mb-6 text-5xl font-bold tracking-tight text-foreground md:text-6xl lg:text-5xl">
+                        Optimisez votre suivi de présence avec <span class="text-primary">webStage</span>
                     </h1>
-                </div>
-
-                <div class="animate__animated animate__fadeIn animate__delay-1s">
-                    <p class="max-w-3xl text-lg leading-relaxed text-muted-foreground md:text-xl">
-                        Votre partenaire en solutions digitales innovantes depuis 2025. Découvrez une expérience utilisateur redéfinie et des outils
-                        performants.
+                    <p class="text-center text-sm leading-relaxed md:text-xl">
+                        WebStage est une solution moderne et intuitive pour gérer les présences, analyser les données et améliorer la productivité.
+                        Développée avec les dernières technologies (Laravel , Vue.js, Inertia.js Tailwind CSS et Chart.js), elle offre une expérience
+                        utilisateur fluide et des fonctionnalités puissantes.
                     </p>
                 </div>
 
-                <div class="mt-12 flex flex-col gap-4 sm:flex-row">
+                <div class="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
                     <Link
                         :href="route('dashboard')"
                         prefetch
@@ -106,17 +95,10 @@ onMounted(() => {
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                         </svg>
                     </Link>
-
-                    <Link
-                        href="#"
-                        class="cta-secondary rounded-lg border-2 border-primary/20 px-8 py-3 text-base font-medium transition-all duration-300 hover:border-primary/40"
-                    >
-                        Nos Disponibilités
-                    </Link>
                 </div>
 
                 <div class="absolute bottom-10 left-1/2 -translate-x-1/2 transform">
-                    <div class="mouse-scroll animate-bounce">
+                    <div class="mouse-scroll animate-bounce bg-violet-400 dark:bg-white">
                         <div class="mouse-wheel bg-primary"></div>
                     </div>
                 </div>
@@ -137,7 +119,7 @@ onMounted(() => {
                             <img :src="user.avatar" :alt="user.name" class="h-12 w-12 rounded-full object-cover" />
                             <div>
                                 <h3 class="text-xl font-semibold text-foreground">{{ user.name }}</h3>
-                                <p class="text-muted-foreground">{{ user.email }}</p>
+                                <p class="text-sm text-muted-foreground">{{ user.email }}</p>
                             </div>
                         </div>
                         <div class="mt-4">
@@ -177,6 +159,8 @@ onMounted(() => {
                         <div class="text-muted-foreground">8h-17h/Jours</div>
                     </div>
                 </div>
+
+                <AppearanceTabs class="" />
             </div>
         </section>
     </div>

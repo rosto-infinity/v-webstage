@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             AbsenceReasonsSeeder::class,
             UserSeeder::class,
             PresenceSeeder::class,
+            AdminSeeder::class,
         ]);
     }
 }

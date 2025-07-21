@@ -53,10 +53,6 @@ const superAdminNavItems: NavItem[] = [
         title: 'DB Backup',
         href: '/settings/dbbackup',
     },
-    {
-        title: 'System Logs',
-        href: '/settings/logs',
-    },
 ];
 
 // Fusion dynamique en fonction du rôle
@@ -65,7 +61,7 @@ let sidebarNavItems = [...baseNavItems];
 if (userRole === 'admin') {
     sidebarNavItems = [...sidebarNavItems, ...adminNavItems];
 } else if (userRole === 'superadmin') {
-    sidebarNavItems = [...sidebarNavItems, ...adminNavItems, ...superAdminNavItems];
+    sidebarNavItems = [...sidebarNavItems, ...superAdminNavItems];
 }
 
 const currentPath = props.ziggy?.location ? new URL(props.ziggy.location).pathname : '';

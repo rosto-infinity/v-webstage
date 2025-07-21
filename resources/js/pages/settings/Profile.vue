@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
-
-import DeleteUser from '@/components/DeleteUser.vue';
 import HeadingSmall from '@/components/HeadingSmall.vue';
 import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
@@ -9,7 +6,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
-import { type BreadcrumbItem, type User } from '@/types';
+import type { BreadcrumbItem, SharedData, User } from '@/types';
+import { Head, useForm, usePage } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 interface Props {
     mustVerifyEmail: boolean;
@@ -18,91 +17,122 @@ interface Props {
 
 defineProps<Props>();
 
-const breadcrumbItems: BreadcrumbItem[] = [
-    {
-        title: 'Profile settings',
-        href: '/settings/profile',
-    },
-];
+const breadcrumbs: BreadcrumbItem[] = [{ title: 'Profile settings', href: '/settings/profile' }];
 
-const page = usePage();
+const page = usePage<SharedData>();
 const user = page.props.auth.user as User;
+
+const avatarPreview = ref<string | null>(null);
 
 const form = useForm({
     name: user.name,
     email: user.email,
+    avatar: null as File | null,
 });
 
-const submit = () => {
-    form.patch(route('profile.update'), {
+function handleAvatarChange(e: Event) {
+    const input = e.target as HTMLInputElement;
+    if (input.files?.[0]) {
+        const file = input.files[0];
+        form.avatar = file;
+        const reader = new FileReader();
+        reader.onload = () => {
+            avatarPreview.value = reader.result as string;
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+function submit() {
+    form.transform((data) => ({ ...data, _method: 'PATCH' })).post(route('profile.update'), {
+        forceFormData: true,
         preserveScroll: true,
+        preserveState: false, // <-- force reload du composant
+        onSuccess: () => {
+            avatarPreview.value = null;
+            form.reset('avatar');
+        },
     });
-};
+}
 </script>
 
 <template>
-    <AppLayout :breadcrumbs="breadcrumbItems">
+    <AppLayout :breadcrumbs="breadcrumbs">
         <Head title="Profile settings" />
 
         <SettingsLayout>
+            <div class="mb-6 flex flex-col items-center">
+                <div
+                    class="group relative h-32 w-32 overflow-hidden rounded-full border-4 border-[#654bc3] bg-gradient-to-br from-[#e0f7ef] to-[#f8fafc] shadow-lg transition-all duration-300"
+                >
+                    <template v-if="avatarPreview">
+                        <img
+                            :src="avatarPreview"
+                            alt="Preview avatar"
+                            class="h-full w-full rounded-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        />
+                    </template>
+                    <template v-else-if="user.avatar">
+                        <img
+                            :src="`/storage/${user.avatar}`"
+                            alt="Current avatar"
+                            class="h-full w-full rounded-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        />
+                    </template>
+                    <template v-else>
+                        <div class="flex h-full w-full items-center justify-center rounded-full bg-[#e0f7ef] text-5xl font-bold text-[#654bc3]">
+                            {{ user.name.charAt(0).toUpperCase() }}
+                        </div>
+                    </template>
+                    <div
+                        class="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                    >
+                        <span class="text-xs font-semibold text-white">Changer l’avatar</span>
+                    </div>
+                </div>
+                <p v-if="avatarPreview" class="mt-2 text-sm text-muted-foreground">Prévisualisation du nouvel avatar</p>
+            </div>
+
             <div class="flex flex-col space-y-6">
                 <HeadingSmall title="Profile information" description="Update your name and email address" />
 
-                <form @submit.prevent="submit" class="space-y-6">
+                <form @submit.prevent="submit" enctype="multipart/form-data" class="grid gap-4">
+                    <!-- Champ Nom -->
                     <div class="grid gap-2">
-                        <Label for="name">Name</Label>
-                        <Input id="name" class="mt-1 block w-full" v-model="form.name" required autocomplete="name" placeholder="Full name" />
-                        <InputError class="mt-2" :message="form.errors.name" />
+                        <Label for="name">Nom</Label>
+                        <Input id="name" type="text" v-model="form.name" class="w-full" />
+                        <InputError :message="form.errors.name" />
                     </div>
 
+                    <!-- Champ Email -->
                     <div class="grid gap-2">
-                        <Label for="email">Email address</Label>
-                        <Input
-                            id="email"
-                            type="email"
-                            class="mt-1 block w-full"
-                            v-model="form.email"
-                            required
-                            autocomplete="username"
-                            placeholder="Email address"
-                        />
-                        <InputError class="mt-2" :message="form.errors.email" />
+                        <Label for="email">Email</Label>
+                        <Input id="email" type="email" v-model="form.email" class="w-full" />
+                        <InputError :message="form.errors.email" />
                     </div>
 
-                    <div v-if="mustVerifyEmail && !user.email_verified_at">
-                        <p class="-mt-4 text-sm text-muted-foreground">
-                            Your email address is unverified.
-                            <Link
-                                :href="route('verification.send')"
-                                method="post"
-                                as="button"
-                                class="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
-                            >
-                                Click here to resend the verification email.
-                            </Link>
-                        </p>
-
-                        <div v-if="status === 'verification-link-sent'" class="mt-2 text-sm font-medium text-green-600">
-                            A new verification link has been sent to your email address.
-                        </div>
+                    <!-- Champ Avatar -->
+                    <div class="grid gap-2">
+                        <Label for="avatar">Avatar</Label>
+                        <Input id="avatar" type="file" accept="image/*" @change="handleAvatarChange" class="w-full" />
+                        <InputError :message="form.errors.avatar" />
                     </div>
 
-                    <div class="flex items-center gap-4">
-                        <Button :disabled="form.processing">Save</Button>
-
-                        <Transition
+                    <div class="flex items-center gap-4 pt-4">
+                        <Button type="submit" :disabled="form.processing"> Enregistrer les modifications </Button>
+                        <transition
                             enter-active-class="transition ease-in-out"
                             enter-from-class="opacity-0"
                             leave-active-class="transition ease-in-out"
                             leave-to-class="opacity-0"
                         >
-                            <p v-show="form.recentlySuccessful" class="text-sm text-neutral-600">Saved.</p>
-                        </Transition>
+                            <p v-if="form.recentlySuccessful" class="text-sm text-muted-foreground">Sauvegardé.</p>
+                        </transition>
                     </div>
                 </form>
-            </div>
 
-            <DeleteUser />
+                <!-- <DeleteUser /> -->
+            </div>
         </SettingsLayout>
     </AppLayout>
 </template>
