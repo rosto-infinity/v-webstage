@@ -18,6 +18,21 @@ Route::get('/', function () {
     return Inertia::render('Welcome', compact('totalUsers', 'users'));
 })->name('home');
 
+// Conditions Générales du Stage
+Route::inertia('/conditions-stage', 'statiqpages/ConditionsStage')->name('conditions.stage');
+// Conditions Générales du Stage
+Route::inertia('/about', 'statiqpages/About')->name('about');
+   
+// Programme de Développement d’Application
+Route::inertia('/guide-stage', 'statiqpages/GuideStage')->name('guide.stage');
+Route::inertia('/dev-app', 'statiqpages/DevApp')->name('dev.app');
+   
+// Programme de Génie Logiciel
+Route::inertia('/genie-logiciel', 'statiqpages/GenieLogiciel')->name('genie.logiciel');
+
+// FAQ et Support
+Route::inertia('/faq', 'statiqpages/FAQ')->name('faq');
+
 Route::get('dashboard', [UserController::class, 'index'])->middleware(['auth', 'verified', 'prevent-back'])->name('dashboard');
 Route::get('dashboard/presence-list-user', [UserController::class, 'list'])->middleware(['auth', 'verified', 'prevent-back'])->name('list');
 

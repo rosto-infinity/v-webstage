@@ -42,7 +42,7 @@ const submit = () => {
                     <Input
                         id="email"
                         type="email"
-                        required
+                        
                         autofocus
                         :tabindex="1"
                         autocomplete="email"
@@ -62,7 +62,7 @@ const submit = () => {
                     <Input
                         id="password"
                         type="password"
-                        required
+                        
                         :tabindex="2"
                         autocomplete="current-password"
                         v-model="form.password"

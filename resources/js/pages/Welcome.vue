@@ -3,6 +3,7 @@ import AppearanceTabs from '@/components/AppearanceTabs.vue';
 
 import { Head, Link } from '@inertiajs/vue3';
 import { onMounted, ref } from 'vue';
+import FooterSite from './statiqpages/FooterSite.vue';
 
 defineProps<{
     totalUsers: number;
@@ -74,12 +75,12 @@ onMounted(() => {
         <section class="welcome-section relative overflow-hidden pb-7 text-center">
             <div class="relative z-10 mx-auto max-w-7xl px-6 py-0 sm:py-32 lg:px-8">
                 <div class="parallax-layer" data-depth="0.2">
-                    <h1 class="mb-6 text-5xl font-bold tracking-tight text-foreground md:text-6xl lg:text-5xl">
+                    <h1 class="mb-6 text-5xl font-bold tracking-tight text-foreground md:text-6xl lg:text-7xl">
                         Optimisez votre suivi de présence avec <span class="text-primary">webStage</span>
                     </h1>
                     <p class="text-center text-sm leading-relaxed md:text-xl">
                         WebStage est une solution moderne et intuitive pour gérer les présences, analyser les données et améliorer la productivité.
-                        Développée avec les dernières technologies (Laravel , Vue.js, Inertia.js Tailwind CSS et Chart.js), elle offre une expérience
+                        Développée avec les dernières technologies (Laravel, Vue.js, Inertia.js Tailwind CSS et Chart.js), elle offre une expérience
                         utilisateur fluide et des fonctionnalités puissantes.
                     </p>
                 </div>
@@ -103,6 +104,7 @@ onMounted(() => {
                     </div>
                 </div>
             </div>
+            
         </section>
 
         <!-- Section Utilisateurs -->
@@ -160,9 +162,10 @@ onMounted(() => {
                     </div>
                 </div>
 
-                <AppearanceTabs class="" />
+               
             </div>
         </section>
+        <FooterSite />
     </div>
 </template>
 
