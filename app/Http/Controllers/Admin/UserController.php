@@ -103,17 +103,15 @@ class UserController extends Controller
 
         // -STATISTIQUES MENSUELLES
         $monthlyStats = Presence::where('user_id', $user->id)
-            // -Sélectionne le mois (compatible SQLite/MySQL), le total et le nombre de présences
-            ->selectRaw("strftime('%m', date) as month, COUNT(*) as total, SUM(CASE WHEN absent = 0 THEN 1 ELSE 0 END) as presents")
+            // -Sélectionne le mois, le total et le nombre de présences
+            ->selectRaw('MONTH(date) as month, COUNT(*) as total, SUM(CASE WHEN absent = 0 THEN 1 ELSE 0 END) as presents')
             ->groupBy('month')
             ->orderBy('month')
             ->get()
             ->map(function ($row) {
                 // -- Formate les données pour l'affichage
-                // strftime('%m', ...) retourne '01', '02', ... donc on convertit en int pour Carbon
-                $monthNum = intval($row->month);
                 return [
-                    'month' => Carbon::create()->month($monthNum)->format('M'), // Format 'Jan', 'Feb', etc.
+                    'month' => Carbon::create()->month($row->month)->format('M'), // Format 'Jan', 'Feb', etc.
                     'rate' => $row->total > 0 ? round($row->presents / $row->total * 100, 1) : 0, // Taux de présence en %
                 ];
             })->toArray();
