@@ -6,7 +6,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-5 gap-8 mb-12">
                     <!-- Colonne 1 : Description -->
                    <div class="md:col-span-2">
-    <span class="text-2xl font-bold mb-4 text-primary dark:text-white">Web Stage</span>
+    <span class="text-2xl font-bold mb-4 text-primary dark:text-primary">Web Stage</span>
     <p class="leading-relaxed">
         Gestion des présences, suivi des stages, innovation digitale... Avec WebStage, je partage mon expertise pour 
         simplifier et optimiser la gestion des stages et des présences. Notre plateforme offre des solutions complètes : 
@@ -18,39 +18,39 @@
 
                     <!-- Colonne 2 : À propos -->
                     <div>
-                        <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-white">À propos</h3>
+                        <h3 class="text-lg font-semibold mb-4 text-violet-800 dark:text-primary">À propos</h3>
                         <ul class="space-y-2">
                             <li>
                                 <Link :href="route('about')" prefetch class="hover:text-primary dark:hover:text-violet-400 transition">À propos de nous</Link>
                             </li>
                             <li>
-                                <Link :href="route('guide.stage')" prefetch class="hover:text-primary dark:hover:text-green-400 transition">Guide du stage</Link>
+                                <Link :href="route('guide.stage')" prefetch class="hover:text-primary dark:hover:text-violet-400 transition">Guide du stage</Link>
                             </li>
                             <li>
-                                <Link :href="route('genie.logiciel')" prefetch class="hover:text-primary dark:hover:text-green-400 transition">Génie logiciel</Link>
+                                <Link :href="route('genie.logiciel')" prefetch class="hover:text-primary dark:hover:text-violet-400 transition">Génie logiciel</Link>
                             </li>
                         </ul>
                     </div>
 
                     <!-- Colonne 3 : Ressources -->
                     <div>
-                        <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-white">Ressources</h3>
+                        <h3 class="text-lg font-semibold mb-4 text-violet-800 dark:text-primary">Ressources</h3>
                         <ul class="space-y-2">
                             <li>
-                                <Link :href="route('dev.app')" prefetch class="hover:text-primary dark:hover:text-green-400 transition">Développement d'applications</Link>
+                                <Link :href="route('dev.app')" prefetch class="hover:text-primary dark:hover:text-violet-400 transition">Développement d'applications</Link>
                             </li>
                             <li>
-                                <Link :href="route('faq')" prefetch class="hover:text-primary dark:hover:text-green-400 transition">FAQ</Link>
+                                <Link :href="route('faq')" prefetch class="hover:text-primary dark:hover:text-violet-400 transition">FAQ</Link>
                             </li>
                             <li>
-                                <Link :href="route('conditions.stage')" prefetch class="hover:text-primary dark:hover:text-green-400 transition">Conditions du stage</Link>
+                                <Link :href="route('conditions.stage')" prefetch class="hover:text-primary dark:hover:text-violet-400 transition">Conditions du stage</Link>
                             </li>
                         </ul>
                     </div>
 
                     <!-- Colonne 4 : Legal -->
                     <div>
-                        <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-white">Legal</h3>
+                        <h3 class="text-lg font-semibold mb-4 text-violet-800 dark:text-primary">Legal</h3>
                         <ul class="space-y-2">
                             <li>
                                 <Link :href="route('conditions.stage')" prefetch class="hover:text-primary dark:hover:text-violet-400 transition">Conditions générales</Link>
@@ -66,7 +66,7 @@
                 </div>
 
                 <!-- Ligne de séparation -->
-                <div class="border-t border-gray-200 dark:border-violet-950 mb-2"></div>
+                <div class="border-t border-violet-200 dark:border-violet-950 mb-2"></div>
                 <!-- Section inférieure -->
                 <div class="flex flex-col md:flex-row justify-between ">
                     <div class="text-sm mb-4 md:mb-0 flex items-center gap-2">
@@ -101,7 +101,7 @@
                             aria-label="Facebook"
                             class="group transition"
                         >
-                            <svg class="w-6 h-6 fill-gray-400 group-hover:fill-[#1877F3] transition" viewBox="0 0 24 24">
+                            <svg class="w-6 h-6 fill-violet-400 group-hover:fill-[#1877F3] transition" viewBox="0 0 24 24">
                                 <path d="M22.675 0h-21.35C.595 0 0 .592 0 1.326v21.348C0 23.408.595 24 1.325 24h11.495v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.797.143v3.24l-1.918.001c-1.504 0-1.797.715-1.797 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116C23.406 24 24 23.408 24 22.674V1.326C24 .592 23.406 0 22.675 0"/>
                             </svg>
                         </a>
@@ -113,7 +113,7 @@
                             aria-label="X"
                             class="group transition"
                         >
-                            <svg class="w-6 h-6 fill-gray-400 group-hover:fill-black transition" viewBox="0 0 24 24">
+                            <svg class="w-6 h-6 fill-violet-400 group-hover:fill-black transition" viewBox="0 0 24 24">
                                 <path d="M17.53 3H21.5l-7.19 8.21L23 21h-7.19l-5.66-6.49L3.5 21H-.5l7.78-8.89L1 3h7.19l5.13 5.88L17.53 3zm-2.1 15.5h2.13l-5.97-6.85-2.13 2.43L15.43 18.5zm-8.86-13l5.97 6.85 2.13-2.43L8.57 5.5H6.57zm13.86 13l-5.97-6.85-2.13 2.43L15.43 18.5h2.13z"/>
                             </svg>
                         </a>
@@ -125,7 +125,7 @@
                             aria-label="LinkedIn"
                             class="group transition"
                         >
-                            <svg class="w-6 h-6 fill-gray-400 group-hover:fill-[#0077B5] transition" viewBox="0 0 24 24">
+                            <svg class="w-6 h-6 fill-violet-400 group-hover:fill-[#0077B5] transition" viewBox="0 0 24 24">
                                 <path d="M22.23 0H1.77C.792 0 0 .771 0 1.723v20.554C0 23.229.792 24 1.77 24h20.46C23.208 24 24 23.229 24 22.277V1.723C24 .771 23.208 0 22.23 0zM7.12 20.452H3.56V9h3.56v11.452zM5.34 7.633a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM20.452 20.452h-3.554v-5.605c0-1.336-.025-3.057-1.865-3.057-1.867 0-2.153 1.454-2.153 2.957v5.705h-3.554V9h3.414v1.561h.049c.476-.899 1.637-1.847 3.37-1.847 3.602 0 4.267 2.37 4.267 5.455v6.283z"/>
                             </svg>
                         </a>
