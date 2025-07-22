@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
 
-import { ChevronDown, ChevronUp, FileText, Info, List, Mail, Shield } from 'lucide-vue-next';
+import { ChevronDown, ChevronUp, FileText, Home, Info, LayoutDashboard, List, Mail, Shield } from 'lucide-vue-next';
 import { h, ref } from 'vue';
 import FooterSite from './FooterSite.vue';
 // import FooterSite from './FooterSite.vue';
@@ -138,17 +138,26 @@ const currentDate = new Date().toLocaleDateString('fr-FR');
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     </Head>
     <div class="min-h-screen bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100">
-        <!-- nav -->
         <nav class="mx-auto mb-0 w-full max-w-[335px] text-sm not-has-[nav]:hidden lg:max-w-4xl">
             <nav class="flex items-center justify-center gap-4 py-6">
-                <AppearanceTabs class="" />
+                <Link
+                        :href="route('home')"
+                        prefetch
+                        class="inline-block rounded-lg bg-primary px-5 py-2 text-sm leading-normal text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
+                    >
+                    <div class="flex">
+                     <Home class="size-4 mr-2"/> Home
+                    </div>   
+                    </Link>
                 <Link
                     v-if="$page.props.auth.user"
                     :href="route('dashboard')"
                     prefetch
                     class="inline-block rounded-lg border border-primary/20 px-5 py-2 text-sm leading-normal text-primary transition-colors hover:bg-primary/10"
                 >
-                    Dashboard
+                     <div class="flex">
+                     <LayoutDashboard class="size-4 mr-2"/> Dashboard
+                    </div>
                 </Link>
                 <template v-else>
                     <Link
@@ -189,7 +198,7 @@ const currentDate = new Date().toLocaleDateString('fr-FR');
                 <div class="mt-6 flex flex-wrap justify-center space-x-6 rounded-lg bg-violet-50 p-4 dark:bg-violet-900/20">
                     <!-- Conditions du Stage -->
 
-                    <!-- À propos -->
+                  
                     <Link
                         :href="route('about')"
                         class="flex items-center text-violet-700 transition hover:text-violet-900 dark:text-violet-400 dark:hover:text-violet-300"
