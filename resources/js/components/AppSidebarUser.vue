@@ -31,8 +31,6 @@ const footerNavItems: NavItem[] = [
         href: 'https://github.com/rosto-infinity/v-webstage',
         icon: Folder,
     },
-
-  
 ];
 </script>
 

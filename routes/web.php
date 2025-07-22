@@ -22,11 +22,11 @@ Route::get('/', function () {
 Route::inertia('/conditions-stage', 'statiqpages/ConditionsStage')->name('conditions.stage');
 // Conditions Générales du Stage
 Route::inertia('/about', 'statiqpages/About')->name('about');
-   
+
 // Programme de Développement d’Application
 Route::inertia('/guide-stage', 'statiqpages/GuideStage')->name('guide.stage');
 Route::inertia('/dev-app', 'statiqpages/DevApp')->name('dev.app');
-   
+
 // Programme de Génie Logiciel
 Route::inertia('/genie-logiciel', 'statiqpages/GenieLogiciel')->name('genie.logiciel');
 

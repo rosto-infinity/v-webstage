@@ -104,7 +104,6 @@ onMounted(() => {
                     </div>
                 </div>
             </div>
-            
         </section>
 
         <!-- Section Utilisateurs -->
@@ -161,8 +160,6 @@ onMounted(() => {
                         <div class="text-muted-foreground">8h-17h/Jours</div>
                     </div>
                 </div>
-
-               
             </div>
         </section>
         <FooterSite />
