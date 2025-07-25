@@ -1,12 +1,11 @@
 <?php
 
-use App\Models\User;
-use Inertia\Inertia;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\PresenceController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\PresenceController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 Route::get('/', [HomeController::class, 'welcome'])->name('home');
 

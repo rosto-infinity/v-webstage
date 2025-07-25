@@ -19,6 +19,15 @@ class SocialMediaController extends Controller
 
     public function store(Request $request)
     {
+        $platformDomains = [
+            'github' => ['github.com'],
+            'twitter' => ['twitter.com', 'x.com'],
+            'linkedin' => ['linkedin.com', 'www.linkedin.com'],
+            'facebook' => ['facebook.com', 'www.facebook.com'],
+            'instagram' => ['instagram.com', 'www.instagram.com'],
+            'youtube' => ['youtube.com', 'www.youtube.com'],
+        ];
+
         $request->validate([
             'platform' => [
                 'required',
@@ -28,12 +37,28 @@ class SocialMediaController extends Controller
                         ->where('platform', $request->platform);
                 }),
             ],
-            'url' => 'required|url|starts_with:https://'.$request->platform.'.com',
+            'url' => [
+                'required',
+                'url',
+                function ($attribute, $value, $fail) use ($request, $platformDomains) {
+                    if ($request->platform !== 'other') {
+                        $valid = false;
+                        foreach ($platformDomains[$request->platform] as $domain) {
+                            if (str_contains($value, $domain)) {
+                                $valid = true;
+                                break;
+                            }
+                        }
+                        if (! $valid) {
+                            $fail("L'URL doit appartenir à l'un de ces domaines: ".implode(', ', $platformDomains[$request->platform]));
+                        }
+                    }
+                },
+        ],
             'display_name' => 'nullable|string|max:255',
         ], [
-            'platform.unique' => 'Vous avez déjà ajouté ce réseau social',
-            'url.starts_with' => 'L\'URL doit correspondre au réseau social sélectionné',
-        ]);
+        'platform.unique' => 'Vous avez déjà ajouté ce réseau social',
+    ]);
 
         auth()->user()->socialMedias()->create($request->only([
             'platform', 'url', 'display_name',
@@ -45,12 +70,12 @@ class SocialMediaController extends Controller
     public function update(Request $request, SocialMedia $socialMedia)
     {
         $platformDomains = [
-            'github' => 'github.com',
-            'twitter' => 'twitter.com',
-            'linkedin' => 'linkedin.com',
-            'facebook' => 'facebook.com',
-            'instagram' => 'instagram.com',
-            'youtube' => 'youtube.com',
+            'github' => ['github.com'],
+            'twitter' => ['twitter.com', 'x.com'],
+            'linkedin' => ['linkedin.com', 'www.linkedin.com'],
+            'facebook' => ['facebook.com', 'www.facebook.com'],
+            'instagram' => ['instagram.com', 'www.instagram.com'],
+            'youtube' => ['youtube.com', 'www.youtube.com'],
         ];
 
         $request->validate([
@@ -66,13 +91,21 @@ class SocialMediaController extends Controller
             'url' => [
                 'required',
                 'url',
-                function ($attribute, $value, $fail) use ($request, $platformDomains): void {
-                    if ($request->platform !== 'other' &&
-                        ! str_contains($value, $platformDomains[$request->platform])) {
-                        $fail("L'URL doit appartenir au domaine ".$platformDomains[$request->platform]);
+                function ($attribute, $value, $fail) use ($request, $platformDomains) {
+                    if ($request->platform !== 'other') {
+                        $valid = false;
+                        foreach ($platformDomains[$request->platform] as $domain) {
+                            if (str_contains($value, $domain)) {
+                                $valid = true;
+                                break;
+                            }
+                        }
+                        if (! $valid) {
+                            $fail("L'URL doit appartenir à l'un de ces domaines: ".implode(', ', $platformDomains[$request->platform]));
+                        }
                     }
                 },
-            ],
+        ],
             'display_name' => 'nullable|string|max:255',
         ]);
 

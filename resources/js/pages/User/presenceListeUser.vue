@@ -128,23 +128,57 @@ const breadcrumbs: BreadcrumbItem[] = [
 
             <!-- Filtres unifiés -->
             <div class="mb-4 flex flex-col gap-4 md:flex-row">
+                <!-- Contrôle de la semaine -->
                 <div class="flex items-center gap-2">
-                    <button @click="currentWeek--" class="rounded-md bg-gray-200 p-1 px-2 hover:bg-gray-300">&lt;</button>
-                    <span class="text-sm font-medium"> Semaine {{ currentWeek >= 0 ? `+${currentWeek}` : currentWeek }} </span>
-                    <button @click="currentWeek++" class="rounded-md bg-gray-200 p-1 px-2 hover:bg-gray-300">&gt;</button>
+                    <button
+                        @click="currentWeek--"
+                        class="rounded-md bg-gray-200 p-1 px-2 text-gray-800 transition-colors duration-200 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+                    >
+                        &lt;
+                    </button>
+                    <span class="text-sm font-medium text-gray-800 dark:text-gray-200"
+                        >Semaine {{ currentWeek >= 0 ? `+${currentWeek}` : currentWeek }}</span
+                    >
+                    <button
+                        @click="currentWeek++"
+                        class="rounded-md bg-gray-200 p-1 px-2 text-gray-800 transition-colors duration-200 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+                    >
+                        &gt;
+                    </button>
                 </div>
 
-                <label>De : <input type="date" v-model="filterDateFrom" class="input rounded-md p-1" /></label>
-                <label>À : <input type="date" v-model="filterDateTo" class="input rounded-md p-1" /></label>
-                <select v-model="filterStatus" class="input rounded-md bg-violet-200 p-1">
-                    <option value="all">Tous</option>
-                    <option value="present">Présents</option>
-                    <option value="absent">Absents</option>
-                    <option value="late">Retards</option>
+                <!-- Sélecteurs de date -->
+                <label class="text-gray-800 dark:text-gray-200"
+                    >De :
+                    <input
+                        type="date"
+                        v-model="filterDateFrom"
+                        class="input rounded-md border border-gray-300 bg-white p-1 text-gray-800 focus:border-violet-400 focus:ring-1 focus:ring-violet-400 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
+                /></label>
+                <label class="text-gray-800 dark:text-gray-200"
+                    >À :
+                    <input
+                        type="date"
+                        v-model="filterDateTo"
+                        class="input rounded-md border border-gray-300 bg-white p-1 text-gray-800 focus:border-violet-400 focus:ring-1 focus:ring-violet-400 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
+                /></label>
+
+                <!-- Sélecteur de statut -->
+                <select
+                    v-model="filterStatus"
+                    class="input rounded-md border border-gray-300 bg-white p-1 text-gray-800 focus:border-violet-400 focus:ring-1 focus:ring-violet-400 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
+                >
+                    <option value="all" class="bg-white dark:bg-gray-800">Tous</option>
+                    <option value="present" class="bg-white dark:bg-gray-800">Présents</option>
+                    <option value="absent" class="bg-white dark:bg-gray-800">Absents</option>
+                    <option value="late" class="bg-white dark:bg-gray-800">Retards</option>
                 </select>
 
+                <!-- Bouton d'export PDF -->
                 <a @click="exportPdf">
-                    <Button class="flex cursor-pointer items-center gap-1">
+                    <Button
+                        class="flex cursor-pointer items-center gap-1 bg-violet-600 text-white transition-colors duration-200 hover:bg-violet-700"
+                    >
                         <Download class="h-5 w-5" />
                         <span>Exporter-Pdf</span>
                         <span class="ml-1 rounded-full bg-green-500 px-2 py-0.5 text-xs font-bold text-white">New</span>

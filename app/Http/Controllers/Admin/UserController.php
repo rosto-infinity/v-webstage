@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\User;
-use Inertia\Inertia;
+use App\Http\Controllers\Controller;
 use App\Models\Presence;
+use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Barryvdh\DomPDF\Facade\Pdf;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Inertia\Inertia;
 
 class UserController extends Controller
 {
@@ -222,40 +222,35 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('success', 'Utilisateur supprimé');
     }
 
+    public function downloadAllUser()
+    {
+        // Récupérer l'utilisateur connecté
+        $user = Auth::user();
 
+        // Récupérer les présences de l'utilisateur
+        $presences = Presence::where('user_id', $user->id)->latest()->get();
 
-  public function downloadAllUser()
-{
-    // Récupérer l'utilisateur connecté
-    $user = Auth::user();
+        // Calculer les statistiques
+        $totalDays = $presences->count();
+        $weekNumber = now()->weekOfYear;
+        $monthName = now()->monthName;
+        $totalLateHours = $presences->sum('late_minutes') / 60;
+        $totalAbsenceDays = $presences->where('absent', true)->count();
 
-    // Récupérer les présences de l'utilisateur
-    $presences = Presence::where('user_id', $user->id)->latest()->get();
+        $filename = 'Presences_'.now()->format('YmdHis').'.pdf';
 
-    // Calculer les statistiques
-    $totalDays = $presences->count();
-    $weekNumber = now()->weekOfYear;
-    $monthName = now()->monthName;
-    $totalLateHours = $presences->sum('late_minutes') / 60;
-    $totalAbsenceDays = $presences->where('absent', true)->count();
-
-    $filename = 'Presences_'.now()->format('YmdHis').'.pdf';
-
-    // Passer les variables à la vue
-    return Pdf::loadView(' User/PdfAllUser', [
-        'presences' => $presences,
-        'date' => now()->format('d/m/Y'),
-        'user' => $user, // Ajouter cette ligne
-        'totalDays' => $totalDays,
-        'weekNumber' => $weekNumber,
-        'monthName' => $monthName,
-        'totalLateHours' => $totalLateHours,
-        'totalAbsenceDays' => $totalAbsenceDays,
-    ])
-        ->setPaper('A4', 'landscape')
-        ->download($filename);
-}
-
-
-   
+        // Passer les variables à la vue
+        return Pdf::loadView(' User/PdfAllUser', [
+            'presences' => $presences,
+            'date' => now()->format('d/m/Y'),
+            'user' => $user, // Ajouter cette ligne
+            'totalDays' => $totalDays,
+            'weekNumber' => $weekNumber,
+            'monthName' => $monthName,
+            'totalLateHours' => $totalLateHours,
+            'totalAbsenceDays' => $totalAbsenceDays,
+        ])
+            ->setPaper('A4', 'landscape')
+            ->download($filename);
+    }
 }

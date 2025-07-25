@@ -47,7 +47,7 @@ function submit() {
     form.transform((data) => ({ ...data, _method: 'PATCH' })).post(route('profile.update'), {
         forceFormData: true,
         preserveScroll: true,
-        preserveState: false, // <-- force reload du composant
+        preserveState: false, // Force le rechargement du composant
         onSuccess: () => {
             avatarPreview.value = null;
             form.reset('avatar');
@@ -74,7 +74,7 @@ function submit() {
                     </template>
                     <template v-else-if="user.avatar">
                         <img
-                            :src="`/storage/${user.avatar}`"
+                            :src="`/${user.avatar}`"
                             alt="Current avatar"
                             class="h-full w-full rounded-full object-cover transition-transform duration-300 group-hover:scale-105"
                         />
@@ -130,8 +130,6 @@ function submit() {
                         </transition>
                     </div>
                 </form>
-
-                <!-- <DeleteUser /> -->
             </div>
         </SettingsLayout>
     </AppLayout>

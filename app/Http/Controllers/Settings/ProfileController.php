@@ -38,15 +38,20 @@ class ProfileController extends Controller
         $user = $request->user();
         $data = $request->validated();
 
-        // Gestion de l'avatar
         if ($request->hasFile('avatar')) {
-            // Supprimer l'ancien avatar si existe
-            if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
-                Storage::disk('public')->delete($user->avatar);
+            // Suppression ancien avatar
+            if ($user->avatar) {
+                $oldAvatarPath = str_replace('storage/', '', $user->avatar);
+                if (Storage::disk('public')->exists($oldAvatarPath)) {
+                    Storage::disk('public')->delete($oldAvatarPath);
+                }
             }
-            // Stocker sur le disque public pour accès via /storage
+
+            // Stockage dans storage/app/public/avatars
             $path = $request->file('avatar')->store('avatars', 'public');
-            $data['avatar'] = $path;
+
+            // Sauvegarde du chemin accessible via web (public/storage/avatars)
+            $data['avatar'] = 'storage/'.$path;
         } else {
             unset($data['avatar']);
         }
