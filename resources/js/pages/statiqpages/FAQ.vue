@@ -195,26 +195,22 @@ watch(faqJsonLd, injectJsonLd);
             <meta name="robots" content="index, follow" />
         </Head>
 
-         <nav class="mx-auto mb-0 w-full max-w-[335px] text-sm not-has-[nav]:hidden lg:max-w-4xl">
+        <nav class="mx-auto mb-0 w-full max-w-[335px] text-sm not-has-[nav]:hidden lg:max-w-4xl">
             <nav class="flex items-center justify-center gap-4 py-6">
                 <Link
-                        :href="route('home')"
-                        prefetch
-                        class="inline-block rounded-lg bg-primary px-5 py-2 text-sm leading-normal text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
-                    >
-                    <div class="flex">
-                     <Home class="size-4 mr-2"/> Home
-                    </div>   
-                    </Link>
+                    :href="route('home')"
+                    prefetch
+                    class="inline-block rounded-lg bg-primary px-5 py-2 text-sm leading-normal text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
+                >
+                    <div class="flex"><Home class="mr-2 size-4" /> Home</div>
+                </Link>
                 <Link
                     v-if="$page.props.auth.user"
                     :href="route('dashboard')"
                     prefetch
                     class="inline-block rounded-lg border border-primary/20 px-5 py-2 text-sm leading-normal text-primary transition-colors hover:bg-primary/10"
                 >
-                     <div class="flex">
-                     <LayoutDashboard class="size-4 mr-2"/> Dashboard
-                    </div>
+                    <div class="flex"><LayoutDashboard class="mr-2 size-4" /> Dashboard</div>
                 </Link>
                 <template v-else>
                     <Link

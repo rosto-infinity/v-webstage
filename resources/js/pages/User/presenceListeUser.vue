@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import Badge from '@/components/Badge.vue';
+import Button from '@/components/ui/button/Button.vue';
 import AppLayoutUser from '@/layouts/AppLayoutUser.vue';
 import type { BreadcrumbItem } from '@/types';
 import { Head, usePage } from '@inertiajs/vue3';
-import { Calendar, CalendarCheck, Clock, Users } from 'lucide-vue-next';
+import { Calendar, CalendarCheck, Clock, Download, Users } from 'lucide-vue-next';
 import { computed, ref, watch } from 'vue';
 
 interface Presence {
@@ -73,6 +74,9 @@ const presentCount = computed(() => data.value.filter((r) => !r.absent).length);
 const absentCount = computed(() => data.value.filter((r) => r.absent).length);
 const lateCount = computed(() => data.value.filter((r) => r.late).length);
 
+const exportPdf = () => {
+    window.location.href = route('downloadpdf.presence');
+};
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Mes Présences',
@@ -138,6 +142,14 @@ const breadcrumbs: BreadcrumbItem[] = [
                     <option value="absent">Absents</option>
                     <option value="late">Retards</option>
                 </select>
+
+                <a @click="exportPdf">
+                    <Button class="flex cursor-pointer items-center gap-1">
+                        <Download class="h-5 w-5" />
+                        <span>Exporter-Pdf</span>
+                        <span class="ml-1 rounded-full bg-green-500 px-2 py-0.5 text-xs font-bold text-white">New</span>
+                    </Button>
+                </a>
             </div>
 
             <!-- Période affichée -->

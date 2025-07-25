@@ -20,20 +20,12 @@
                         <h3 class="mb-4 text-lg font-semibold text-violet-800 dark:text-primary">À propos</h3>
                         <ul class="space-y-2">
                             <li>
-                                <Link :href="route('home')" prefetch class="transition hover:text-primary dark:hover:text-violet-400"
-                                    >
-                                    
-                                    Accueil
-                                    </Link
-                                >
+                                <Link :href="route('home')" prefetch class="transition hover:text-primary dark:hover:text-violet-400"> Accueil </Link>
                             </li>
                             <li>
-                                <Link :href="route('about')" prefetch class="transition hover:text-primary dark:hover:text-violet-400"
-                                    >
-
+                                <Link :href="route('about')" prefetch class="transition hover:text-primary dark:hover:text-violet-400">
                                     À propos de nous
-                                    </Link
-                                >
+                                </Link>
                             </li>
                             <li>
                                 <Link :href="route('guide.stage')" prefetch class="transition hover:text-primary dark:hover:text-violet-400"

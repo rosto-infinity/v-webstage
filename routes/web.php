@@ -1,22 +1,14 @@
 <?php
 
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\PresenceController;
-use App\Http\Controllers\Admin\UserController;
 use App\Models\User;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\PresenceController;
+use App\Http\Controllers\Admin\DashboardController;
 
-Route::get('/', function () {
-    $totalUsers = User::count();
-    $users = User::with('socialMedias')->get()->map(function ($user) {
-        $user->setAttribute('socialMedias', $user->socialMedias ?? []);
-
-        return $user;
-    });
-
-    return Inertia::render('Welcome', compact('totalUsers', 'users'));
-})->name('home');
+Route::get('/', [HomeController::class, 'welcome'])->name('home');
 
 // Conditions Générales du Stage
 Route::inertia('/conditions-stage', 'statiqpages/ConditionsStage')->name('conditions.stage');
@@ -32,9 +24,9 @@ Route::inertia('/genie-logiciel', 'statiqpages/GenieLogiciel')->name('genie.logi
 
 // FAQ et Support
 Route::inertia('/faq', 'statiqpages/FAQ')->name('faq');
-
 Route::get('dashboard', [UserController::class, 'index'])->middleware(['auth', 'verified', 'prevent-back'])->name('dashboard');
 Route::get('dashboard/presence-list-user', [UserController::class, 'list'])->middleware(['auth', 'verified', 'prevent-back'])->name('list');
+Route::get('dashboard/downloadpdf-presence', [UserController::class, 'downloadAllUser'])->middleware(['auth', 'verified', 'prevent-back'])->name('downloadpdf.presence');
 
 Route::middleware(['auth', 'verified', 'role:admin'])->group(function (): void {
     Route::get('admin/dashboard', [DashboardController::class, 'admin'])->name('admin.dashboard');
