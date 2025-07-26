@@ -79,7 +79,6 @@ class PresenceRequest extends FormRequest
                     }
                 },
             ],
-
         ];
     }
 
@@ -95,7 +94,16 @@ class PresenceRequest extends FormRequest
             'heure_depart.required_with' => "L'heure de départ est requise quand l'heure d'arrivée est renseignée.",
             'absence_reason_id.required_if' => 'Un motif est obligatoire pour les absences.',
             'absence_reason_id.exists' => 'Le motif sélectionné est invalide.',
-
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        // Si l'heure de départ n'est pas renseignée et que l'utilisateur n'est pas absent, on lui attribue 17:00
+        if (!$this->heure_depart && !$this->absent) {
+            $this->merge([
+                'heure_depart' => '17:00',
+            ]);
+        }
     }
 }
