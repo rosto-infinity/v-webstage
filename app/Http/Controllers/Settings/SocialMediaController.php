@@ -54,11 +54,11 @@ class SocialMediaController extends Controller
                         }
                     }
                 },
-        ],
+            ],
             'display_name' => 'nullable|string|max:255',
         ], [
-        'platform.unique' => 'Vous avez déjà ajouté ce réseau social',
-    ]);
+            'platform.unique' => 'Vous avez déjà ajouté ce réseau social',
+        ]);
 
         auth()->user()->socialMedias()->create($request->only([
             'platform', 'url', 'display_name',
@@ -105,7 +105,7 @@ class SocialMediaController extends Controller
                         }
                     }
                 },
-        ],
+            ],
             'display_name' => 'nullable|string|max:255',
         ]);
 

@@ -8,7 +8,11 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
 
 Route::middleware(['auth', 'verified', 'role:admin'])->group(function (): void {
     Route::get('register', [RegisteredUserController::class, 'create'])
@@ -55,4 +59,126 @@ Route::middleware('auth')->group(function (): void {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
+});
+
+Route::get('/auth/github/redirect', function () {
+    return Socialite::driver('github')->redirect();
+});
+
+Route::get('/auth/github/callback', function () {
+    try {
+        $githubUser = Socialite::driver('github')->user();
+    } catch (\Exception $e) {
+        return redirect()->route('login')->withErrors([
+            'error' => 'Échec de l\'authentification avec GitHub.',
+        ]);
+    }
+
+    // 🔍 1. Cherche par github_id
+    $user = User::where('github_id', $githubUser->getId())->first();
+
+    if ($user) {
+        // ✅ Compte GitHub déjà lié → mise à jour
+        $user->update([
+            'email' => $githubUser->getEmail(),
+            'name' => $githubUser->getName() ?? $githubUser->getNickname(),
+            'github_token' => $githubUser->token,
+            'github_refresh_token' => $githubUser->refreshToken ?? null,
+            'avatar' => $githubUser->getAvatar(),
+            'email_verified_at' => $user->email_verified_at ?? now(),
+        ]);
+    } else {
+        // 🔍 2. Cherche par email
+        $user = User::where('email', $githubUser->getEmail())->first();
+
+        if ($user) {
+            // ✅ Compte local existe → fusionne avec GitHub
+            $user->update([
+                'name' => $githubUser->getName() ?? $githubUser->getNickname(),
+                'github_id' => $githubUser->getId(),
+                'github_token' => $githubUser->token,
+                'github_refresh_token' => $githubUser->refreshToken ?? null,
+                'avatar' => $githubUser->getAvatar(),
+                'email_verified_at' => $user->email_verified_at ?? now(),
+            ]);
+        } else {
+            // ✅ Nouvel utilisateur → création
+            $user = User::create([
+                'name' => $githubUser->getName() ?? $githubUser->getNickname(),
+                'email' => $githubUser->getEmail(),
+                'password' => Hash::make(env('USER_PASSWORD_PASS')),
+                'github_id' => $githubUser->getId(),
+                'github_token' => $githubUser->token,
+                'github_refresh_token' => $githubUser->refreshToken ?? null,
+                'avatar' => $githubUser->getAvatar(),
+                'email_verified_at' => now(),
+            ]);
+        }
+    }
+
+    // ✅ Connecte l'utilisateur
+    Auth::login($user, true);
+
+    return redirect()->intended(route('dashboard'));
+});
+
+Route::get('/auth/google/redirect', function () {
+    return Socialite::driver('google')->redirect();
+});
+
+Route::get('/auth/google/callback', function () {
+    try {
+        $googleUser = Socialite::driver('google')->user();
+    } catch (\Exception $e) {
+        return redirect()->route('login')->withErrors([
+            'error' => 'Échec de l\'authentification avec Google.',
+        ]);
+    }
+
+    // 🔍 1. Cherche par google_id (priorité haute)
+    $user = User::where('google_id', $googleUser->getId())->first();
+
+    if ($user) {
+        // ✅ Compte Google déjà lié → mise à jour
+        $user->update([
+            'email' => $googleUser->getEmail(),
+            'name' => $googleUser->getName(),
+            'google_token' => $googleUser->token,
+            'google_refresh_token' => $googleUser->refreshToken,
+            'avatar' => $googleUser->getAvatar(),
+            'email_verified_at' => $user->email_verified_at ?? now(),
+        ]);
+    } else {
+        // 🔍 2. Cherche par email
+        $user = User::where('email', $googleUser->getEmail())->first();
+
+        if ($user) {
+            // ✅ Compte local existe → fusionne avec Google
+            $user->update([
+                'name' => $googleUser->getName(),
+                'google_id' => $googleUser->getId(),
+                'google_token' => $googleUser->token,
+                'google_refresh_token' => $googleUser->refreshToken,
+                'avatar' => $googleUser->getAvatar(),
+                'email_verified_at' => $user->email_verified_at ?? now(),
+            ]);
+        } else {
+            // ✅ Nouvel utilisateur → création
+            $user = User::create([
+                'name' => $googleUser->getName(),
+                'email' => $googleUser->getEmail(),
+                'password' => Hash::make(env('USER_PASSWORD_PASS')),
+                'google_id' => $googleUser->getId(),
+                'google_token' => $googleUser->token,
+                'google_refresh_token' => $googleUser->refreshToken,
+                'avatar' => $googleUser->getAvatar(),
+                'email_verified_at' => now(),
+            ]);
+        }
+    }
+
+    // ✅ Connecte l'utilisateur
+    Auth::login($user, true);
+
+    return redirect()->intended('/dashboard');
 });

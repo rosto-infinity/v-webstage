@@ -100,7 +100,7 @@ class PresenceRequest extends FormRequest
     protected function prepareForValidation()
     {
         // Si l'heure de départ n'est pas renseignée et que l'utilisateur n'est pas absent, on lui attribue 17:00
-        if (!$this->heure_depart && !$this->absent) {
+        if (! $this->heure_depart && ! $this->absent) {
             $this->merge([
                 'heure_depart' => '17:00',
             ]);

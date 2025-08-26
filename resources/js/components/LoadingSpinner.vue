@@ -1,12 +1,12 @@
 <template>
-    <div class="fixed inset-0 z-50 flex items-center justify-center bg-background/90 backdrop-blur-sm dark:bg-background-dark/90">
+    <div class="dark:bg-background-dark/90 fixed inset-0 z-50 flex items-center justify-center bg-background/90 backdrop-blur-sm">
         <div class="h-12 w-12 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
 import { useMotion } from '@vueuse/motion';
+import { onMounted, ref } from 'vue';
 
 const spinner = ref<HTMLElement>();
 
