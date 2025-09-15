@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class SocialMedia extends Model
 {
     use HasFactory;
-
+//Social media
     protected $fillable = [
         'user_id',
         'platform',
