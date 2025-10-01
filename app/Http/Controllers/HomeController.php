@@ -25,7 +25,7 @@ class HomeController extends Controller
             return $user;
         });
 
-        // Renvoyer la vue Inertia 'Welcome' avec les données compactées
+        // -Renvoyer la vue Inertia 'Welcome' avec les données compactées
         return Inertia::render('Welcome', [
             'totalUsers' => $totalUsers,
             'users' => $users,
