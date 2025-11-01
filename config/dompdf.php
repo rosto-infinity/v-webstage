@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'default_paper_size' => 'A4',
     'default_orientation' => 'landscape', // paysage large

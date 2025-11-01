@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Http\Controllers\Settings\DBBackupController;
 use App\Http\Controllers\Settings\PasswordController;
 use App\Http\Controllers\Settings\ProfileController;
@@ -22,9 +24,7 @@ Route::middleware(['auth', 'prevent-back'])->group(function (): void {
     Route::put('settings/media/{socialMedia}', [SocialMediaController::class, 'update'])->name('media.update');
     Route::delete('settings/media/{socialMedia}', [SocialMediaController::class, 'destroy'])->name('media.destroy');
 
-    Route::get('settings/appearance', function () {
-        return Inertia::render('settings/Appearance');
-    })->name('appearance');
+    Route::get('settings/appearance', fn () => Inertia::render('settings/Appearance'))->name('appearance');
 
     Route::get('settings/dbbackup', [DBBackupController::class, 'index'])
         ->name('dbbackup');

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PresenceController;
 use App\Http\Controllers\Admin\UserController;
@@ -64,6 +66,4 @@ Route::middleware(['auth', 'verified', 'role:superadmin'])->group(function (): v
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
 
-Route::get('/{any}', function () {
-    return Inertia::render('NotFoundPage');
-})->where('any', '.*')->name('notfound');
+Route::get('/{any}', fn () => Inertia::render('NotFoundPage'))->where('any', '.*')->name('notfound');

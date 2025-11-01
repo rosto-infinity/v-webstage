@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -18,9 +20,7 @@ class PresenceRequest extends FormRequest
             'user_id' => [
                 'required',
                 'exists:users,id',
-                Rule::unique('presences')->where(function ($query) {
-                    return $query->whereDate('date', $this->date);
-                })->ignore($this->route('id')), // Ignore lors de la mise à jour
+                Rule::unique('presences')->where(fn ($query) => $query->whereDate('date', $this->date))->ignore($this->route('id')), // Ignore lors de la mise à jour
             ],
             'date' => [
                 'required',
@@ -97,7 +97,7 @@ class PresenceRequest extends FormRequest
         ];
     }
 
-    protected function prepareForValidation()
+    protected function prepareForValidation(): void
     {
         // Si l'heure de départ n'est pas renseignée et que l'utilisateur n'est pas absent, on lui attribue 17:00
         if (! $this->heure_depart && ! $this->absent) {

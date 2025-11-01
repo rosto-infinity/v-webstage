@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\AbsenceReason;
 use App\Models\Presence;
 use App\Models\User;

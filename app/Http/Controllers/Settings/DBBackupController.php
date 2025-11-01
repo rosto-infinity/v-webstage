@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
@@ -19,14 +21,12 @@ class DBBackupController extends Controller
     {
         $backups = collect(Storage::files('private/backup'))
             ->filter(fn ($file) => Str::endsWith($file, '.gz'))
-            ->map(function ($file) {
-                return [
-                    'name' => basename($file),
-                    'size' => Storage::size($file),
-                    'last_modified' => Storage::lastModified($file),
-                    'path' => $file,
-                ];
-            })
+            ->map(fn ($file) => [
+                'name' => basename($file),
+                'size' => Storage::size($file),
+                'last_modified' => Storage::lastModified($file),
+                'path' => $file,
+            ])
             ->sortByDesc('last_modified')
             ->values();
 

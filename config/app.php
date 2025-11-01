@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'superadmin' => [
         'name' => env('SUPERADMIN_NAME', 'Admin Default'),

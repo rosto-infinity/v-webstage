@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
@@ -32,20 +34,19 @@ class SocialMediaController extends Controller
             'platform' => [
                 'required',
                 'in:github,twitter,linkedin,facebook,instagram,youtube,other',
-                Rule::unique('social_media')->where(function ($query) use ($request) {
-                    return $query->where('user_id', auth()->id())
-                        ->where('platform', $request->platform);
-                }),
+                Rule::unique('social_media')->where(fn ($query) => $query->where('user_id', auth()->id())
+                    ->where('platform', $request->platform)),
             ],
             'url' => [
                 'required',
                 'url',
-                function ($attribute, $value, $fail) use ($request, $platformDomains) {
+                function ($attribute, $value, $fail) use ($request, $platformDomains): void {
                     if ($request->platform !== 'other') {
                         $valid = false;
                         foreach ($platformDomains[$request->platform] as $domain) {
                             if (str_contains($value, $domain)) {
                                 $valid = true;
+
                                 break;
                             }
                         }
@@ -82,21 +83,20 @@ class SocialMediaController extends Controller
             'platform' => [
                 'required',
                 'in:github,twitter,linkedin,facebook,instagram,youtube,other',
-                Rule::unique('social_media')->where(function ($query) use ($request, $socialMedia) {
-                    return $query->where('user_id', auth()->id())
-                        ->where('platform', $request->platform)
-                        ->where('id', '!=', $socialMedia->id);
-                }),
+                Rule::unique('social_media')->where(fn ($query) => $query->where('user_id', auth()->id())
+                    ->where('platform', $request->platform)
+                    ->where('id', '!=', $socialMedia->id)),
             ],
             'url' => [
                 'required',
                 'url',
-                function ($attribute, $value, $fail) use ($request, $platformDomains) {
+                function ($attribute, $value, $fail) use ($request, $platformDomains): void {
                     if ($request->platform !== 'other') {
                         $valid = false;
                         foreach ($platformDomains[$request->platform] as $domain) {
                             if (str_contains($value, $domain)) {
                                 $valid = true;
+
                                 break;
                             }
                         }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
@@ -61,9 +63,7 @@ Route::middleware('auth')->group(function (): void {
         ->name('logout');
 });
 
-Route::get('/auth/github/redirect', function () {
-    return Socialite::driver('github')->redirect();
-});
+Route::get('/auth/github/redirect', fn () => Socialite::driver('github')->redirect());
 
 Route::get('/auth/github/callback', function () {
     try {
@@ -122,9 +122,7 @@ Route::get('/auth/github/callback', function () {
     return redirect()->intended(route('dashboard'));
 });
 
-Route::get('/auth/google/redirect', function () {
-    return Socialite::driver('google')->redirect();
-});
+Route::get('/auth/google/redirect', fn () => Socialite::driver('google')->redirect());
 
 Route::get('/auth/google/callback', function () {
     try {
