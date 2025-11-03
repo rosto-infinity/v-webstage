@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\Admin\UserController::presence
 * @see app/Http/Controllers/Admin/UserController.php:227
@@ -42,6 +42,43 @@ presence.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: presence.url(options),
     method: 'head',
 })
+
+/**
+* @see \App\Http\Controllers\Admin\UserController::presence
+* @see app/Http/Controllers/Admin/UserController.php:227
+* @route '/dashboard/downloadpdf-presence'
+*/
+const presenceForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: presence.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Admin\UserController::presence
+* @see app/Http/Controllers/Admin/UserController.php:227
+* @route '/dashboard/downloadpdf-presence'
+*/
+presenceForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: presence.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Admin\UserController::presence
+* @see app/Http/Controllers/Admin/UserController.php:227
+* @route '/dashboard/downloadpdf-presence'
+*/
+presenceForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: presence.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+presence.form = presenceForm
 
 const downloadpdf = {
     presence: Object.assign(presence, presence),

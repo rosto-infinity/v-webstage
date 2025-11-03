@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
 /**
 * @see \Inertia\Controller::__invoke
 * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
@@ -42,6 +42,43 @@ stage.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: stage.url(options),
     method: 'head',
 })
+
+/**
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @route '/guide-stage'
+*/
+const stageForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: stage.url(options),
+    method: 'get',
+})
+
+/**
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @route '/guide-stage'
+*/
+stageForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: stage.url(options),
+    method: 'get',
+})
+
+/**
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @route '/guide-stage'
+*/
+stageForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: stage.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+stage.form = stageForm
 
 const guide = {
     stage: Object.assign(stage, stage),

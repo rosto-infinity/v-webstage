@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
 /**
 * @see \Inertia\Controller::__invoke
 * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
@@ -42,6 +42,43 @@ logiciel.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: logiciel.url(options),
     method: 'head',
 })
+
+/**
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @route '/genie-logiciel'
+*/
+const logicielForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: logiciel.url(options),
+    method: 'get',
+})
+
+/**
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @route '/genie-logiciel'
+*/
+logicielForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: logiciel.url(options),
+    method: 'get',
+})
+
+/**
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @route '/genie-logiciel'
+*/
+logicielForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: logiciel.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+logiciel.form = logicielForm
 
 const genie = {
     logiciel: Object.assign(logiciel, logiciel),

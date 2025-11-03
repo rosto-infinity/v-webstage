@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
 /**
 * @see \Inertia\Controller::__invoke
 * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
@@ -42,6 +42,43 @@ app.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: app.url(options),
     method: 'head',
 })
+
+/**
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @route '/dev-app'
+*/
+const appForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: app.url(options),
+    method: 'get',
+})
+
+/**
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @route '/dev-app'
+*/
+appForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: app.url(options),
+    method: 'get',
+})
+
+/**
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @route '/dev-app'
+*/
+appForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: app.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+app.form = appForm
 
 const dev = {
     app: Object.assign(app, app),

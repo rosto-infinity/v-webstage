@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\Admin\DashboardController::superadmin
 * @see app/Http/Controllers/Admin/DashboardController.php:17
@@ -42,6 +42,43 @@ superadmin.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: superadmin.url(options),
     method: 'head',
 })
+
+/**
+* @see \App\Http\Controllers\Admin\DashboardController::superadmin
+* @see app/Http/Controllers/Admin/DashboardController.php:17
+* @route '/superadmin/dashboard'
+*/
+const superadminForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: superadmin.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Admin\DashboardController::superadmin
+* @see app/Http/Controllers/Admin/DashboardController.php:17
+* @route '/superadmin/dashboard'
+*/
+superadminForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: superadmin.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Admin\DashboardController::superadmin
+* @see app/Http/Controllers/Admin/DashboardController.php:17
+* @route '/superadmin/dashboard'
+*/
+superadminForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: superadmin.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+superadmin.form = superadminForm
 
 const dashboard = {
     superadmin: Object.assign(superadmin, superadmin),

@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Admin\DashboardController::admin
 * @see app/Http/Controllers/Admin/DashboardController.php:164
@@ -44,6 +44,43 @@ admin.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
+* @see \App\Http\Controllers\Admin\DashboardController::admin
+* @see app/Http/Controllers/Admin/DashboardController.php:164
+* @route '/admin/dashboard'
+*/
+const adminForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: admin.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Admin\DashboardController::admin
+* @see app/Http/Controllers/Admin/DashboardController.php:164
+* @route '/admin/dashboard'
+*/
+adminForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: admin.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Admin\DashboardController::admin
+* @see app/Http/Controllers/Admin/DashboardController.php:164
+* @route '/admin/dashboard'
+*/
+adminForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: admin.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+admin.form = adminForm
+
+/**
 * @see \App\Http\Controllers\Admin\DashboardController::superadmin
 * @see app/Http/Controllers/Admin/DashboardController.php:17
 * @route '/superadmin/dashboard'
@@ -86,6 +123,43 @@ superadmin.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: superadmin.url(options),
     method: 'head',
 })
+
+/**
+* @see \App\Http\Controllers\Admin\DashboardController::superadmin
+* @see app/Http/Controllers/Admin/DashboardController.php:17
+* @route '/superadmin/dashboard'
+*/
+const superadminForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: superadmin.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Admin\DashboardController::superadmin
+* @see app/Http/Controllers/Admin/DashboardController.php:17
+* @route '/superadmin/dashboard'
+*/
+superadminForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: superadmin.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Admin\DashboardController::superadmin
+* @see app/Http/Controllers/Admin/DashboardController.php:17
+* @route '/superadmin/dashboard'
+*/
+superadminForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: superadmin.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+superadmin.form = superadminForm
 
 const DashboardController = { admin, superadmin }
 
