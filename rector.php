@@ -2,29 +2,23 @@
 
 declare(strict_types=1);
 
-use Rector\Config\RectorConfig;
-use Rector\Set\ValueObject\SetList;
-use Rector\Set\ValueObject\LevelSetList;
-use Rector\ValueObject\PhpVersion;
-use RectorLaravel\Set\LaravelLevelSetList;
-use RectorLaravel\Set\LaravelSetList;
 use Rector\CodeQuality\Rector\Class_\CompleteDynamicPropertiesRector;
+use Rector\Config\RectorConfig;
 use Rector\EarlyReturn\Rector\Return_\ReturnBinaryOrToEarlyReturnRector;
-use RectorLaravel\Rector\ClassMethod\AddGenericReturnTypeToRelationsRector;
-use RectorLaravel\Rector\MethodCall\AssertStatusToAssertMethodRector;
-use RectorLaravel\Rector\StaticCall\DispatchToHelperFunctionsRector;
-use RectorLaravel\Rector\StaticCall\EloquentMagicMethodToQueryBuilderRector;
+use Rector\Set\ValueObject\LevelSetList;
+use Rector\Set\ValueObject\SetList;
+use Rector\ValueObject\PhpVersion;
 
 return static function (RectorConfig $rectorConfig): void {
     // -- chemins à analyser
     $rectorConfig->paths([
-        __DIR__ . '/app',
-        __DIR__ . '/bootstrap',
-        __DIR__ . '/config',
-        __DIR__ . '/public',
-        __DIR__ . '/resources',
-        __DIR__ . '/routes',
-        __DIR__ . '/tests',
+        __DIR__.'/app',
+        __DIR__.'/bootstrap',
+        __DIR__.'/config',
+        __DIR__.'/public',
+        __DIR__.'/resources',
+        __DIR__.'/routes',
+        __DIR__.'/tests',
     ]);
 
     // -- ensembles de règles (Sets) à appliquer
@@ -32,14 +26,12 @@ return static function (RectorConfig $rectorConfig): void {
         LevelSetList::UP_TO_PHP_83,
         SetList::CODE_QUALITY,
         SetList::TYPE_DECLARATION,
-    
-    ]);
 
-   
+    ]);
 
     // -- exclusions (skip) : chemins ou règles à ignorer
     $rectorConfig->skip([
-        __DIR__ . '/app/Listeners',
+        __DIR__.'/app/Listeners',
         ReturnBinaryOrToEarlyReturnRector::class,
         CompleteDynamicPropertiesRector::class,
     ]);

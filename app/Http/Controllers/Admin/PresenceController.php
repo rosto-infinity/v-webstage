@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Illuminate\Support\Collection;
 use App\Exports\PresenceExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PresenceRequest;
@@ -14,9 +12,11 @@ use App\Models\Presence;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Collection;
 use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
 use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
  * Gère la gestion complète des présences :

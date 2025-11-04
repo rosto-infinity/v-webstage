@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Exports;
 
-use Illuminate\Support\Collection;
 use App\Models\Presence;
 use App\Models\User;
-use Illuminate\Contracts\View\View; // --Importe l'interface View pour le type de retour
+use Illuminate\Contracts\View\View;
+use Illuminate\Support\Collection; // --Importe l'interface View pour le type de retour
 use Maatwebsite\Excel\Concerns\FromView; // ---Importe l'interface FromView pour l'exportation Excel
 
 class PresenceExport implements FromView
