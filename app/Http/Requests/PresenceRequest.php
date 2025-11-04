@@ -17,7 +17,7 @@ class PresenceRequest extends FormRequest
     public function rules(): array
     {
         $presenceId = $this->route('id') ?? $this->route('presence'); // Support des deux formats de route
-        
+
         return [
             'user_id' => [
                 'required',
@@ -46,7 +46,7 @@ class PresenceRequest extends FormRequest
                 'date_format:H:i',
                 'after:heure_arrivee',
                 function ($attribute, $value, $fail): void {
-                    if ($value && !$this->heure_arrivee && !$this->absent) {
+                    if ($value && ! $this->heure_arrivee && ! $this->absent) {
                         $fail("Le départ nécessite une heure d'arrivée.");
                     }
                     if ($value && $this->absent) {
@@ -76,7 +76,7 @@ class PresenceRequest extends FormRequest
                 'nullable',
                 'exists:absence_reasons,id',
                 function ($attribute, $value, $fail): void {
-                    if ($value && !$this->absent) {
+                    if ($value && ! $this->absent) {
                         $fail("Incohérence : motif d'absence renseigné alors que non absent.");
                     }
                 },
@@ -108,11 +108,12 @@ class PresenceRequest extends FormRequest
                 'minutes_retard' => 0,
                 'en_retard' => false,
             ]);
+
             return;
         }
 
         // Si non absent et pas de départ, mettre 17:00 par défaut
-        if (!$this->heure_depart) {
+        if (! $this->heure_depart) {
             $this->merge([
                 'heure_depart' => '17:00',
             ]);

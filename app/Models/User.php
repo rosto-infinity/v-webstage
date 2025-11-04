@@ -4,20 +4,43 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 
+/**
+ * Class User
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property string|null $password
+ * @property string|null $role
+ * @property string|null $avatar
+ * @property string|null $github_id
+ * @property string|null $github_token
+ * @property string|null $github_refresh_token
+ * @property string|null $google_id
+ * @property string|null $google_token
+ * @property string|null $google_refresh_token
+ * @property Carbon|null $email_verified_at
+ * @property string|null $remember_token
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\SocialMedia> $socialMedias
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereRole(string $role)
+ */
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
     /**
-     * -The attributes that are mass assignable.
+     * The attributes that are mass assignable.
      *
-     * @var list<string>
+     * @var array<int, string>
      */
     protected $fillable = [
         'name',
@@ -33,14 +56,10 @@ class User extends Authenticatable
         'google_refresh_token',
     ];
 
-    protected $casts = [
-        'role' => 'string',
-    ];
-
     /**
      * The attributes that should be hidden for serialization.
      *
-     * @var list<string>
+     * @var array<int, string>
      */
     protected $hidden = [
         'password',
@@ -48,27 +67,31 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * The attributes that should be cast.
      *
-     * @return array<string, string>
+     * @var array<string, string>
      */
-    protected function casts(): array
+    protected $casts = [
+        'role' => 'string',
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
+
+    /**
+     * Détermine si l’utilisateur a le rôle de super‑administrateur.
+     */
+    public function isSuperAdmin(): bool
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->role === (string) env('SUPERADMIN_ROLE', 'lolo');
     }
 
-    public function isSuperAdmin()
+    /**
+     * Relation : l’utilisateur possède plusieurs médias sociaux.
+     *
+     * @return HasMany<\App\Models\SocialMedia>
+     */
+    public function socialMedias(): HasMany
     {
-        return $this->role === env('SUPERADMIN_ROLE', 'lolo');
-
-    }
-
-    // Ajoutez dans app/Models/User.php
-    public function socialMedias()
-    {
-        return $this->hasMany(SocialMedia::class);
+        return $this->hasMany(SocialMedia::class, 'user_id', 'id');
     }
 }

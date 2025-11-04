@@ -11,10 +11,13 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
-class LoginRequest extends FormRequest
+/**
+ * Form Request pour l’authentification des utilisateurs (login).
+ */
+final class LoginRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * Détermine si l’utilisateur est autorisé à effectuer cette requête.
      */
     public function authorize(): bool
     {
@@ -22,9 +25,9 @@ class LoginRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * Règles de validation qui s’appliquent à la requête.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<int, mixed>|string>
      */
     public function rules(): array
     {
@@ -35,7 +38,23 @@ class LoginRequest extends FormRequest
     }
 
     /**
-     * Attempt to authenticate the request's credentials.
+     * Messages d’erreur personnalisés pour cette requête.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'email.required' => 'L’adresse e‑mail est obligatoire.',
+            'email.string' => 'L’adresse e‑mail doit être une chaîne de caractères.',
+            'email.email' => 'Merci d’entrer une adresse e‑mail valide.',
+            'password.required' => 'Le mot de passe est obligatoire.',
+            'password.string' => 'Le mot de passe doit être une chaîne de caractères.',
+        ];
+    }
+
+    /**
+     * Tente d’authentifier les identifiants de l’utilisateur.
      *
      * @throws \Illuminate\Validation\ValidationException
      */
@@ -47,7 +66,7 @@ class LoginRequest extends FormRequest
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
+                'email' => 'Les identifiants fournis sont incorrects.',
             ]);
         }
 
@@ -55,7 +74,7 @@ class LoginRequest extends FormRequest
     }
 
     /**
-     * Ensure the login request is not rate limited.
+     * Vérifie que la requête n’est pas bloquée par trop nombreuses tentatives.
      *
      * @throws \Illuminate\Validation\ValidationException
      */
@@ -70,18 +89,15 @@ class LoginRequest extends FormRequest
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
         throw ValidationException::withMessages([
-            'email' => trans('auth.throttle', [
-                'seconds' => $seconds,
-                'minutes' => ceil($seconds / 60),
-            ]),
+            'email' => "Trop de tentatives. Réessayez dans {$seconds} secondes (~".ceil($seconds / 60).' minutes).',
         ]);
     }
 
     /**
-     * Get the rate limiting throttle key for the request.
+     * Clé de throttling (limite de tentatives) pour cette requête.
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->input('email')).'|'.$this->ip());
     }
 }

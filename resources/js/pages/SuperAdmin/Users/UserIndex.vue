@@ -11,7 +11,7 @@ import  * as presenceRoutes from '@/routes/presences';
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Users List : Sup_Admin',
-        href: presenceRoutes.users().url,
+        href: userRoutes.index().url,
     },
 ];
 
@@ -163,7 +163,7 @@ function destroy(id: number | string) {
 
             <div class="mt-4">
                 <Link
-                    :href="route('presences')"
+                    :href="presenceRoutes.users().url"
                     prefetch
                     class="inline-flex items-center rounded-md bg-muted px-4 py-2 text-foreground hover:bg-muted/80"
                 >

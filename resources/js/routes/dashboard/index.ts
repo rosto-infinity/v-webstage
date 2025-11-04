@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\Admin\DashboardController::superadmin
-* @see app/Http/Controllers/Admin/DashboardController.php:17
+* @see app/Http/Controllers/Admin/DashboardController.php:31
 * @route '/superadmin/dashboard'
 */
 export const superadmin = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ superadmin.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\DashboardController::superadmin
-* @see app/Http/Controllers/Admin/DashboardController.php:17
+* @see app/Http/Controllers/Admin/DashboardController.php:31
 * @route '/superadmin/dashboard'
 */
 superadmin.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ superadmin.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\DashboardController::superadmin
-* @see app/Http/Controllers/Admin/DashboardController.php:17
+* @see app/Http/Controllers/Admin/DashboardController.php:31
 * @route '/superadmin/dashboard'
 */
 superadmin.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ superadmin.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\DashboardController::superadmin
-* @see app/Http/Controllers/Admin/DashboardController.php:17
+* @see app/Http/Controllers/Admin/DashboardController.php:31
 * @route '/superadmin/dashboard'
 */
 superadmin.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ superadmin.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\DashboardController::superadmin
-* @see app/Http/Controllers/Admin/DashboardController.php:17
+* @see app/Http/Controllers/Admin/DashboardController.php:31
 * @route '/superadmin/dashboard'
 */
 const superadminForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const superadminForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'>
 
 /**
 * @see \App\Http\Controllers\Admin\DashboardController::superadmin
-* @see app/Http/Controllers/Admin/DashboardController.php:17
+* @see app/Http/Controllers/Admin/DashboardController.php:31
 * @route '/superadmin/dashboard'
 */
 superadminForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ superadminForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =
 
 /**
 * @see \App\Http\Controllers\Admin\DashboardController::superadmin
-* @see app/Http/Controllers/Admin/DashboardController.php:17
+* @see app/Http/Controllers/Admin/DashboardController.php:31
 * @route '/superadmin/dashboard'
 */
 superadminForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

@@ -11,37 +11,55 @@ use App\Models\AbsenceReason;
 use App\Models\Presence;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Inertia\Inertia;
-use Maatwebsite\Excel\Facades\Excel;
-use Inertia\Response as InertiaResponse;
 use Illuminate\Http\RedirectResponse;
-class PresenceController extends Controller
+use Inertia\Inertia;
+use Inertia\Response as InertiaResponse;
+use Maatwebsite\Excel\Facades\Excel;
+
+/**
+ * Gère la gestion complète des présences :
+ * affichage, création, mise à jour, suppression et export (Excel/PDF).
+ */
+final class PresenceController extends Controller
 {
-    public function index()
+    /**
+     * Liste toutes les présences avec leurs relations.
+     */
+    public function index(): InertiaResponse
     {
-        $presences = Presence::with('user', 'absenceReason')
-            ->orderBy('date', 'desc')
+        /** @var \Illuminate\Support\Collection<int, array{
+         *     id: int,
+         *     date: string,
+         *     arrival_time: ?string,
+         *     departure_time: ?string,
+         *     late_minutes: int,
+         *     absent: bool,
+         *     late: bool,
+         *     user: array{name: string, email: string},
+         *     absence_reason: ?string
+         * }> $presences
+         */
+        $presences = Presence::with(['user', 'absenceReason'])
+            ->orderByDesc('date')
             ->get()
-            ->map(fn ($p) => [
+            ->map(static fn (Presence $p): array => [
                 'id' => $p->id,
                 'date' => $p->date,
                 'arrival_time' => $p->arrival_time,
                 'departure_time' => $p->departure_time,
-                'late_minutes' => $p->late_minutes,
-                'absent' => $p->absent,
-                'late' => $p->late,
+                'late_minutes' => (int) $p->late_minutes,
+                'absent' => (bool) $p->absent,
+                'late' => (bool) $p->late,
                 'user' => [
-                    'name' => $p->user->name,
-                    'email' => $p->user->email,
+                    'name' => $p->user?->name ?? '—',
+                    'email' => $p->user?->email ?? '—',
                 ],
-                'absence_reason' => $p->absenceReason ? $p->absenceReason->name : null,
+                'absence_reason' => $p->absenceReason?->name,
             ]);
-
-        $presenceCount = Presence::count();
 
         return Inertia::render('SuperAdmin/Presence/PresenceIndex', [
             'presences' => $presences,
-            'presenceCount' => $presenceCount,
+            'presenceCount' => Presence::count(),
             'flash' => [
                 'success' => session('success'),
                 'error' => session('error'),
@@ -50,49 +68,69 @@ class PresenceController extends Controller
         ]);
     }
 
-    public function add()
+    /**
+     * Affiche le formulaire d’ajout d’une présence.
+     */
+    public function add(): InertiaResponse
     {
-        $users = User::where('role', 'user')->orderBy('name')->get(['id', 'name', 'email']);
+        /** @var \Illuminate\Database\Eloquent\Collection<int, User> $users */
+        $users = User::where('role', 'user')
+            ->orderBy('name')
+            ->get(['id', 'name', 'email']);
+
+        /** @var \Illuminate\Database\Eloquent\Collection<int, AbsenceReason> $absenceReasons */
         $absenceReasons = AbsenceReason::all(['id', 'name']);
 
-        return Inertia::render('SuperAdmin/Presence/PresenceAdd', compact('users', 'absenceReasons'));
+        return Inertia::render('SuperAdmin/Presence/PresenceAdd', [
+            'users' => $users,
+            'absenceReasons' => $absenceReasons,
+        ]);
     }
 
-    public function store(PresenceRequest $request)
+    /**
+     * Enregistre une nouvelle présence.
+     */
+    public function store(PresenceRequest $request): RedirectResponse
     {
-        // Vérification finale avant création
-        if (Presence::where('user_id', $request->user_id)
-            ->whereDate('date', $request->date)
-            ->exists()) {
+        $userId = (int) $request->user_id;
+        $date = (string) $request->date;
+
+        // ✅ Vérifie si une présence existe déjà pour cet utilisateur aujourd’hui
+        $exists = Presence::where('user_id', $userId)
+            ->whereDate('date', $date)
+            ->exists();
+
+        if ($exists) {
             return back()
-                ->withErrors(['user_id' => 'Une présence existe déjà pour cet étudiant aujourd\'hui.'])
+                ->withErrors(['user_id' => "Une présence existe déjà pour cet étudiant aujourd'hui."])
                 ->withInput();
         }
 
-        // Création de la présence
+        // ✅ Création de la présence
         Presence::create([
-            'user_id' => $request->user_id,
-            'date' => $request->date,
+            'user_id' => $userId,
+            'date' => $date,
             'arrival_time' => $request->absent ? null : $request->heure_arrivee,
             'departure_time' => $request->absent ? null : $request->heure_depart,
-            'late_minutes' => $request->absent ? 0 : $request->minutes_retard,
-            'absent' => $request->absent,
-            'late' => $request->absent ? false : $request->en_retard,
-            'absence_reason_id' => $request->absent
-                ? $request->absence_reason_id
-                : null, // Bien géré
+            'late_minutes' => $request->absent ? 0 : (int) ($request->minutes_retard ?? 0),
+            'absent' => (bool) $request->absent,
+            'late' => $request->absent ? false : (bool) $request->en_retard,
+            'absence_reason_id' => $request->absent ? $request->absence_reason_id : null,
         ]);
 
         return redirect()->route('presences.users')
             ->with('success', 'Présence enregistrée avec succès.');
     }
 
-   public function edit($id): InertiaResponse
+    /**
+     * Affiche le formulaire d’édition d’une présence.
+     */
+    public function edit(int $id): InertiaResponse
     {
-        // Récupérer la présence avec ses relations
+        /** @var Presence $presence */
         $presence = Presence::with('user:id,name,email')->findOrFail($id);
 
-        // Récupérer tous les utilisateurs
+        /** @var \Illuminate\Database\Eloquent\Collection<int, User> $users */
         $users = User::orderBy('name')->get(['id', 'name', 'email']);
 
         return Inertia::render('SuperAdmin/Presence/PresenceEdit', [
@@ -100,64 +138,64 @@ class PresenceController extends Controller
                 'id' => $presence->id,
                 'user_id' => $presence->user_id,
                 'date' => $presence->date,
-                // ⚠️ ATTENTION : Mapper les noms de colonnes BD → Frontend
-                'heure_arrivee' => $presence->arrival_time,      // ← arrival_time → heure_arrivee
-                'heure_depart' => $presence->departure_time,     // ← departure_time → heure_depart
-                'minutes_retard' => $presence->late_minutes,     // ← late_minutes → minutes_retard
+                'heure_arrivee' => $presence->arrival_time,
+                'heure_depart' => $presence->departure_time,
+                'minutes_retard' => $presence->late_minutes,
                 'absent' => $presence->absent,
-                'en_retard' => $presence->late,                  // ← late → en_retard
+                'en_retard' => $presence->late,
                 'absence_reason_id' => $presence->absence_reason_id,
             ],
             'users' => $users,
         ]);
     }
 
-    public function update(PresenceRequest $request, $id): RedirectResponse
+    /**
+     * Met à jour une présence existante.
+     */
+    public function update(PresenceRequest $request, int $id): RedirectResponse
     {
+        /** @var Presence $presence */
         $presence = Presence::findOrFail($id);
 
-        // Préparer les données en mappant correctement
-        $data = [
+        $presence->update([
             'user_id' => $request->user_id,
             'date' => $request->date,
-            'arrival_time' => $request->absent ? null : $request->heure_arrivee,    // ← heure_arrivee → arrival_time
-            'departure_time' => $request->absent ? null : $request->heure_depart,   // ← heure_depart → departure_time
-            'late_minutes' => $request->absent ? 0 : ($request->minutes_retard ?? 0), // ← minutes_retard → late_minutes
-            'absent' => $request->absent,
-            'late' => $request->absent ? false : $request->en_retard,               // ← en_retard → late
+            'arrival_time' => $request->absent ? null : $request->heure_arrivee,
+            'departure_time' => $request->absent ? null : $request->heure_depart,
+            'late_minutes' => $request->absent ? 0 : (int) ($request->minutes_retard ?? 0),
+            'absent' => (bool) $request->absent,
+            'late' => $request->absent ? false : (bool) $request->en_retard,
             'absence_reason_id' => $request->absent ? $request->absence_reason_id : null,
-        ];
+        ]);
 
-        $presence->update($data);
-
-        return redirect()
-            ->route('presences.users')
+        return redirect()->route('presences.users')
             ->with('success', 'Présence mise à jour avec succès.');
     }
 
     /**
-     * Supprime une présence
+     * Supprime une présence.
      */
-    public function destroy(Presence $presence)
+    public function destroy(Presence $presence): RedirectResponse
     {
-
         $presence->delete();
 
         return redirect()->route('presences.users')
             ->with('success', 'Présence supprimée avec succès.');
     }
 
-    public function excel()
+    /**
+     * Exporte les présences au format Excel (.xlsx)
+     */
+    public function excel(): \Symfony\Component\HttpFoundation\BinaryFileResponse
     {
-        // --Génère un nom de fichier basé sur la date et l'heure actuelles
-        $fileName = now()->format('d-m-Y H.i.s');
+        $fileName = now()->format('d-m-Y_H.i.s');
 
-        // -- Télécharge le fichier Excel avec les données d'historique des emplois
-        return Excel::download(new PresenceExport, 'Presences_'.$fileName.'.xlsx');
+        return Excel::download(new PresenceExport, "Presences_{$fileName}.xlsx");
     }
 
     public function downloadAll()
     {
+
         $presences = Presence::latest()->get();
         $filename = 'Presences_'.now()->format('YmdHis').'.pdf';
 
@@ -165,7 +203,7 @@ class PresenceController extends Controller
             'presences' => $presences,
             'date' => now()->format('d/m/Y'),
         ])
-            ->setPaper('A4', 'landscape')  // Doit être appelé avant download()
+            ->setPaper('A4', 'landscape')
             ->download($filename);
     }
 }

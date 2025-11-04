@@ -244,7 +244,7 @@ faq.form = faqForm
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::dashboard
-* @see app/Http/Controllers/Admin/UserController.php:67
+* @see app/Http/Controllers/Admin/UserController.php:95
 * @route '/dashboard'
 */
 export const dashboard = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -259,7 +259,7 @@ dashboard.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::dashboard
-* @see app/Http/Controllers/Admin/UserController.php:67
+* @see app/Http/Controllers/Admin/UserController.php:95
 * @route '/dashboard'
 */
 dashboard.url = (options?: RouteQueryOptions) => {
@@ -268,7 +268,7 @@ dashboard.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::dashboard
-* @see app/Http/Controllers/Admin/UserController.php:67
+* @see app/Http/Controllers/Admin/UserController.php:95
 * @route '/dashboard'
 */
 dashboard.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -278,7 +278,7 @@ dashboard.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::dashboard
-* @see app/Http/Controllers/Admin/UserController.php:67
+* @see app/Http/Controllers/Admin/UserController.php:95
 * @route '/dashboard'
 */
 dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -288,7 +288,7 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::dashboard
-* @see app/Http/Controllers/Admin/UserController.php:67
+* @see app/Http/Controllers/Admin/UserController.php:95
 * @route '/dashboard'
 */
 const dashboardForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -298,7 +298,7 @@ const dashboardForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> 
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::dashboard
-* @see app/Http/Controllers/Admin/UserController.php:67
+* @see app/Http/Controllers/Admin/UserController.php:95
 * @route '/dashboard'
 */
 dashboardForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -308,7 +308,7 @@ dashboardForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =>
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::dashboard
-* @see app/Http/Controllers/Admin/UserController.php:67
+* @see app/Http/Controllers/Admin/UserController.php:95
 * @route '/dashboard'
 */
 dashboardForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -325,7 +325,7 @@ dashboard.form = dashboardForm
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::list
-* @see app/Http/Controllers/Admin/UserController.php:35
+* @see app/Http/Controllers/Admin/UserController.php:48
 * @route '/dashboard/presence-list-user'
 */
 export const list = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -340,7 +340,7 @@ list.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::list
-* @see app/Http/Controllers/Admin/UserController.php:35
+* @see app/Http/Controllers/Admin/UserController.php:48
 * @route '/dashboard/presence-list-user'
 */
 list.url = (options?: RouteQueryOptions) => {
@@ -349,7 +349,7 @@ list.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::list
-* @see app/Http/Controllers/Admin/UserController.php:35
+* @see app/Http/Controllers/Admin/UserController.php:48
 * @route '/dashboard/presence-list-user'
 */
 list.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -359,7 +359,7 @@ list.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::list
-* @see app/Http/Controllers/Admin/UserController.php:35
+* @see app/Http/Controllers/Admin/UserController.php:48
 * @route '/dashboard/presence-list-user'
 */
 list.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -369,7 +369,7 @@ list.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::list
-* @see app/Http/Controllers/Admin/UserController.php:35
+* @see app/Http/Controllers/Admin/UserController.php:48
 * @route '/dashboard/presence-list-user'
 */
 const listForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -379,7 +379,7 @@ const listForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::list
-* @see app/Http/Controllers/Admin/UserController.php:35
+* @see app/Http/Controllers/Admin/UserController.php:48
 * @route '/dashboard/presence-list-user'
 */
 listForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -389,7 +389,7 @@ listForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::list
-* @see app/Http/Controllers/Admin/UserController.php:35
+* @see app/Http/Controllers/Admin/UserController.php:48
 * @route '/dashboard/presence-list-user'
 */
 listForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -642,7 +642,7 @@ dbbackup.form = dbbackupForm
 
 /**
 * @see \App\Http\Controllers\Auth\RegisteredUserController::register
-* @see app/Http/Controllers/Auth/RegisteredUserController.php:23
+* @see app/Http/Controllers/Auth/RegisteredUserController.php:26
 * @route '/register'
 */
 export const register = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -657,7 +657,7 @@ register.definition = {
 
 /**
 * @see \App\Http\Controllers\Auth\RegisteredUserController::register
-* @see app/Http/Controllers/Auth/RegisteredUserController.php:23
+* @see app/Http/Controllers/Auth/RegisteredUserController.php:26
 * @route '/register'
 */
 register.url = (options?: RouteQueryOptions) => {
@@ -666,7 +666,7 @@ register.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Auth\RegisteredUserController::register
-* @see app/Http/Controllers/Auth/RegisteredUserController.php:23
+* @see app/Http/Controllers/Auth/RegisteredUserController.php:26
 * @route '/register'
 */
 register.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -676,7 +676,7 @@ register.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Auth\RegisteredUserController::register
-* @see app/Http/Controllers/Auth/RegisteredUserController.php:23
+* @see app/Http/Controllers/Auth/RegisteredUserController.php:26
 * @route '/register'
 */
 register.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -686,7 +686,7 @@ register.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Auth\RegisteredUserController::register
-* @see app/Http/Controllers/Auth/RegisteredUserController.php:23
+* @see app/Http/Controllers/Auth/RegisteredUserController.php:26
 * @route '/register'
 */
 const registerForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -696,7 +696,7 @@ const registerForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =
 
 /**
 * @see \App\Http\Controllers\Auth\RegisteredUserController::register
-* @see app/Http/Controllers/Auth/RegisteredUserController.php:23
+* @see app/Http/Controllers/Auth/RegisteredUserController.php:26
 * @route '/register'
 */
 registerForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -706,7 +706,7 @@ registerForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => 
 
 /**
 * @see \App\Http\Controllers\Auth\RegisteredUserController::register
-* @see app/Http/Controllers/Auth/RegisteredUserController.php:23
+* @see app/Http/Controllers/Auth/RegisteredUserController.php:26
 * @route '/register'
 */
 registerForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

@@ -20,17 +20,20 @@ class HomeController extends Controller
         $totalUsers = User::count();
 
         // Récupérer tous les utilisateurs avec leurs réseaux sociaux associés
-        $users = User::with('socialMedias')->get()->map(function ($user) {
-            // Assurer que l'attribut 'socialMedias' est défini, même si vide
-            $user->setAttribute('socialMedias', $user->socialMedias ?? []);
+        $users = User::with('socialMedias')
+            ->latest()
+            ->paginate(12)
+            ->through(function ($user) {
+                // Assurer que l'attribut 'socialMedias' est défini, même si vide
+                $user->setAttribute('socialMedias', $user->socialMedias ?? []);
 
-            return $user;
-        });
+                return $user;
+            });
 
         // -Renvoyer la vue Inertia 'Welcome' avec les données compactées
         return Inertia::render('Welcome', [
             'totalUsers' => $totalUsers,
-            'users' => $users,
+            'users' => Inertia::scroll($users),
         ]);
     }
 }
