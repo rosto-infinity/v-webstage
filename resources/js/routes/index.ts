@@ -405,87 +405,6 @@ listForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 list.form = listForm
 
 /**
-* @see \App\Http\Controllers\Admin\PresenceController::presences
-* @see app/Http/Controllers/Admin/PresenceController.php:19
-* @route '/presences/users'
-*/
-export const presences = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: presences.url(options),
-    method: 'get',
-})
-
-presences.definition = {
-    methods: ["get","head"],
-    url: '/presences/users',
-} satisfies RouteDefinition<["get","head"]>
-
-/**
-* @see \App\Http\Controllers\Admin\PresenceController::presences
-* @see app/Http/Controllers/Admin/PresenceController.php:19
-* @route '/presences/users'
-*/
-presences.url = (options?: RouteQueryOptions) => {
-    return presences.definition.url + queryParams(options)
-}
-
-/**
-* @see \App\Http\Controllers\Admin\PresenceController::presences
-* @see app/Http/Controllers/Admin/PresenceController.php:19
-* @route '/presences/users'
-*/
-presences.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: presences.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Admin\PresenceController::presences
-* @see app/Http/Controllers/Admin/PresenceController.php:19
-* @route '/presences/users'
-*/
-presences.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: presences.url(options),
-    method: 'head',
-})
-
-/**
-* @see \App\Http\Controllers\Admin\PresenceController::presences
-* @see app/Http/Controllers/Admin/PresenceController.php:19
-* @route '/presences/users'
-*/
-const presencesForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: presences.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Admin\PresenceController::presences
-* @see app/Http/Controllers/Admin/PresenceController.php:19
-* @route '/presences/users'
-*/
-presencesForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: presences.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Admin\PresenceController::presences
-* @see app/Http/Controllers/Admin/PresenceController.php:19
-* @route '/presences/users'
-*/
-presencesForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: presences.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-presences.form = presencesForm
-
-/**
 * @see \App\Http\Controllers\Settings\SocialMediaController::media
 * @see app/Http/Controllers/Settings/SocialMediaController.php:15
 * @route '/settings/media'
@@ -940,7 +859,7 @@ logoutForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 logout.form = logoutForm
 
 /**
-* @see routes/web.php:69
+* @see routes/web.php:70
 * @route '/{any}'
 */
 export const notfound = (args: { any: string | number } | [any: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -954,7 +873,7 @@ notfound.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see routes/web.php:69
+* @see routes/web.php:70
 * @route '/{any}'
 */
 notfound.url = (args: { any: string | number } | [any: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -980,7 +899,7 @@ notfound.url = (args: { any: string | number } | [any: string | number ] | strin
 }
 
 /**
-* @see routes/web.php:69
+* @see routes/web.php:70
 * @route '/{any}'
 */
 notfound.get = (args: { any: string | number } | [any: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -989,7 +908,7 @@ notfound.get = (args: { any: string | number } | [any: string | number ] | strin
 })
 
 /**
-* @see routes/web.php:69
+* @see routes/web.php:70
 * @route '/{any}'
 */
 notfound.head = (args: { any: string | number } | [any: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -998,7 +917,7 @@ notfound.head = (args: { any: string | number } | [any: string | number ] | stri
 })
 
 /**
-* @see routes/web.php:69
+* @see routes/web.php:70
 * @route '/{any}'
 */
 const notfoundForm = (args: { any: string | number } | [any: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1007,7 +926,7 @@ const notfoundForm = (args: { any: string | number } | [any: string | number ] |
 })
 
 /**
-* @see routes/web.php:69
+* @see routes/web.php:70
 * @route '/{any}'
 */
 notfoundForm.get = (args: { any: string | number } | [any: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1016,7 +935,7 @@ notfoundForm.get = (args: { any: string | number } | [any: string | number ] | s
 })
 
 /**
-* @see routes/web.php:69
+* @see routes/web.php:70
 * @route '/{any}'
 */
 notfoundForm.head = (args: { any: string | number } | [any: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

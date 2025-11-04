@@ -162,6 +162,87 @@ downloadAllForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'>
 downloadAll.form = downloadAllForm
 
 /**
+* @see \App\Http\Controllers\Admin\PresenceController::users
+* @see app/Http/Controllers/Admin/PresenceController.php:19
+* @route '/presences/users'
+*/
+export const users = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: users.url(options),
+    method: 'get',
+})
+
+users.definition = {
+    methods: ["get","head"],
+    url: '/presences/users',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\Admin\PresenceController::users
+* @see app/Http/Controllers/Admin/PresenceController.php:19
+* @route '/presences/users'
+*/
+users.url = (options?: RouteQueryOptions) => {
+    return users.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Admin\PresenceController::users
+* @see app/Http/Controllers/Admin/PresenceController.php:19
+* @route '/presences/users'
+*/
+users.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: users.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Admin\PresenceController::users
+* @see app/Http/Controllers/Admin/PresenceController.php:19
+* @route '/presences/users'
+*/
+users.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: users.url(options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\Admin\PresenceController::users
+* @see app/Http/Controllers/Admin/PresenceController.php:19
+* @route '/presences/users'
+*/
+const usersForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: users.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Admin\PresenceController::users
+* @see app/Http/Controllers/Admin/PresenceController.php:19
+* @route '/presences/users'
+*/
+usersForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: users.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Admin\PresenceController::users
+* @see app/Http/Controllers/Admin/PresenceController.php:19
+* @route '/presences/users'
+*/
+usersForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: users.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+users.form = usersForm
+
+/**
 * @see \App\Http\Controllers\Admin\PresenceController::add
 * @see app/Http/Controllers/Admin/PresenceController.php:52
 * @route '/presences/add'
@@ -402,15 +483,15 @@ edit.form = editForm
 * @see app/Http/Controllers/Admin/PresenceController.php:103
 * @route '/presences/{id}'
 */
-export const update = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
     url: update.url(args, options),
-    method: 'put',
+    method: 'patch',
 })
 
 update.definition = {
-    methods: ["put"],
+    methods: ["patch"],
     url: '/presences/{id}',
-} satisfies RouteDefinition<["put"]>
+} satisfies RouteDefinition<["patch"]>
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::update
@@ -444,9 +525,9 @@ update.url = (args: { id: string | number } | [id: string | number ] | string | 
 * @see app/Http/Controllers/Admin/PresenceController.php:103
 * @route '/presences/{id}'
 */
-update.put = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.patch = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
     url: update.url(args, options),
-    method: 'put',
+    method: 'patch',
 })
 
 /**
@@ -457,7 +538,7 @@ update.put = (args: { id: string | number } | [id: string | number ] | string | 
 const updateForm = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: update.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'PUT',
+            _method: 'PATCH',
             ...(options?.query ?? options?.mergeQuery ?? {}),
         }
     }),
@@ -469,10 +550,10 @@ const updateForm = (args: { id: string | number } | [id: string | number ] | str
 * @see app/Http/Controllers/Admin/PresenceController.php:103
 * @route '/presences/{id}'
 */
-updateForm.put = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+updateForm.patch = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: update.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'PUT',
+            _method: 'PATCH',
             ...(options?.query ?? options?.mergeQuery ?? {}),
         }
     }),
@@ -572,6 +653,9 @@ destroyForm.delete = (args: { presence: number | { id: number } } | [presence: n
 destroy.form = destroyForm
 
 const presences = {
+    excel: Object.assign(excel, excel),
+    downloadAll: Object.assign(downloadAll, downloadAll),
+    users: Object.assign(users, users),
     add: Object.assign(add, add),
     store: Object.assign(store, store),
     edit: Object.assign(edit, edit),

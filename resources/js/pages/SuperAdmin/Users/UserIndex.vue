@@ -5,10 +5,13 @@ import { type BreadcrumbItem, type PaginationLink } from '@/types';
 import { Head, Link, router } from '@inertiajs/vue3';
 import { Calendar, Clock, Pen, Trash2, UserPlus, Users } from 'lucide-vue-next';
 
+import  * as userRoutes from '@/routes/users';
+import  * as presenceRoutes from '@/routes/presences';
+
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Users List : Sup_Admin',
-        href: '/presences/users',
+        href: presenceRoutes.users().url,
     },
 ];
 
@@ -30,7 +33,8 @@ defineProps<{
 
 function destroy(id: number | string) {
     if (confirm('Supprimer cet utilisateur ?')) {
-        router.delete(route('users.destroy', id));
+        router.delete(userRoutes.destroy(id));
+        // router.delete(userRoutes.destroy(id).url
     }
 }
 </script>
@@ -94,7 +98,7 @@ function destroy(id: number | string) {
                 <h2 class="text-lg font-medium">Liste des utilisateurs</h2>
                 <span class="flex gap-1 rounded-sm bg-primary px-2 pt-2 text-white">
                     <UserPlus />
-                    <Link class="btn btn-primary mb-4" :href="route('users.create')" prefetch>Add Users</Link>
+                    <Link class="btn btn-primary mb-4" :href="userRoutes.create().url" prefetch>Add Users</Link>
                 </span>
                 <span class="text-sm text-muted-foreground"> Total: {{ totalUsers }} utilisateur(s) </span>
             </div>
@@ -137,7 +141,7 @@ function destroy(id: number | string) {
                             </td>
                             <td class="px-6 py-4 text-sm font-medium whitespace-nowrap">
                                 <Link
-                                    :href="route('users.edit', user.id)"
+                                    :href="userRoutes.edit(user.id).url"
                                     class="inline-flex items-center gap-1 rounded-md bg-primary px-3 py-1 text-primary-foreground hover:bg-primary/90"
                                 >
                                     <Pen class="inline h-4 w-4" /> Editer

@@ -47,16 +47,17 @@ Route::middleware(['auth', 'verified', 'role:superadmin'])->group(function (): v
         Route::get('users/{user}/edit', [UserController::class, 'edit'])->name('edit');
         Route::put('users/{user}', [UserController::class, 'update'])->name('update');
         Route::delete('users/{user}', [UserController::class, 'destroy'])->name('destroy');
+        // Route::resource('user', UserController::class);
     });
 
     Route::prefix('presences')->group(function (): void {
         Route::get('/excel', [PresenceController::class, 'excel'])->name('presences.excel');
         Route::get('/download-all', [PresenceController::class, 'downloadAll'])->name('presences.downloadAll');
-        Route::get('/users', [PresenceController::class, 'index'])->name('presences');
+        Route::get('/users', [PresenceController::class, 'index'])->name('presences.users');
         Route::get('/add', [PresenceController::class, 'add'])->name('presences.add');
         Route::post('/store', [PresenceController::class, 'store'])->name('presences.store');
         Route::get('/{id}/edit', [PresenceController::class, 'edit'])->name('presences.edit');
-        Route::put('/{id}', [PresenceController::class, 'update'])->name('presences.update');
+        Route::patch('/{id}', [PresenceController::class, 'update'])->name('presences.update');
         Route::delete('/{presence}', [PresenceController::class, 'destroy'])
             ->name('presences.destroy');
     });

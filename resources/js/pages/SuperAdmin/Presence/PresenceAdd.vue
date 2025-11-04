@@ -5,7 +5,7 @@
         <div class="mx-auto max-w-7xl p-6">
             <!-- Bouton de retour -->
             <Link
-                :href="route('presences')"
+                :href="presenceRoutes.users().url"
                 prefetch
                 class="mb-6 inline-flex items-center gap-2 rounded-lg bg-muted px-4 py-2 text-foreground transition-colors hover:bg-muted/80"
             >
@@ -177,7 +177,7 @@
 
                     <!-- Actions -->
                     <div class="flex gap-4 border-t pt-4">
-                        <Link :href="route('presences')" class="rounded-lg border px-6 py-2 text-foreground transition-colors hover:bg-muted">
+                        <Link :href="presenceRoutes.users().url" class="rounded-lg border px-6 py-2 text-foreground transition-colors hover:bg-muted">
                             Annuler
                         </Link>
                         <button
@@ -202,6 +202,7 @@ import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 import { ArrowLeft, Clock } from 'lucide-vue-next';
 import { computed, watch } from 'vue';
 
+import  * as presenceRoutes from '@/routes/presences';
 // Typage TypeScript
 interface PresenceForm {
     user_id: number | null;
@@ -309,7 +310,7 @@ watch(
 
 // Logique métier
 const submit = () => {
-    form.post(route('presences.store'), {
+    form.post(presenceRoutes.store().url, {
         preserveScroll: true,
         onSuccess: () => {
             form.reset();
@@ -322,8 +323,8 @@ const submit = () => {
 
 // Configuration UI
 const breadcrumbs: BreadcrumbItem[] = [
-    { title: 'Présences Sup_Admin', href: route('presences') },
-    { title: 'Ajout Présences : Sup_Admin', href: route('presences.add') },
+    { title: 'Présences Sup_Admin', href: presenceRoutes.users().url },
+    { title: 'Ajout Présences : Sup_Admin', href: presenceRoutes.add().url },
 ];
 </script>
 

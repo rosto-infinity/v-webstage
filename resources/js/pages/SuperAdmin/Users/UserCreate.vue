@@ -9,9 +9,11 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { ArrowLeft, LoaderCircle } from 'lucide-vue-next';
+
+import  * as userRoutes from '@/routes/users';
 // Configuration des breadcrumbs
 const breadcrumbs: BreadcrumbItem[] = [
-    { title: 'Utilisateurs Sup_Admin', href: '/users' },
+    { title: 'Utilisateurs Sup_Admin', href: userRoutes.index().url },
     { title: 'Nouvel utilisateur : Sup_Admin', href: '' },
 ];
 
@@ -33,7 +35,7 @@ const form = useForm<UserFormData>({
 
 // Soumission du formulaire avec gestion améliorée des erreurs
 const submit = () => {
-    form.post(route('users.store'), {
+    form.post(userRoutes.store().url, {
         preserveScroll: true,
         onSuccess: () => {
             form.reset();
@@ -66,7 +68,7 @@ const submit = () => {
                         <div class="flex items-center justify-between gap-3 pt-1">
                             <span>
                                 <Link
-                                    :href="route('users.index')"
+                                    :href="userRoutes.index().url"
                                     prefetch
                                     class="mb-6 inline-flex items-center gap-2 rounded-lg bg-gray-100 px-4 py-2 text-gray-800 transition-colors hover:bg-gray-200"
                                 >

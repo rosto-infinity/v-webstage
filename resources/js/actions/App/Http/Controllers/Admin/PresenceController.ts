@@ -483,15 +483,15 @@ edit.form = editForm
 * @see app/Http/Controllers/Admin/PresenceController.php:103
 * @route '/presences/{id}'
 */
-export const update = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
     url: update.url(args, options),
-    method: 'put',
+    method: 'patch',
 })
 
 update.definition = {
-    methods: ["put"],
+    methods: ["patch"],
     url: '/presences/{id}',
-} satisfies RouteDefinition<["put"]>
+} satisfies RouteDefinition<["patch"]>
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::update
@@ -525,9 +525,9 @@ update.url = (args: { id: string | number } | [id: string | number ] | string | 
 * @see app/Http/Controllers/Admin/PresenceController.php:103
 * @route '/presences/{id}'
 */
-update.put = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.patch = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
     url: update.url(args, options),
-    method: 'put',
+    method: 'patch',
 })
 
 /**
@@ -538,7 +538,7 @@ update.put = (args: { id: string | number } | [id: string | number ] | string | 
 const updateForm = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: update.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'PUT',
+            _method: 'PATCH',
             ...(options?.query ?? options?.mergeQuery ?? {}),
         }
     }),
@@ -550,10 +550,10 @@ const updateForm = (args: { id: string | number } | [id: string | number ] | str
 * @see app/Http/Controllers/Admin/PresenceController.php:103
 * @route '/presences/{id}'
 */
-updateForm.put = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+updateForm.patch = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: update.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'PUT',
+            _method: 'PATCH',
             ...(options?.query ?? options?.mergeQuery ?? {}),
         }
     }),

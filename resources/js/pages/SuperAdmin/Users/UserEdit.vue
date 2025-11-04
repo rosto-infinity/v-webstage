@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
 import type { BreadcrumbItem } from '@/types';
 import { Head, useForm } from '@inertiajs/vue3';
-
+import  * as userRoutes from '@/routes/users';
 // Typage TypeScript strict
 interface User {
     id: number | string;
@@ -20,7 +20,7 @@ const props = defineProps<{
 
 // Configuration des breadcrumbs
 const breadcrumbs: BreadcrumbItem[] = [
-    { title: 'Utilisateurs Admin', href: '/users' },
+    { title: 'Utilisateurs Admin', href:userRoutes.index().url},
     { title: `Modifier utilisateur : ${props.user.name}`, href: '' },
 ];
 
@@ -34,7 +34,8 @@ const form = useForm({
 
 // Soumission du formulaire
 const submit = () => {
-    form.put(route('users.update', props.user.id), {
+    // form.put(route('users.update', props.user.id), {
+    form.put(userRoutes.update(props.user.id).url, {
         preserveScroll: true,
         onSuccess: () => form.reset('password', 'password_confirmation'),
         onError: () => {

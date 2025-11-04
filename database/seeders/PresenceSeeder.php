@@ -15,6 +15,6 @@ class PresenceSeeder extends Seeder
     public function run(): void
     {
         // Génère 100 présences
-        Presence::factory()->count(2)->create();
+        Presence::factory()->count(300)->create();
     }
 }

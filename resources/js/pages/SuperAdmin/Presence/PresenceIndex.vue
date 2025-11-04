@@ -205,7 +205,8 @@ import type { BreadcrumbItem } from '@/types';
 import { Head, Link, router, usePage } from '@inertiajs/vue3';
 import { Calendar, ChevronLeft, ChevronRight, Clock, Download, Pen, Search, Trash2, Users, X } from 'lucide-vue-next';
 import { computed, ref, watch } from 'vue';
-
+// Import des routes Wayfinder
+import * as userRoutes from '@/routes/users';
 // Typage amélioré avec absence_reason
 interface Presence {
     id: number;
@@ -346,7 +347,7 @@ function calculerMinutesRetard(arrivee: string | null, normale = '08:00'): numbe
 }
 
 // Breadcrumbs
-const breadcrumbs: BreadcrumbItem[] = [{ title: 'Présences : Sup_Admin', href: '/presences' }];
+const breadcrumbs: BreadcrumbItem[] = [{ title: 'Présences : Sup_Admin', href: userRoutes.index().url }];
 </script>
 
 <style scoped>

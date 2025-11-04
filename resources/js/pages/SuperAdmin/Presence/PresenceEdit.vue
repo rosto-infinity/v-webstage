@@ -3,6 +3,7 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import type { BreadcrumbItem } from '@/types';
 import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 import { watch } from 'vue';
+import  * as presenceRoutes from '@/routes/presences';
 
 interface PresenceForm {
     user_id: number | null;
@@ -43,7 +44,8 @@ watch(
 
 // Soumission du formulaire
 const submit = () => {
-    form.put(route('presences.update', props.presence.id), {
+    // form.put(route('presences.update', props.presence.id), {
+           form.patch(presenceRoutes.update(props.presence.id), {
         preserveScroll: true,
         onSuccess: () => form.reset(),
     });
