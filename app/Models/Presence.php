@@ -23,8 +23,8 @@ use Illuminate\Support\Carbon;
  * @property int|null $absence_reason_id Référence au motif d’absence
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read \App\Models\User               $user
- * @property-read \App\Models\AbsenceReason|null $absenceReason
+ * @property-read User $user
+ * @property-read AbsenceReason|null $absenceReason
  */
 class Presence extends Model
 {
@@ -69,7 +69,7 @@ class Presence extends Model
     /**
      * Relation : présence appartient à un utilisateur.
      *
-     * @return BelongsTo<\App\Models\User, Presence>
+     * @return BelongsTo<User, Presence>
      */
     public function user(): BelongsTo
     {
@@ -79,7 +79,7 @@ class Presence extends Model
     /**
      * Relation : présence peut avoir un motif d’absence (nullable).
      *
-     * @return BelongsTo<\App\Models\AbsenceReason, Presence>
+     * @return BelongsTo<AbsenceReason, Presence>
      */
     public function absenceReason(): BelongsTo
     {

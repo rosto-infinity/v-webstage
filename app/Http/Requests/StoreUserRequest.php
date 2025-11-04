@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+use Override;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
@@ -22,7 +24,7 @@ final class StoreUserRequest extends FormRequest
     /**
      * Règles de validation appliquées à la requête.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<int, mixed>|string>
+     * @return array<string, ValidationRule|array<int, mixed>|string>
      */
     public function rules(): array
     {
@@ -38,6 +40,7 @@ final class StoreUserRequest extends FormRequest
      *
      * @return array<string, string>
      */
+    #[Override]
     public function messages(): array
     {
         return [

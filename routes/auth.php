@@ -68,7 +68,7 @@ Route::get('/auth/github/redirect', fn () => Socialite::driver('github')->redire
 Route::get('/auth/github/callback', function () {
     try {
         $githubUser = Socialite::driver('github')->user();
-    } catch (\Exception $e) {
+    } catch (Exception) {
         return redirect()->route('login')->withErrors([
             'error' => 'Échec de l\'authentification avec GitHub.',
         ]);
@@ -127,7 +127,7 @@ Route::get('/auth/google/redirect', fn () => Socialite::driver('google')->redire
 Route::get('/auth/google/callback', function () {
     try {
         $googleUser = Socialite::driver('google')->user();
-    } catch (\Exception $e) {
+    } catch (Exception) {
         return redirect()->route('login')->withErrors([
             'error' => 'Échec de l\'authentification avec Google.',
         ]);

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Illuminate\Support\Collection;
 use App\Exports\PresenceExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PresenceRequest;
@@ -27,17 +29,8 @@ final class PresenceController extends Controller
      */
     public function index(): InertiaResponse
     {
-        /** @var \Illuminate\Support\Collection<int, array{
-         *     id: int,
-         *     date: string,
-         *     arrival_time: ?string,
-         *     departure_time: ?string,
-         *     late_minutes: int,
-         *     absent: bool,
-         *     late: bool,
-         *     user: array{name: string, email: string},
-         *     absence_reason: ?string
-         * }> $presences
+        /**
+         * @var Collection<int, array{id: int, date: string, arrival_time: ?string, departure_time: ?string, late_minutes: int, absent: bool, late: bool, user: array{name: string, email: string}, absence_reason: ?string}> $presences
          */
         $presences = Presence::with(['user', 'absenceReason'])
             ->orderByDesc('date')
@@ -186,14 +179,14 @@ final class PresenceController extends Controller
     /**
      * Exporte les présences au format Excel (.xlsx)
      */
-    public function excel(): \Symfony\Component\HttpFoundation\BinaryFileResponse
+    public function excel(): BinaryFileResponse
     {
         $fileName = now()->format('d-m-Y_H.i.s');
 
         return Excel::download(new PresenceExport, "Presences_{$fileName}.xlsx");
     }
 
-    public function downloadAll()
+    public function downloadAll(): \Illuminate\Http\Response
     {
 
         $presences = Presence::latest()->get();

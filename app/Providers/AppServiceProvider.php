@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use Override;
+use URL;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
@@ -13,6 +15,7 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      */
+    #[Override]
     public function register(): void
     {
         //
@@ -24,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         if (env('APP_ENV') === 'production') {
-            \URL::forceScheme('https');
+            URL::forceScheme('https');
         }
         Validator::excludeUnvalidatedArrayKeys();
         Model::automaticallyEagerLoadRelationships();

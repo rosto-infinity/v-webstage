@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+use Override;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -84,6 +85,7 @@ class PresenceRequest extends FormRequest
         ];
     }
 
+    #[Override]
     public function messages(): array
     {
         return [

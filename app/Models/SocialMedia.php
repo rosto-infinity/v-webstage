@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -20,8 +21,8 @@ use Illuminate\Support\Carbon;
  * @property string $display_name
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read \App\Models\User      $user
- * @property-read \Illuminate\Database\Eloquent\Collection<int, SocialMedia> $socialMedias
+ * @property-read User $user
+ * @property-read Collection<int, SocialMedia> $socialMedias
  */
 class SocialMedia extends Model
 {
@@ -58,7 +59,7 @@ class SocialMedia extends Model
     /**
      * Relationship : SocialMedia belongs to a User.
      *
-     * @return BelongsTo<\App\Models\User, SocialMedia>
+     * @return BelongsTo<User, SocialMedia>
      */
     public function user(): BelongsTo
     {

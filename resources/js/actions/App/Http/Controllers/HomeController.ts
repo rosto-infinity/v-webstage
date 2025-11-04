@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\HomeController::welcome
-* @see app/Http/Controllers/HomeController.php:17
+* @see app/Http/Controllers/HomeController.php:18
 * @route '/'
 */
 export const welcome = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ welcome.definition = {
 
 /**
 * @see \App\Http\Controllers\HomeController::welcome
-* @see app/Http/Controllers/HomeController.php:17
+* @see app/Http/Controllers/HomeController.php:18
 * @route '/'
 */
 welcome.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ welcome.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\HomeController::welcome
-* @see app/Http/Controllers/HomeController.php:17
+* @see app/Http/Controllers/HomeController.php:18
 * @route '/'
 */
 welcome.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ welcome.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\HomeController::welcome
-* @see app/Http/Controllers/HomeController.php:17
+* @see app/Http/Controllers/HomeController.php:18
 * @route '/'
 */
 welcome.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ welcome.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\HomeController::welcome
-* @see app/Http/Controllers/HomeController.php:17
+* @see app/Http/Controllers/HomeController.php:18
 * @route '/'
 */
 const welcomeForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const welcomeForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =>
 
 /**
 * @see \App\Http\Controllers\HomeController::welcome
-* @see app/Http/Controllers/HomeController.php:17
+* @see app/Http/Controllers/HomeController.php:18
 * @route '/'
 */
 welcomeForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ welcomeForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\HomeController::welcome
-* @see app/Http/Controllers/HomeController.php:17
+* @see app/Http/Controllers/HomeController.php:18
 * @route '/'
 */
 welcomeForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

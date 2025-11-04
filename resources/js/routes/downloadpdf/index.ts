@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\Admin\UserController::presence
-* @see app/Http/Controllers/Admin/UserController.php:226
+* @see app/Http/Controllers/Admin/UserController.php:220
 * @route '/dashboard/downloadpdf-presence'
 */
 export const presence = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ presence.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::presence
-* @see app/Http/Controllers/Admin/UserController.php:226
+* @see app/Http/Controllers/Admin/UserController.php:220
 * @route '/dashboard/downloadpdf-presence'
 */
 presence.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ presence.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::presence
-* @see app/Http/Controllers/Admin/UserController.php:226
+* @see app/Http/Controllers/Admin/UserController.php:220
 * @route '/dashboard/downloadpdf-presence'
 */
 presence.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ presence.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::presence
-* @see app/Http/Controllers/Admin/UserController.php:226
+* @see app/Http/Controllers/Admin/UserController.php:220
 * @route '/dashboard/downloadpdf-presence'
 */
 presence.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ presence.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::presence
-* @see app/Http/Controllers/Admin/UserController.php:226
+* @see app/Http/Controllers/Admin/UserController.php:220
 * @route '/dashboard/downloadpdf-presence'
 */
 const presenceForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const presenceForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::presence
-* @see app/Http/Controllers/Admin/UserController.php:226
+* @see app/Http/Controllers/Admin/UserController.php:220
 * @route '/dashboard/downloadpdf-presence'
 */
 presenceForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ presenceForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => 
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::presence
-* @see app/Http/Controllers/Admin/UserController.php:226
+* @see app/Http/Controllers/Admin/UserController.php:220
 * @route '/dashboard/downloadpdf-presence'
 */
 presenceForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

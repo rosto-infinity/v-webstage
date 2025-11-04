@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia\Response;
 use App\Models\User;
 use Inertia\Inertia;
 
@@ -12,7 +13,7 @@ class HomeController extends Controller
     /**
      * Affiche la page d'accueil.
      *
-     * @return \Inertia\Response
+     * @return Response
      */
     public function welcome()
     {

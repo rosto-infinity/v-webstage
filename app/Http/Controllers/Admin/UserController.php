@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
@@ -31,7 +33,7 @@ final class UserController extends Controller
      */
     public function indexlist(Request $request): InertiaResponse
     {
-        /** @var \Illuminate\Contracts\Pagination\LengthAwarePaginator<int, User> $paginatedUsers */
+        /** @var LengthAwarePaginator<int, User> $paginatedUsers */
         $paginatedUsers = User::latest()->paginate(7);
 
         return Inertia::render('SuperAdmin/Users/UserIndex', [
@@ -54,16 +56,8 @@ final class UserController extends Controller
             abort(403, 'Utilisateur non authentifié.');
         }
 
-        /** @var \Illuminate\Support\Collection<int, array{
-         *     id: int,
-         *     date: string,
-         *     arrival_time: ?string,
-         *     departure_time: ?string,
-         *     late_minutes: int,
-         *     absent: bool,
-         *     late: bool,
-         *     absence_reason: ?string
-         * }> $presences */
+        /**
+         * @var Collection<int, array{id: int, date: string, arrival_time: ?string, departure_time: ?string, late_minutes: int, absent: bool, late: bool, absence_reason: ?string}> $presences */
         $presences = Presence::where('user_id', $user->id)
             ->with('absenceReason')
             ->orderByDesc('date')
@@ -116,7 +110,7 @@ final class UserController extends Controller
             $weekStats[$day] = ['present' => 0, 'absent' => 0];
         }
 
-        /** @var \Illuminate\Support\Collection<string, \Illuminate\Support\Collection<int, Presence>> $weekData */
+        /** @var Collection<string, Collection<int, Presence>> $weekData */
         $weekData = Presence::where('user_id', $user->id)
             ->whereBetween('date', [now()->startOfWeek(), now()->endOfWeek()])
             ->get()
@@ -223,7 +217,7 @@ final class UserController extends Controller
         return redirect()->route('users.index')->with('success', 'Utilisateur supprimé');
     }
 
-    public function downloadAllUser()
+    public function downloadAllUser(): \Illuminate\Http\Response
     {
         /** @var User|null $user */
         $user = Auth::user();

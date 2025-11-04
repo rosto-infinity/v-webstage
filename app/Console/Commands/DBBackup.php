@@ -14,7 +14,7 @@ class DBBackup extends Command
 
     protected $description = 'Crée une sauvegarde compressée de la base de données';
 
-    public function handle()
+    public function handle(): int
     {
         //  $path = Storage::path("/backup/" . now()->format("Y-m-d_H-i-s").".gz");
         // Chemin de stockage modifié pour utiliser 'private/backup'
@@ -26,10 +26,10 @@ class DBBackup extends Command
 
         $command = sprintf(
             'mysqldump --user=%s --password=%s --host=%s %s | gzip > %s',
-            escapeshellarg(config('database.connections.mysql.username')),
-            escapeshellarg(config('database.connections.mysql.password')),
-            escapeshellarg(config('database.connections.mysql.host')),
-            escapeshellarg(config('database.connections.mysql.database')),
+            escapeshellarg((string) config('database.connections.mysql.username')),
+            escapeshellarg((string) config('database.connections.mysql.password')),
+            escapeshellarg((string) config('database.connections.mysql.host')),
+            escapeshellarg((string) config('database.connections.mysql.database')),
             $path
         );
 

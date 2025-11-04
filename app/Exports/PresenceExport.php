@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Exports;
 
+use Illuminate\Support\Collection;
 use App\Models\Presence;
 use App\Models\User;
 use Illuminate\Contracts\View\View; // --Importe l'interface View pour le type de retour
@@ -12,7 +13,7 @@ use Maatwebsite\Excel\Concerns\FromView; // ---Importe l'interface FromView pour
 class PresenceExport implements FromView
 {
     /**
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     public function view(): View
     {

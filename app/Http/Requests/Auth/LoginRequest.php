@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Auth;
 
+use Override;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +29,7 @@ final class LoginRequest extends FormRequest
     /**
      * Règles de validation qui s’appliquent à la requête.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<int, mixed>|string>
+     * @return array<string, ValidationRule|array<int, mixed>|string>
      */
     public function rules(): array
     {
@@ -42,6 +44,7 @@ final class LoginRequest extends FormRequest
      *
      * @return array<string, string>
      */
+    #[Override]
     public function messages(): array
     {
         return [
@@ -56,7 +59,7 @@ final class LoginRequest extends FormRequest
     /**
      * Tente d’authentifier les identifiants de l’utilisateur.
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function authenticate(): void
     {
@@ -76,7 +79,7 @@ final class LoginRequest extends FormRequest
     /**
      * Vérifie que la requête n’est pas bloquée par trop nombreuses tentatives.
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function ensureIsNotRateLimited(): void
     {

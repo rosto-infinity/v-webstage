@@ -21,8 +21,8 @@ class DBBackupController extends Controller
     {
         $backups = collect(Storage::files('private/backup'))
             ->filter(fn ($file) => Str::endsWith($file, '.gz'))
-            ->map(fn ($file) => [
-                'name' => basename($file),
+            ->map(fn ($file): array => [
+                'name' => basename((string) $file),
                 'size' => Storage::size($file),
                 'last_modified' => Storage::lastModified($file),
                 'path' => $file,

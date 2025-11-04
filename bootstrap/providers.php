@@ -2,9 +2,13 @@
 
 declare(strict_types=1);
 
+use App\Providers\AppServiceProvider;
+use Barryvdh\Debugbar\ServiceProvider;
+use Illuminate\Auth\AuthServiceProvider;
+
 return [
-    App\Providers\AppServiceProvider::class,
-    Barryvdh\Debugbar\ServiceProvider::class,
-    Illuminate\Auth\AuthServiceProvider::class,
+    AppServiceProvider::class,
+    ServiceProvider::class,
+    AuthServiceProvider::class,
 
 ];

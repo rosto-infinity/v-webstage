@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -29,9 +31,9 @@ use Illuminate\Support\Carbon;
  * @property string|null $remember_token
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\SocialMedia> $socialMedias
+ * @property-read Collection<int, SocialMedia> $socialMedias
  *
- * @method static \Illuminate\Database\Eloquent\Builder|User whereRole(string $role)
+ * @method static Builder|User whereRole(string $role)
  */
 class User extends Authenticatable
 {
@@ -88,7 +90,7 @@ class User extends Authenticatable
     /**
      * Relation : l’utilisateur possède plusieurs médias sociaux.
      *
-     * @return HasMany<\App\Models\SocialMedia>
+     * @return HasMany<SocialMedia>
      */
     public function socialMedias(): HasMany
     {

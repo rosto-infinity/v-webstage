@@ -48,10 +48,10 @@ class RestoreDatabase extends Command
         $command = sprintf(
             'gunzip < %s | mysql --user=%s --password=%s --host=%s %s',
             escapeshellarg($file),
-            escapeshellarg($username),
-            escapeshellarg($password),
-            escapeshellarg($host),
-            escapeshellarg($databaseName)
+            escapeshellarg((string) $username),
+            escapeshellarg((string) $password),
+            escapeshellarg((string) $host),
+            escapeshellarg((string) $databaseName)
         );
 
         // Exécutez la commande
