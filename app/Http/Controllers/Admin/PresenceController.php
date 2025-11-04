@@ -13,7 +13,8 @@ use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Inertia\Inertia;
 use Maatwebsite\Excel\Facades\Excel;
-
+use Inertia\Response as InertiaResponse;
+use Illuminate\Http\RedirectResponse;
 class PresenceController extends Controller
 {
     public function index()
@@ -82,41 +83,56 @@ class PresenceController extends Controller
                 : null, // Bien géré
         ]);
 
-        return redirect()->route('presences')
+        return redirect()->route('presences.users')
             ->with('success', 'Présence enregistrée avec succès.');
     }
 
-    public function edit($id)
+   public function edit($id): InertiaResponse
     {
-        // Récupérer la présence par ID
-        $presence = Presence::findOrFail($id);
+        // Récupérer la présence avec ses relations
+        $presence = Presence::with('user:id,name,email')->findOrFail($id);
 
-        // Récupérer tous les utilisateurs pour le sélecteur
+        // Récupérer tous les utilisateurs
         $users = User::orderBy('name')->get(['id', 'name', 'email']);
 
         return Inertia::render('SuperAdmin/Presence/PresenceEdit', [
-            'presence' => $presence,
+            'presence' => [
+                'id' => $presence->id,
+                'user_id' => $presence->user_id,
+                'date' => $presence->date,
+                // ⚠️ ATTENTION : Mapper les noms de colonnes BD → Frontend
+                'heure_arrivee' => $presence->arrival_time,      // ← arrival_time → heure_arrivee
+                'heure_depart' => $presence->departure_time,     // ← departure_time → heure_depart
+                'minutes_retard' => $presence->late_minutes,     // ← late_minutes → minutes_retard
+                'absent' => $presence->absent,
+                'en_retard' => $presence->late,                  // ← late → en_retard
+                'absence_reason_id' => $presence->absence_reason_id,
+            ],
             'users' => $users,
         ]);
     }
 
-    public function update(PresenceRequest $request, $id)
+    public function update(PresenceRequest $request, $id): RedirectResponse
     {
-        // Récupérer la présence par ID
         $presence = Presence::findOrFail($id);
 
-        // Mettre à jour la présence avec les données validées
-        $presence->update([
+        // Préparer les données en mappant correctement
+        $data = [
             'user_id' => $request->user_id,
             'date' => $request->date,
-            'arrival_time' => $request->absent ? null : $request->heure_arrivee,
-            'departure_time' => $request->absent ? null : $request->heure_depart,
-            'late_minutes' => $request->absent ? 0 : $request->minutes_retard,
+            'arrival_time' => $request->absent ? null : $request->heure_arrivee,    // ← heure_arrivee → arrival_time
+            'departure_time' => $request->absent ? null : $request->heure_depart,   // ← heure_depart → departure_time
+            'late_minutes' => $request->absent ? 0 : ($request->minutes_retard ?? 0), // ← minutes_retard → late_minutes
             'absent' => $request->absent,
-            'late' => $request->absent ? false : $request->en_retard,
-        ]);
+            'late' => $request->absent ? false : $request->en_retard,               // ← en_retard → late
+            'absence_reason_id' => $request->absent ? $request->absence_reason_id : null,
+        ];
 
-        return redirect()->route('presences')->with('success', 'Présence mise à jour avec succès.');
+        $presence->update($data);
+
+        return redirect()
+            ->route('presences.users')
+            ->with('success', 'Présence mise à jour avec succès.');
     }
 
     /**
@@ -127,7 +143,7 @@ class PresenceController extends Controller
 
         $presence->delete();
 
-        return redirect()->route('presences')
+        return redirect()->route('presences.users')
             ->with('success', 'Présence supprimée avec succès.');
     }
 

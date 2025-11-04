@@ -72,6 +72,20 @@
         "test": [
             "@php artisan config:clear --ansi",
             "@php artisan test"
+        ],
+        "pint": [
+            "@php ./vendor/bin/pint"
+        ],
+        "phpstan": [
+            "@php ./vendor/bin/phpstan analyse"
+        ],
+        "pest": [
+            "@php ./vendor/bin/pest"
+        ],
+        "clean": [
+            "@php ./vendor/bin/pint",
+            "@php ./vendor/bin/phpstan analyse",
+            "@php ./vendor/bin/pest"
         ]
     },
     "extra": {

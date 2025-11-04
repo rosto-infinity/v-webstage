@@ -9,18 +9,22 @@ use Illuminate\Validation\Rule;
 
 class PresenceRequest extends FormRequest
 {
-    public function authorize()
+    public function authorize(): bool
     {
-        return true; // Autoriser toutes les requêtes
+        return true;
     }
 
-    public function rules()
+    public function rules(): array
     {
+        $presenceId = $this->route('id') ?? $this->route('presence'); // Support des deux formats de route
+        
         return [
             'user_id' => [
                 'required',
                 'exists:users,id',
-                Rule::unique('presences')->where(fn ($query) => $query->whereDate('date', $this->date))->ignore($this->route('id')), // Ignore lors de la mise à jour
+                Rule::unique('presences')
+                    ->where(fn ($query) => $query->whereDate('date', $this->date))
+                    ->ignore($presenceId), // ← Ignorer l'enregistrement actuel
             ],
             'date' => [
                 'required',
@@ -38,12 +42,11 @@ class PresenceRequest extends FormRequest
                 },
             ],
             'heure_depart' => [
-                'required_with:heure_arrivee',
                 'nullable',
                 'date_format:H:i',
                 'after:heure_arrivee',
                 function ($attribute, $value, $fail): void {
-                    if ($value && ! $this->heure_arrivee) {
+                    if ($value && !$this->heure_arrivee && !$this->absent) {
                         $fail("Le départ nécessite une heure d'arrivée.");
                     }
                     if ($value && $this->absent) {
@@ -67,14 +70,13 @@ class PresenceRequest extends FormRequest
             'en_retard' => [
                 'required',
                 'boolean',
-                'exclude_if:absent,true',
             ],
             'absence_reason_id' => [
                 'required_if:absent,true',
                 'nullable',
                 'exists:absence_reasons,id',
                 function ($attribute, $value, $fail): void {
-                    if ($value && ! $this->absent) {
+                    if ($value && !$this->absent) {
                         $fail("Incohérence : motif d'absence renseigné alors que non absent.");
                     }
                 },
@@ -82,7 +84,7 @@ class PresenceRequest extends FormRequest
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
             'user_id.unique' => 'Cet étudiant a déjà une présence enregistrée pour cette date.',
@@ -91,7 +93,6 @@ class PresenceRequest extends FormRequest
             'minutes_retard.required_if' => 'Veuillez renseigner le nombre de minutes de retard.',
             'minutes_retard.max' => 'Le retard maximum autorisé est de 300 minutes (5h).',
             'heure_depart.after' => "L'heure de départ doit être postérieure à l'arrivée.",
-            'heure_depart.required_with' => "L'heure de départ est requise quand l'heure d'arrivée est renseignée.",
             'absence_reason_id.required_if' => 'Un motif est obligatoire pour les absences.',
             'absence_reason_id.exists' => 'Le motif sélectionné est invalide.',
         ];
@@ -99,8 +100,19 @@ class PresenceRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        // Si l'heure de départ n'est pas renseignée et que l'utilisateur n'est pas absent, on lui attribue 17:00
-        if (! $this->heure_depart && ! $this->absent) {
+        // Si absent, on force les valeurs à null/false
+        if ($this->absent) {
+            $this->merge([
+                'heure_arrivee' => null,
+                'heure_depart' => null,
+                'minutes_retard' => 0,
+                'en_retard' => false,
+            ]);
+            return;
+        }
+
+        // Si non absent et pas de départ, mettre 17:00 par défaut
+        if (!$this->heure_depart) {
             $this->merge([
                 'heure_depart' => '17:00',
             ]);

@@ -31,6 +31,7 @@
         "@tailwindcss/vite": "^4.1.1",
         "@vitejs/plugin-vue": "^5.2.1",
         "@vueuse/core": "^12.8.2",
+        "@vueuse/head": "^2.0.0",
         "@vueuse/motion": "^3.0.3",
         "chart.js": "^4.5.0",
         "class-variance-authority": "^0.7.1",
