@@ -55,25 +55,25 @@ final class DashboardController extends Controller
 
         $query = Presence::query()
             ->with('absenceReason')
-            ->when($userName !== '', static fn($q) => $q->whereHas('user', fn($u) => $u->where('name', $userName)))
+            ->when($userName !== '', static fn ($q) => $q->whereHas('user', fn ($u) => $u->where('name', $userName)))
             ->whereBetween('date', [$startDate, $endDate]);
 
         $stats = $this->computePresenceStats($query);
 
         return Inertia::render('SuperAdmin/Dashboard', [
-            'totalUsers'     => $userName !== '' ? 1 : User::count(),
-            'presenceCount'  => $stats['total'],
-            'countPresent'   => $stats['present'],
-            'countAbsent'    => $stats['absent'],
-            'countLate'      => $stats['late'],
-            'selectedDate'   => $date,
-            'selectedMonth'  => $month,
-            'selectedWeek'   => $week,
-            'selectedUser'   => $userName,
-            'users'          => $users,
-            'filterType'     => $filterType,
+            'totalUsers' => $userName !== '' ? 1 : User::count(),
+            'presenceCount' => $stats['total'],
+            'countPresent' => $stats['present'],
+            'countAbsent' => $stats['absent'],
+            'countLate' => $stats['late'],
+            'selectedDate' => $date,
+            'selectedMonth' => $month,
+            'selectedWeek' => $week,
+            'selectedUser' => $userName,
+            'users' => $users,
+            'filterType' => $filterType,
             'weeklyPresence' => $this->getWeeklyStats($week, $userName),
-            'monthlyTrend'   => $this->getMonthlyStats($month, $userName),
+            'monthlyTrend' => $this->getMonthlyStats($month, $userName),
             'absenceReasons' => $this->getAbsenceReasons($month, $userName),
         ]);
     }
@@ -101,17 +101,17 @@ final class DashboardController extends Controller
     /**
      * Calcule les statistiques globales sur les présences/absences/retards.
      *
-     * @param \Illuminate\Database\Eloquent\Builder<Presence> $query
+     * @param  \Illuminate\Database\Eloquent\Builder<Presence>  $query
      * @return array{total: int, present: int, absent: int, late: int}
      */
     private function computePresenceStats($query): array
     {
         $base = (clone $query);
         $stats = [
-            'total'   => $base->count(),
+            'total' => $base->count(),
             'present' => (clone $base)->where('absent', false)->count(),
-            'absent'  => (clone $base)->where('absent', true)->count(),
-            'late'    => (clone $base)->where('late', true)->count(),
+            'absent' => (clone $base)->where('absent', true)->count(),
+            'late' => (clone $base)->where('late', true)->count(),
         ];
 
         return $stats;
@@ -124,7 +124,7 @@ final class DashboardController extends Controller
     {
         $startOfWeek = Carbon::parse($week)->startOfWeek();
         $query = Presence::query()
-            ->when($user !== '', static fn($q) => $q->whereHas('user', fn($u) => $u->where('name', $user)));
+            ->when($user !== '', static fn ($q) => $q->whereHas('user', fn ($u) => $u->where('name', $user)));
 
         return collect(range(0, 6))
             ->map(static function (int $day) use ($startOfWeek, $query): array {
@@ -132,8 +132,8 @@ final class DashboardController extends Controller
                 $base = (clone $query)->whereDate('date', $date);
 
                 return [
-                    'day'    => $date->isoFormat('ddd'),
-                    'present'=> (clone $base)->where('absent', false)->count(),
+                    'day' => $date->isoFormat('ddd'),
+                    'present' => (clone $base)->where('absent', false)->count(),
                     'absent' => (clone $base)->where('absent', true)->count(),
                 ];
             })
@@ -146,10 +146,10 @@ final class DashboardController extends Controller
     private function getMonthlyStats(string $month, string $user = ''): array
     {
         $start = Carbon::parse($month)->startOfMonth();
-        $end   = Carbon::parse($month)->endOfMonth();
+        $end = Carbon::parse($month)->endOfMonth();
 
         $query = Presence::query()
-            ->when($user !== '', static fn($q) => $q->whereHas('user', fn($u) => $u->where('name', $user)));
+            ->when($user !== '', static fn ($q) => $q->whereHas('user', fn ($u) => $u->where('name', $user)));
 
         $totalUsers = $user !== '' ? 1 : User::count();
         $dayExpr = DB::getDriverName() === 'sqlite'
@@ -163,8 +163,8 @@ final class DashboardController extends Controller
             ->orderBy('day')
             ->get();
 
-        return $result->map(static fn($item): array => [
-            'day'  => (string) $item->day,
+        return $result->map(static fn ($item): array => [
+            'day' => (string) $item->day,
             'rate' => $totalUsers > 0 ? ($item->count / $totalUsers) * 100 : 0.0,
         ])->toArray();
     }
@@ -175,17 +175,17 @@ final class DashboardController extends Controller
     private function getAbsenceReasons(string $month, string $user = ''): array
     {
         $start = Carbon::parse($month)->startOfMonth();
-        $end   = Carbon::parse($month)->endOfMonth();
+        $end = Carbon::parse($month)->endOfMonth();
 
         $query = Presence::query()
             ->where('absent', true)
             ->with('absenceReason')
-            ->when($user !== '', static fn($q) => $q->whereHas('user', fn($u) => $u->where('name', $user)))
+            ->when($user !== '', static fn ($q) => $q->whereHas('user', fn ($u) => $u->where('name', $user)))
             ->whereBetween('date', [$start, $end]);
 
         return $query->get()
-            ->groupBy(static fn(Presence $p): ?string => $p->absenceReason?->name ?? null)
-            ->map(static fn(Collection $group, ?string $reason): array => [
+            ->groupBy(static fn (Presence $p): ?string => $p->absenceReason?->name ?? null)
+            ->map(static fn (Collection $group, ?string $reason): array => [
                 'label' => $reason ?? 'Sans motif',
                 'value' => $group->count(),
                 'color' => $reason ? sprintf('#%06X', random_int(0, 0xFFFFFF)) : '#EF4444',

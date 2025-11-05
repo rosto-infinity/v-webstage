@@ -96,7 +96,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(SocialMedia::class, 'user_id', 'id');
     }
-     /**
+
+    /**
      * Relation : l’utilisateur possède plusieurs présences.
      *
      * @return HasMany<Presence>

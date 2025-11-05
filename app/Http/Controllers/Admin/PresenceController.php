@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\User;
-use Inertia\Inertia;
-use App\Models\Presence;
-use App\Models\AbsenceReason;
-use Illuminate\Http\Response;
 use App\Exports\PresenceExport;
-use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Support\Collection;
 use App\Http\Controllers\Controller;
-use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\PresenceRequest;
+use App\Models\AbsenceReason;
+use App\Models\Presence;
+use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
+use Illuminate\Support\Collection;
+use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
+use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
@@ -28,7 +28,7 @@ final class PresenceController extends Controller
     /**
      * Liste toutes les présences avec leurs relations.
      */
-   public function index(): InertiaResponse
+    public function index(): InertiaResponse
     {
         // Récupérer toutes les présences
         $presences = Presence::with(['user', 'absenceReason'])
@@ -54,7 +54,7 @@ final class PresenceController extends Controller
         $allUsers = User::has('presences')
             ->orderBy('name')
             ->get(['id', 'name', 'email'])
-            ->map(fn($user) => [
+            ->map(fn ($user) => [
                 'id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
@@ -197,7 +197,7 @@ final class PresenceController extends Controller
         return Excel::download(new PresenceExport, "Presences_{$fileName}.xlsx");
     }
 
- /**
+    /**
      * Télécharger le PDF de toutes les présences
      */
     public function downloadAll(): Response
@@ -205,8 +205,8 @@ final class PresenceController extends Controller
         $presences = Presence::with(['user', 'absenceReason'])
             ->latest()
             ->get();
-            
-        $filename = 'Presences_All_' . now()->format('YmdHis') . '.pdf';
+
+        $filename = 'Presences_All_'.now()->format('YmdHis').'.pdf';
 
         return Pdf::loadView('SuperAdmin/Presences/PdfAllPresences', [
             'presences' => $presences,
@@ -230,7 +230,7 @@ final class PresenceController extends Controller
         // Calculer les statistiques
         $stats = $this->calculateUserStats($presences);
 
-        $filename = 'Presences_' . str_replace(' ', '_', $user->name) . '_' . now()->format('YmdHis') . '.pdf';
+        $filename = 'Presences_'.str_replace(' ', '_', $user->name).'_'.now()->format('YmdHis').'.pdf';
 
         return Pdf::loadView('SuperAdmin/Presences/PdfUserPresences', [
             'user' => $user,
@@ -255,7 +255,7 @@ final class PresenceController extends Controller
 
         $stats = $this->calculateUserStats($presences);
 
-        $filename = 'Presences_' . str_replace(' ', '_', $user->name) . '_' . $startDate . '_to_' . $endDate . '.pdf';
+        $filename = 'Presences_'.str_replace(' ', '_', $user->name).'_'.$startDate.'_to_'.$endDate.'.pdf';
 
         return Pdf::loadView('SuperAdmin/Presences/PdfUserPresences', [
             'user' => $user,
@@ -274,17 +274,17 @@ final class PresenceController extends Controller
     public function downloadAllUsersPdf()
     {
         set_time_limit(120);
-        
+
         $users = User::has('presences')->get();
-        $zipFilename = 'Presences_All_Users_' . now()->format('YmdHis') . '.zip';
-        $zipPath = storage_path('app/temp/' . $zipFilename);
+        $zipFilename = 'Presences_All_Users_'.now()->format('YmdHis').'.zip';
+        $zipPath = storage_path('app/temp/'.$zipFilename);
 
         // Créer le dossier temp si inexistant
-        if (!file_exists(storage_path('app/temp'))) {
+        if (! file_exists(storage_path('app/temp'))) {
             mkdir(storage_path('app/temp'), 0755, true);
         }
 
-        $zip = new \ZipArchive();
+        $zip = new \ZipArchive;
         if ($zip->open($zipPath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === true) {
             foreach ($users as $user) {
                 $presences = Presence::where('user_id', $user->id)
@@ -293,8 +293,8 @@ final class PresenceController extends Controller
                     ->get();
 
                 $stats = $this->calculateUserStats($presences);
-                $pdfFilename = 'Presences_' . str_replace(' ', '_', $user->name) . '.pdf';
-                
+                $pdfFilename = 'Presences_'.str_replace(' ', '_', $user->name).'.pdf';
+
                 $pdf = Pdf::loadView('SuperAdmin/Presences/PdfUserPresences', [
                     'user' => $user,
                     'presences' => $presences,

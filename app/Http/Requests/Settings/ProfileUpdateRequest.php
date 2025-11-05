@@ -65,7 +65,7 @@ class ProfileUpdateRequest extends FormRequest
             $path = $this->file('avatar')->store('avatars', 'public');
 
             // Sauvegarde du chemin accessible via web (public/storage/avatars)
-            $data['avatar'] = 'storage/' . $path;
+            $data['avatar'] = 'storage/'.$path;
         } else {
             // Ne pas toucher à l'avatar si aucun fichier n'est fourni
             unset($data['avatar']);

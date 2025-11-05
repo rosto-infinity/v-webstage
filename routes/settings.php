@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-use Inertia\Inertia;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Settings\StageController;
-use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\Settings\DBBackupController;
 use App\Http\Controllers\Settings\PasswordController;
+use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\Settings\SocialMediaController;
+use App\Http\Controllers\Settings\StageController;
+use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 Route::middleware(['auth', 'prevent-back'])->group(function (): void {
     Route::redirect('settings', '/settings/profile');

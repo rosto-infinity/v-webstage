@@ -17,17 +17,15 @@ class StageController extends Controller
     public function index()
     {
         return Inertia::render('settings/Stages', [
-            'stages' => Auth::user()->stages()->latest()->get()->map(function ($stage) {
-                return [
-                    'id' => $stage->id,
-                    'titre' => $stage->titre,
-                    'url_github' => $stage->url_github,
-                    'images' => $stage->images,
-                    'diplome' => $stage->diplome,
-                    'diplome_label' => $stage->getDiplomeLabel(),
-                    'created_at' => $stage->created_at?->format('d/m/Y'),
-                ];
-            }),
+            'stages' => Auth::user()->stages()->latest()->get()->map(fn ($stage) => [
+                'id' => $stage->id,
+                'titre' => $stage->titre,
+                'url_github' => $stage->url_github,
+                'images' => $stage->images,
+                'diplome' => $stage->diplome,
+                'diplome_label' => $stage->getDiplomeLabel(),
+                'created_at' => $stage->created_at?->format('d/m/Y'),
+            ]),
             'diplomes' => Stage::DIPLOMES,
         ]);
     }
@@ -111,7 +109,7 @@ class StageController extends Controller
         // Si de nouvelles images sont uploadées
         if ($request->hasFile('images')) {
             $images = $request->file('images');
-            
+
             // Vérifier le nombre d'images
             if (is_array($images) && (count($images) < 3 || count($images) > 5)) {
                 return back()->withErrors([

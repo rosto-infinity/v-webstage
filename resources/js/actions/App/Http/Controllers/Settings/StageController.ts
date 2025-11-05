@@ -82,7 +82,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\Settings\StageController::store
-* @see app/Http/Controllers/Settings/StageController.php:35
+* @see app/Http/Controllers/Settings/StageController.php:33
 * @route '/settings/stages'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -97,7 +97,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Settings\StageController::store
-* @see app/Http/Controllers/Settings/StageController.php:35
+* @see app/Http/Controllers/Settings/StageController.php:33
 * @route '/settings/stages'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -106,7 +106,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Settings\StageController::store
-* @see app/Http/Controllers/Settings/StageController.php:35
+* @see app/Http/Controllers/Settings/StageController.php:33
 * @route '/settings/stages'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -116,7 +116,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Settings\StageController::store
-* @see app/Http/Controllers/Settings/StageController.php:35
+* @see app/Http/Controllers/Settings/StageController.php:33
 * @route '/settings/stages'
 */
 const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -126,7 +126,7 @@ const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 
 /**
 * @see \App\Http\Controllers\Settings\StageController::store
-* @see app/Http/Controllers/Settings/StageController.php:35
+* @see app/Http/Controllers/Settings/StageController.php:33
 * @route '/settings/stages'
 */
 storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -138,7 +138,7 @@ store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\Settings\StageController::update
-* @see app/Http/Controllers/Settings/StageController.php:83
+* @see app/Http/Controllers/Settings/StageController.php:81
 * @route '/settings/stages/{stage}'
 */
 export const update = (args: { stage: number | { id: number } } | [stage: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -153,7 +153,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Settings\StageController::update
-* @see app/Http/Controllers/Settings/StageController.php:83
+* @see app/Http/Controllers/Settings/StageController.php:81
 * @route '/settings/stages/{stage}'
 */
 update.url = (args: { stage: number | { id: number } } | [stage: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -186,7 +186,7 @@ update.url = (args: { stage: number | { id: number } } | [stage: number | { id: 
 
 /**
 * @see \App\Http\Controllers\Settings\StageController::update
-* @see app/Http/Controllers/Settings/StageController.php:83
+* @see app/Http/Controllers/Settings/StageController.php:81
 * @route '/settings/stages/{stage}'
 */
 update.put = (args: { stage: number | { id: number } } | [stage: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -196,7 +196,7 @@ update.put = (args: { stage: number | { id: number } } | [stage: number | { id: 
 
 /**
 * @see \App\Http\Controllers\Settings\StageController::update
-* @see app/Http/Controllers/Settings/StageController.php:83
+* @see app/Http/Controllers/Settings/StageController.php:81
 * @route '/settings/stages/{stage}'
 */
 const updateForm = (args: { stage: number | { id: number } } | [stage: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -211,7 +211,7 @@ const updateForm = (args: { stage: number | { id: number } } | [stage: number | 
 
 /**
 * @see \App\Http\Controllers\Settings\StageController::update
-* @see app/Http/Controllers/Settings/StageController.php:83
+* @see app/Http/Controllers/Settings/StageController.php:81
 * @route '/settings/stages/{stage}'
 */
 updateForm.put = (args: { stage: number | { id: number } } | [stage: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -228,7 +228,7 @@ update.form = updateForm
 
 /**
 * @see \App\Http\Controllers\Settings\StageController::destroy
-* @see app/Http/Controllers/Settings/StageController.php:142
+* @see app/Http/Controllers/Settings/StageController.php:140
 * @route '/settings/stages/{stage}'
 */
 export const destroy = (args: { stage: number | { id: number } } | [stage: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -243,7 +243,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Settings\StageController::destroy
-* @see app/Http/Controllers/Settings/StageController.php:142
+* @see app/Http/Controllers/Settings/StageController.php:140
 * @route '/settings/stages/{stage}'
 */
 destroy.url = (args: { stage: number | { id: number } } | [stage: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -276,7 +276,7 @@ destroy.url = (args: { stage: number | { id: number } } | [stage: number | { id:
 
 /**
 * @see \App\Http\Controllers\Settings\StageController::destroy
-* @see app/Http/Controllers/Settings/StageController.php:142
+* @see app/Http/Controllers/Settings/StageController.php:140
 * @route '/settings/stages/{stage}'
 */
 destroy.delete = (args: { stage: number | { id: number } } | [stage: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -286,7 +286,7 @@ destroy.delete = (args: { stage: number | { id: number } } | [stage: number | { 
 
 /**
 * @see \App\Http\Controllers\Settings\StageController::destroy
-* @see app/Http/Controllers/Settings/StageController.php:142
+* @see app/Http/Controllers/Settings/StageController.php:140
 * @route '/settings/stages/{stage}'
 */
 const destroyForm = (args: { stage: number | { id: number } } | [stage: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -301,7 +301,7 @@ const destroyForm = (args: { stage: number | { id: number } } | [stage: number |
 
 /**
 * @see \App\Http\Controllers\Settings\StageController::destroy
-* @see app/Http/Controllers/Settings/StageController.php:142
+* @see app/Http/Controllers/Settings/StageController.php:140
 * @route '/settings/stages/{stage}'
 */
 destroyForm.delete = (args: { stage: number | { id: number } } | [stage: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
