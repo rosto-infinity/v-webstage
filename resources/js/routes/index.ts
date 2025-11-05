@@ -406,7 +406,7 @@ list.form = listForm
 
 /**
 * @see \App\Http\Controllers\Settings\SocialMediaController::media
-* @see app/Http/Controllers/Settings/SocialMediaController.php:15
+* @see app/Http/Controllers/Settings/SocialMediaController.php:16
 * @route '/settings/media'
 */
 export const media = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -421,7 +421,7 @@ media.definition = {
 
 /**
 * @see \App\Http\Controllers\Settings\SocialMediaController::media
-* @see app/Http/Controllers/Settings/SocialMediaController.php:15
+* @see app/Http/Controllers/Settings/SocialMediaController.php:16
 * @route '/settings/media'
 */
 media.url = (options?: RouteQueryOptions) => {
@@ -430,7 +430,7 @@ media.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Settings\SocialMediaController::media
-* @see app/Http/Controllers/Settings/SocialMediaController.php:15
+* @see app/Http/Controllers/Settings/SocialMediaController.php:16
 * @route '/settings/media'
 */
 media.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -440,7 +440,7 @@ media.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Settings\SocialMediaController::media
-* @see app/Http/Controllers/Settings/SocialMediaController.php:15
+* @see app/Http/Controllers/Settings/SocialMediaController.php:16
 * @route '/settings/media'
 */
 media.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -450,7 +450,7 @@ media.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Settings\SocialMediaController::media
-* @see app/Http/Controllers/Settings/SocialMediaController.php:15
+* @see app/Http/Controllers/Settings/SocialMediaController.php:16
 * @route '/settings/media'
 */
 const mediaForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -460,7 +460,7 @@ const mediaForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\Settings\SocialMediaController::media
-* @see app/Http/Controllers/Settings/SocialMediaController.php:15
+* @see app/Http/Controllers/Settings/SocialMediaController.php:16
 * @route '/settings/media'
 */
 mediaForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -470,7 +470,7 @@ mediaForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Settings\SocialMediaController::media
-* @see app/Http/Controllers/Settings/SocialMediaController.php:15
+* @see app/Http/Controllers/Settings/SocialMediaController.php:16
 * @route '/settings/media'
 */
 mediaForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

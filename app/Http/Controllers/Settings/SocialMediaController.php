@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Settings;
 use App\Http\Controllers\Controller;
 use App\Models\SocialMedia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
@@ -15,7 +16,7 @@ class SocialMediaController extends Controller
     public function index()
     {
         return Inertia::render('settings/Media', [
-            'socialMedias' => auth()->user()->socialMedias,
+            'socialMedias' => Auth::user()->socialMedias,
         ]);
     }
 
@@ -60,8 +61,9 @@ class SocialMediaController extends Controller
         ], [
             'platform.unique' => 'Vous avez déjà ajouté ce réseau social',
         ]);
-
-        auth()->user()->socialMedias()->create($request->only([
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        $user->socialMedias()->create($request->only([
             'platform', 'url', 'display_name',
         ]));
 
@@ -116,7 +118,11 @@ class SocialMediaController extends Controller
 
     public function destroy(SocialMedia $socialMedia)
     {
-        $this->authorize('delete', $socialMedia);
+        // Vérification manuelle de l'autorisation
+        if (auth()->id() !== $socialMedia->user_id) {
+            abort(403, 'Action non autorisée.');
+        }
+
         $socialMedia->delete();
 
         return back()->with('success', 'Media deleted successfully');

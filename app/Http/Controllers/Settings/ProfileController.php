@@ -24,11 +24,6 @@ class ProfileController extends Controller
         return Inertia::render('settings/Profile', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => $request->session()->get('status'),
-            'user' => [
-                'name' => $request->user()->name,
-                'email' => $request->user()->email,
-                'avatar' => $request->user()->avatar ? Storage::disk('public')->url($request->user()->avatar) : null,
-            ],
         ]);
     }
 
@@ -37,36 +32,9 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $user = $request->user();
-        $data = $request->validated();
+        $request->updateProfile();
 
-        if ($request->hasFile('avatar')) {
-            // Suppression ancien avatar
-            if ($user->avatar) {
-                $oldAvatarPath = str_replace('storage/', '', $user->avatar);
-                if (Storage::disk('public')->exists($oldAvatarPath)) {
-                    Storage::disk('public')->delete($oldAvatarPath);
-                }
-            }
-
-            // Stockage dans storage/app/public/avatars
-            $path = $request->file('avatar')->store('avatars', 'public');
-
-            // Sauvegarde du chemin accessible via web (public/storage/avatars)
-            $data['avatar'] = 'storage/'.$path;
-        } else {
-            unset($data['avatar']);
-        }
-
-        $user->fill($data);
-
-        if ($user->isDirty('email')) {
-            $user->email_verified_at = null;
-        }
-
-        $user->save();
-
-        return to_route('profile.edit')->with('status', 'profile-updated');
+        return back()->with('status', 'profile-updated');
     }
 
     /**
@@ -79,6 +47,14 @@ class ProfileController extends Controller
         ]);
 
         $user = $request->user();
+
+        // Suppression de l'avatar si existe
+        if ($user->avatar) {
+            $oldAvatarPath = str_replace('storage/', '', $user->avatar);
+            if (Storage::disk('public')->exists($oldAvatarPath)) {
+                Storage::disk('public')->delete($oldAvatarPath);
+            }
+        }
 
         Auth::logout();
 

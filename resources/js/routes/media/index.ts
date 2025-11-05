@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\Settings\SocialMediaController::store
-* @see app/Http/Controllers/Settings/SocialMediaController.php:22
+* @see app/Http/Controllers/Settings/SocialMediaController.php:23
 * @route '/settings/media'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Settings\SocialMediaController::store
-* @see app/Http/Controllers/Settings/SocialMediaController.php:22
+* @see app/Http/Controllers/Settings/SocialMediaController.php:23
 * @route '/settings/media'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Settings\SocialMediaController::store
-* @see app/Http/Controllers/Settings/SocialMediaController.php:22
+* @see app/Http/Controllers/Settings/SocialMediaController.php:23
 * @route '/settings/media'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -35,7 +35,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Settings\SocialMediaController::store
-* @see app/Http/Controllers/Settings/SocialMediaController.php:22
+* @see app/Http/Controllers/Settings/SocialMediaController.php:23
 * @route '/settings/media'
 */
 const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -45,7 +45,7 @@ const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 
 /**
 * @see \App\Http\Controllers\Settings\SocialMediaController::store
-* @see app/Http/Controllers/Settings/SocialMediaController.php:22
+* @see app/Http/Controllers/Settings/SocialMediaController.php:23
 * @route '/settings/media'
 */
 storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -57,7 +57,7 @@ store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\Settings\SocialMediaController::update
-* @see app/Http/Controllers/Settings/SocialMediaController.php:71
+* @see app/Http/Controllers/Settings/SocialMediaController.php:73
 * @route '/settings/media/{socialMedia}'
 */
 export const update = (args: { socialMedia: number | { id: number } } | [socialMedia: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -72,7 +72,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Settings\SocialMediaController::update
-* @see app/Http/Controllers/Settings/SocialMediaController.php:71
+* @see app/Http/Controllers/Settings/SocialMediaController.php:73
 * @route '/settings/media/{socialMedia}'
 */
 update.url = (args: { socialMedia: number | { id: number } } | [socialMedia: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -105,7 +105,7 @@ update.url = (args: { socialMedia: number | { id: number } } | [socialMedia: num
 
 /**
 * @see \App\Http\Controllers\Settings\SocialMediaController::update
-* @see app/Http/Controllers/Settings/SocialMediaController.php:71
+* @see app/Http/Controllers/Settings/SocialMediaController.php:73
 * @route '/settings/media/{socialMedia}'
 */
 update.put = (args: { socialMedia: number | { id: number } } | [socialMedia: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -115,7 +115,7 @@ update.put = (args: { socialMedia: number | { id: number } } | [socialMedia: num
 
 /**
 * @see \App\Http\Controllers\Settings\SocialMediaController::update
-* @see app/Http/Controllers/Settings/SocialMediaController.php:71
+* @see app/Http/Controllers/Settings/SocialMediaController.php:73
 * @route '/settings/media/{socialMedia}'
 */
 const updateForm = (args: { socialMedia: number | { id: number } } | [socialMedia: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -130,7 +130,7 @@ const updateForm = (args: { socialMedia: number | { id: number } } | [socialMedi
 
 /**
 * @see \App\Http\Controllers\Settings\SocialMediaController::update
-* @see app/Http/Controllers/Settings/SocialMediaController.php:71
+* @see app/Http/Controllers/Settings/SocialMediaController.php:73
 * @route '/settings/media/{socialMedia}'
 */
 updateForm.put = (args: { socialMedia: number | { id: number } } | [socialMedia: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -147,7 +147,7 @@ update.form = updateForm
 
 /**
 * @see \App\Http\Controllers\Settings\SocialMediaController::destroy
-* @see app/Http/Controllers/Settings/SocialMediaController.php:117
+* @see app/Http/Controllers/Settings/SocialMediaController.php:119
 * @route '/settings/media/{socialMedia}'
 */
 export const destroy = (args: { socialMedia: number | { id: number } } | [socialMedia: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -162,7 +162,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Settings\SocialMediaController::destroy
-* @see app/Http/Controllers/Settings/SocialMediaController.php:117
+* @see app/Http/Controllers/Settings/SocialMediaController.php:119
 * @route '/settings/media/{socialMedia}'
 */
 destroy.url = (args: { socialMedia: number | { id: number } } | [socialMedia: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -195,7 +195,7 @@ destroy.url = (args: { socialMedia: number | { id: number } } | [socialMedia: nu
 
 /**
 * @see \App\Http\Controllers\Settings\SocialMediaController::destroy
-* @see app/Http/Controllers/Settings/SocialMediaController.php:117
+* @see app/Http/Controllers/Settings/SocialMediaController.php:119
 * @route '/settings/media/{socialMedia}'
 */
 destroy.delete = (args: { socialMedia: number | { id: number } } | [socialMedia: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -205,7 +205,7 @@ destroy.delete = (args: { socialMedia: number | { id: number } } | [socialMedia:
 
 /**
 * @see \App\Http\Controllers\Settings\SocialMediaController::destroy
-* @see app/Http/Controllers/Settings/SocialMediaController.php:117
+* @see app/Http/Controllers/Settings/SocialMediaController.php:119
 * @route '/settings/media/{socialMedia}'
 */
 const destroyForm = (args: { socialMedia: number | { id: number } } | [socialMedia: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -220,7 +220,7 @@ const destroyForm = (args: { socialMedia: number | { id: number } } | [socialMed
 
 /**
 * @see \App\Http\Controllers\Settings\SocialMediaController::destroy
-* @see app/Http/Controllers/Settings/SocialMediaController.php:117
+* @see app/Http/Controllers/Settings/SocialMediaController.php:119
 * @route '/settings/media/{socialMedia}'
 */
 destroyForm.delete = (args: { socialMedia: number | { id: number } } | [socialMedia: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
