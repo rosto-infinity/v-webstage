@@ -105,4 +105,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Presence::class, 'user_id', 'id');
     }
+
+    /**
+     * Get the stages for the user.
+     */
+    public function stages(): HasMany
+    {
+        return $this->hasMany(Stage::class);
+    }
 }

@@ -37,6 +37,10 @@ const baseNavItems: NavItem[] = [
         title: 'Media',
         href: '/settings/media',
     },
+    {
+        title: 'Stages',
+        href: '/settings/stages',
+    },
 ];
 
 // Items réservés aux admins

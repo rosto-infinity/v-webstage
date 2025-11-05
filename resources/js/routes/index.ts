@@ -486,7 +486,88 @@ mediaForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 media.form = mediaForm
 
 /**
-* @see routes/settings.php:27
+* @see \App\Http\Controllers\Settings\StageController::stages
+* @see app/Http/Controllers/Settings/StageController.php:17
+* @route '/settings/stages'
+*/
+export const stages = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: stages.url(options),
+    method: 'get',
+})
+
+stages.definition = {
+    methods: ["get","head"],
+    url: '/settings/stages',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\Settings\StageController::stages
+* @see app/Http/Controllers/Settings/StageController.php:17
+* @route '/settings/stages'
+*/
+stages.url = (options?: RouteQueryOptions) => {
+    return stages.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Settings\StageController::stages
+* @see app/Http/Controllers/Settings/StageController.php:17
+* @route '/settings/stages'
+*/
+stages.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: stages.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Settings\StageController::stages
+* @see app/Http/Controllers/Settings/StageController.php:17
+* @route '/settings/stages'
+*/
+stages.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: stages.url(options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\Settings\StageController::stages
+* @see app/Http/Controllers/Settings/StageController.php:17
+* @route '/settings/stages'
+*/
+const stagesForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: stages.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Settings\StageController::stages
+* @see app/Http/Controllers/Settings/StageController.php:17
+* @route '/settings/stages'
+*/
+stagesForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: stages.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Settings\StageController::stages
+* @see app/Http/Controllers/Settings/StageController.php:17
+* @route '/settings/stages'
+*/
+stagesForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: stages.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+stages.form = stagesForm
+
+/**
+* @see routes/settings.php:33
 * @route '/settings/appearance'
 */
 export const appearance = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -500,7 +581,7 @@ appearance.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see routes/settings.php:27
+* @see routes/settings.php:33
 * @route '/settings/appearance'
 */
 appearance.url = (options?: RouteQueryOptions) => {
@@ -508,7 +589,7 @@ appearance.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see routes/settings.php:27
+* @see routes/settings.php:33
 * @route '/settings/appearance'
 */
 appearance.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -517,7 +598,7 @@ appearance.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 /**
-* @see routes/settings.php:27
+* @see routes/settings.php:33
 * @route '/settings/appearance'
 */
 appearance.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -526,7 +607,7 @@ appearance.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see routes/settings.php:27
+* @see routes/settings.php:33
 * @route '/settings/appearance'
 */
 const appearanceForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -535,7 +616,7 @@ const appearanceForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'>
 })
 
 /**
-* @see routes/settings.php:27
+* @see routes/settings.php:33
 * @route '/settings/appearance'
 */
 appearanceForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -544,7 +625,7 @@ appearanceForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =
 })
 
 /**
-* @see routes/settings.php:27
+* @see routes/settings.php:33
 * @route '/settings/appearance'
 */
 appearanceForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
