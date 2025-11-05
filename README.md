@@ -7,10 +7,10 @@
 ## 📦 Technologies
 
 - **Back‑end** :
-  - PHP ≥ 8.2
+  - PHP ≥ 8.3
   - Laravel 12
   - Inertia.js via `inertiajs/inertia-laravel`
-  - Ziggy (routage côté client)
+  - Wayfinder (routage côté client)
 - **Front‑end** :
   - Vue.js 3
   - @inertiajs/vue3
@@ -140,10 +140,10 @@ MIT License - voir le fichier LICENSE.
 - Dashboard avec statistiques graphiques (camembert des présences du jour, graphique à barres hebdomadaire, graphique linéaire mensuel, motifs d'absence)
 - Export Excel / PDF des présences
 - Interface responsive grâce à Tailwind v4
-- Navigation fluide avec Inertia.js + Ziggy
+- Navigation fluide avec Inertia.js + Wayfinder
 
 ### Pile Technologique
-- Back-end : PHP ≥ 8.2, Laravel 12, Inertia.js, Ziggy
+- Back-end : PHP ≥ 8.3, Laravel 12, Inertia.js, Wayfinder
 - Front-end : Vue.js 3, @inertiajs/vue3, Tailwind CSS v4, Chart.js, lucide-vue-next
 - Outils et développement : Vite, TypeScript, tailwind-merge, cla$$x, fakerphp/faker, pestphp/pest, mockery/mockery, laravel/pint, etc.
 - Environnement de développement : Linux Mint, Nginx, Docker (optionnel), Composer, Node.js (npm), MySQL (ou MariaDB), SQLite (optionnel)
