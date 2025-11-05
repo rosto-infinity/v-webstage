@@ -53,6 +53,18 @@ Route::middleware(['auth', 'verified', 'role:superadmin'])->group(function (): v
     Route::prefix('presences')->group(function (): void {
         Route::get('/excel', [PresenceController::class, 'excel'])->name('presences.excel');
         Route::get('/download-all', [PresenceController::class, 'downloadAll'])->name('presences.downloadAll');
+       
+       // Nouvelles routes pour PDF par utilisateur
+    Route::get('/users/{user}/pdf', [PresenceController::class, 'downloadUserPdf'])
+        ->name('presences.user.pdf');
+    
+    Route::get('/users/{user}/pdf/{startDate}/{endDate}', [PresenceController::class, 'downloadUserPdfPeriod'])
+        ->name('presences.user.pdf.period');
+    
+    Route::get('/users/pdf/all-zip', [PresenceController::class, 'downloadAllUsersPdf'])
+        ->name('presences.users.pdf.zip');
+    
+       
         Route::get('/users', [PresenceController::class, 'index'])->name('presences.users');
         Route::get('/add', [PresenceController::class, 'add'])->name('presences.add');
         Route::post('/store', [PresenceController::class, 'store'])->name('presences.store');
