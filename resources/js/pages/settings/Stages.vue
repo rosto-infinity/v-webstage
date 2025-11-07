@@ -18,7 +18,7 @@ import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 import * as userStages from '@/routes/stages';
-
+// comment
 declare module '@inertiajs/vue3' {
     interface PageProps {
         flash?: {
