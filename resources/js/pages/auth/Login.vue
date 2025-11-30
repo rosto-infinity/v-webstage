@@ -6,8 +6,14 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthBase from '@/layouts/AuthLayout.vue';
+
+import { stage as configCgu } from '@/routes/conditions';
+import { request as passwordRequest } from '@/routes/password';
 import { Head, useForm } from '@inertiajs/vue3';
-import { LoaderCircle } from 'lucide-vue-next';
+import { Eye, EyeOff, Github, LoaderCircle, LogIn } from 'lucide-vue-next';
+import { ref } from 'vue';
+// Import Wayfinder routes/actions générées
+import { store } from '@/routes';
 
 defineProps<{
     status?: string;
@@ -20,91 +26,44 @@ const form = useForm({
     remember: false,
 });
 
+const showPassword = ref(false);
+
 const submit = () => {
-    form.post(route('login'), {
+    form.post(store().url, {
         onFinish: () => form.reset('password'),
     });
 };
 
 // ✅ Redirection vers les routes existantes
-const loginWithGoogle = () => {
-    window.location.href = '/auth/google/redirect';
-};
+// const loginWithGoogle = () => {
+//     window.location.href = '/auth/google/redirect';
+// };
 
 const loginWithGithub = () => {
     window.location.href = '/auth/github/redirect';
 };
+// const loginWithLinkedin = () => {
+//     window.location.href = '/auth/linkedin/redirect';
+// };
 </script>
 
 <template>
-    <AuthBase title="Log in to your account" description="Enter your email and password below to log in">
-        <Head title="Log in" />
+    <AuthBase title="Connectez-vous :">
+        <Head title="Connectez-vous à votre compte" />
 
-        <div v-if="status" class="mb-4 text-center text-sm font-medium text-green-600">
+        <!-- Message de statut -->
+        <div v-if="status" class="mb-4 text-center text-sm font-bold text-accent">
             {{ status }}
         </div>
 
-        <form @submit.prevent="submit" class="flex flex-col gap-6">
-            <div class="grid gap-6">
-                <div class="grid gap-2">
-                    <Label for="email">Email address</Label>
-                    <Input
-                        id="email"
-                        type="email"
-                        autofocus
-                        :tabindex="1"
-                        autocomplete="email"
-                        v-model="form.email"
-                        placeholder="email@example.com"
-                    />
-                    <InputError :message="form.errors.email" />
-                </div>
-
-                <div class="grid gap-2">
-                    <div class="flex items-center justify-between">
-                        <Label for="password">Password</Label>
-                        <TextLink v-if="canResetPassword" :href="route('password.request')" class="text-sm" :tabindex="5">
-                            Forgot password?
-                        </TextLink>
-                    </div>
-                    <Input
-                        id="password"
-                        type="password"
-                        :tabindex="2"
-                        autocomplete="current-password"
-                        v-model="form.password"
-                        placeholder="Password"
-                    />
-                    <InputError :message="form.errors.password" />
-                </div>
-
-                <div class="flex items-center justify-between">
-                    <Label for="remember" class="flex items-center space-x-3">
-                        <Checkbox id="remember" v-model="form.remember" :tabindex="3" />
-                        <span>Remember me</span>
-                    </Label>
-                </div>
-
-                <Button type="submit" class="mt-4 w-full" :tabindex="4" :disabled="form.processing">
-                    <LoaderCircle v-if="form.processing" class="h-4 w-4 animate-spin" />
-                    Log in
-                </Button>
-            </div>
-
-            <!-- Séparateur -->
-            <div class="my-2 flex items-center">
-                <div class="flex-1 border-t border-slate-200 dark:border-slate-700"></div>
-                <span class="px-4 text-sm text-slate-500 dark:text-slate-400">ou continuez avec</span>
-                <div class="flex-1 border-t border-slate-200 dark:border-slate-700"></div>
-            </div>
-
+        <form method="POST" @submit.prevent="submit" class="flex flex-col gap-6">
             <!-- Boutons externes -->
             <div class="flex items-center justify-center gap-3">
                 <!-- Google -->
-                <Button
+                <!-- <Button
                     type="button"
                     variant="outline"
-                    class="flex w-45 items-center justify-center gap-3 border-slate-200 bg-white text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
+                    class="flex w-35 items-center justify-center gap-3 border-slate-200 bg-white text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
                     @click="loginWithGoogle"
                 >
                     <svg class="h-4 w-4" viewBox="0 0 24 24">
@@ -125,24 +84,96 @@ const loginWithGithub = () => {
                             fill="#EA4335"
                         />
                     </svg>
-                    <span>Google</span>
-                </Button>
+                    <span>Avec Google</span>
+                </Button> -->
 
                 <!-- GitHub -->
                 <Button
                     type="button"
                     variant="outline"
-                    class="flex w-45 items-center justify-center gap-3 border-slate-200 bg-white text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
+                    class="flex w-55 cursor-pointer items-center justify-center gap-3 border-primary bg-primary/20 text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
                     @click="loginWithGithub"
                 >
                     <Github class="h-4 w-4" />
-                    <span>GitHub</span>
+                    <span>Avec GitHub</span>
+                </Button>
+                <!-- Linkedin-->
+                <!-- <Button
+                    type="button"
+                    variant="outline"
+                    class="flex w-27 items-center justify-center gap-3 border-slate-200 bg-white text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
+                    @click="loginWithLinkedin"
+                >
+                    <Linkedin class="h-4 w-4" />
+                    <span>Linkedin</span>
+                </Button> -->
+            </div>
+            <!-- Séparateur -->
+            <div class="my-2 flex items-center">
+                <div class="flex-1 border-t-2 border-slate-200 dark:border-slate-700"></div>
+                <span class="px-4 text-sm text-slate-500 dark:text-slate-400">OU CONNECTEZ-VOUS AVEC ADRESSE E-MAIL</span>
+                <div class="flex-1 border-t-2 border-slate-200 dark:border-slate-700"></div>
+            </div>
+
+            <!-- Formulaire principal -->
+            <div class="grid gap-4">
+                <!-- Email -->
+                <div class="grid gap-2">
+                    <Label for="email">Adresse e-mail</Label>
+                    <Input id="email" type="email" autofocus :tabindex="1" autocomplete="email" v-model="form.email" placeholder="Adresse e-mail" />
+                    <InputError :message="form.errors.email" />
+                </div>
+
+                <!-- Mot de passe -->
+                <div class="grid gap-2">
+                    <div class="flex items-center justify-between">
+                        <Label for="password">Mot de passe</Label>
+                        <TextLink v-if="canResetPassword" :href="passwordRequest().url" class="text-sm font-black text-accent" :tabindex="5">
+                            Mot de passe oublié ?
+                        </TextLink>
+                    </div>
+                    <div class="relative">
+                        <Input
+                            id="password"
+                            v-model="form.password"
+                            :type="showPassword ? 'text' : 'password'"
+                            :tabindex="2"
+                            placeholder="Mot de passe"
+                            autocomplete="current-password"
+                            class="pr-10"
+                        />
+                        <button
+                            type="button"
+                            @click="showPassword = !showPassword"
+                            class="absolute inset-y-0 right-0 flex items-center px-3 text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300"
+                        >
+                            <EyeOff v-if="showPassword" class="h-4 w-4" />
+                            <Eye v-else class="h-4 w-4" />
+                        </button>
+                    </div>
+                    <InputError :message="form.errors.password" />
+                </div>
+
+                <!-- Se souvenir de moi -->
+                <div class="flex items-center justify-between">
+                    <Label for="remember" class="flex items-center space-x-3">
+                        <Checkbox id="remember" v-model="form.remember" :tabindex="3" />
+                        <span>Se souvenir de moi</span>
+                    </Label>
+                </div>
+
+                <!-- Bouton de soumission -->
+                <Button type="submit" class="mt-2 w-full" :disabled="form.processing">
+                    <LoaderCircle v-if="form.processing" class="mr-2 h-4 w-4 animate-spin" />
+                    <LogIn v-else class="mr-2 h-4 w-4" />
+                    Se connecter
                 </Button>
             </div>
+           
             <!-- Lien vers Conditions générales d'utilisation -->
-            <div class="text-center text-sm text-muted-foreground">
+            <div class="-mt-2 text-center text-sm text-muted-foreground">
                 En vous connectant, vous acceptez nos
-                <TextLink :href="route('conditions.stage')" class="font-black text-accent">Conditions générales d'utilisation</TextLink>
+                <TextLink :href="configCgu().url" class="font-black text-accent">Conditions générales d'utilisation </TextLink>
             </div>
         </form>
     </AuthBase>
