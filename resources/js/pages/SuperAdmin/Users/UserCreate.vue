@@ -7,48 +7,17 @@ import { type BreadcrumbItem } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Head, Link, Form } from '@inertiajs/vue3';
 import { ArrowLeft, LoaderCircle } from 'lucide-vue-next';
 
-import  * as userRoutes from '@/routes/users';
+import * as userRoutes from '@/routes/users';
+import UserController from '@/actions/App/Http/Controllers/Admin/UserController';
+
 // Configuration des breadcrumbs
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Utilisateurs Sup_Admin', href: userRoutes.index().url },
     { title: 'Nouvel utilisateur : Sup_Admin', href: '' },
 ];
-
-// Typage du formulaire avec intersection de types
-type UserFormData = {
-    name: string;
-    email: string;
-    password: string;
-    password_confirmation: string;
-};
-
-// Initialisation du formulaire avec typage explicite
-const form = useForm<UserFormData>({
-    name: '',
-    email: '',
-    password: '',
-    password_confirmation: '',
-});
-
-// Soumission du formulaire avec gestion améliorée des erreurs
-const submit = () => {
-    form.post(userRoutes.store().url, {
-        preserveScroll: true,
-        onSuccess: () => {
-            form.reset();
-            // Ajouter une notification de succès si nécessaire
-        },
-        onError: (errors) => {
-            console.error('Erreur lors de la création:', errors);
-            if (form.errors.password) {
-                form.reset('password', 'password_confirmation');
-            }
-        },
-    });
-};
 </script>
 
 <template>
@@ -61,10 +30,18 @@ const submit = () => {
                 <p class="text-sm text-gray-500 dark:text-gray-400">Remplissez les champs obligatoires pour ajouter un utilisateur</p>
             </header>
 
-            <form @submit.prevent="submit" class="max-w-2xl space-y-6">
+            <!-- Composant Form d'Inertia avec Wayfinder -->
+            <Form
+                v-bind="UserController.store.form()"
+                class="max-w-2xl space-y-6"
+                resetOnSuccess
+                setDefaultsOnSuccess
+                disable-while-processing
+                #default="{ errors, processing, isDirty }"
+            >
                 <Card class="rounded-xl">
-                    <!-- Boutons d'action -->
                     <div class="grid gap-6 rounded-md px-4 shadow-emerald-950">
+                        <!-- Boutons d'action -->
                         <div class="flex items-center justify-between gap-3 pt-1">
                             <span>
                                 <Link
@@ -76,65 +53,95 @@ const submit = () => {
                                     Retour à la liste
                                 </Link>
                             </span>
-                            <!-- <button type="button" @click="form.reset()" class="btn btn-secondary" :disabled="form.processing">
-                Réinitialiser
-              </button> -->
 
                             <button
                                 type="button"
-                                @click="form.reset()"
-                                class="rounded-md bg-secondary px-4 py-2 text-sm font-medium text-secondary-foreground shadow-sm hover:bg-secondary/80"
-                                :disabled="form.processing"
+                                @click="$el.closest('form').reset()"
+                                class="rounded-md bg-secondary px-4 py-2 text-sm font-medium text-secondary-foreground shadow-sm hover:bg-secondary/80 disabled:opacity-50"
+                                :disabled="processing || !isDirty"
                             >
                                 Réinitialiser
                             </button>
                         </div>
 
+                        <!-- Champ Name -->
                         <div class="grid gap-2">
                             <Label for="name">Name</Label>
-                            <Input id="name" type="text" autofocus :tabindex="1" autocomplete="name" v-model="form.name" placeholder="Full name" />
-                            <InputError :message="form.errors.name" />
+                            <Input
+                                id="name"
+                                type="text"
+                                name="name"
+                                autofocus
+                                :tabindex="1"
+                                autocomplete="name"
+                                placeholder="Full name"
+                                class="border-gray-300"
+                                :class="{ 'border-red-500': errors.name }"
+                            />
+                            <InputError :message="errors.name" />
                         </div>
 
+                        <!-- Champ Email -->
                         <div class="grid gap-2">
                             <Label for="email">Email address</Label>
-                            <Input id="email" type="email" :tabindex="2" autocomplete="email" v-model="form.email" placeholder="email@example.com" />
-                            <InputError :message="form.errors.email" />
+                            <Input
+                                id="email"
+                                type="email"
+                                name="email"
+                                :tabindex="2"
+                                autocomplete="email"
+                                placeholder="email@example.com"
+                                class="border-gray-300"
+                                :class="{ 'border-red-500': errors.email }"
+                            />
+                            <InputError :message="errors.email" />
                         </div>
 
+                        <!-- Champ Password -->
                         <div class="grid gap-2">
                             <Label for="password">Password</Label>
                             <Input
                                 id="password"
                                 type="password"
+                                name="password"
                                 :tabindex="3"
                                 autocomplete="new-password"
-                                v-model="form.password"
                                 placeholder="Password"
+                                class="border-gray-300"
+                                :class="{ 'border-red-500': errors.password }"
                             />
-                            <InputError :message="form.errors.password" />
+                            <InputError :message="errors.password" />
                         </div>
 
+                        <!-- Champ Password Confirmation -->
                         <div class="grid gap-2">
                             <Label for="password_confirmation">Confirm password</Label>
                             <Input
                                 id="password_confirmation"
                                 type="password"
+                                name="password_confirmation"
                                 :tabindex="4"
                                 autocomplete="new-password"
-                                v-model="form.password_confirmation"
                                 placeholder="Confirm password"
+                                class="border-gray-300"
+                                :class="{ 'border-red-500': errors.password_confirmation }"
                             />
-                            <InputError :message="form.errors.password_confirmation" />
+                            <InputError :message="errors.password_confirmation" />
                         </div>
 
-                        <Button type="submit" class="" tabindex="5" :disabled="form.processing">
-                            <LoaderCircle v-if="form.processing" class="h-4 w-4 animate-spin" />
-                            Create account
+                        <!-- Bouton Submit -->
+                        <Button
+                            type="submit"
+                            :tabindex="5"
+                            :disabled="processing"
+                            class="w-full"
+                        >
+                            <LoaderCircle v-if="processing" class="mr-2 h-4 w-4 animate-spin" />
+                            {{ processing ? 'Création en cours...' : 'Create account' }}
                         </Button>
                     </div>
                 </Card>
-            </form>
+            </Form>
         </div>
     </AppLayout>
 </template>
