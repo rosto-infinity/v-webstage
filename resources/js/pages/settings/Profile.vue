@@ -52,10 +52,7 @@ function handleAvatarChange(e: Event) {
 
         <SettingsLayout>
             <div class="flex max-w-2xl flex-col space-y-6">
-                <HeadingSmall
-                    title="Informations sur la connexion"
-                    description="Actualisez vos informations de profil"
-                />
+                <HeadingSmall title="Informations sur la connexion" description="Actualisez vos informations de profil" />
 
                 <!-- Preview avatar -->
                 <div class="mb-6 flex flex-col items-center">
@@ -87,9 +84,7 @@ function handleAvatarChange(e: Event) {
                             <span class="text-xs font-semibold text-white">Changer l'avatar</span>
                         </div>
                     </div>
-                    <p v-if="avatarPreview" class="mt-2 text-sm text-muted-foreground">
-                        Prévisualisation du nouvel avatar
-                    </p>
+                    <p v-if="avatarPreview" class="mt-2 text-sm text-muted-foreground">Prévisualisation du nouvel avatar</p>
                 </div>
 
                 <!-- Formulaire avec le composant Form d'Inertia.js -->
@@ -102,14 +97,7 @@ function handleAvatarChange(e: Event) {
                     <!-- Nom -->
                     <div class="grid gap-2">
                         <Label for="name">Nom et prénom</Label>
-                        <Input
-                            id="name"
-                            name="name"
-                            :default-value="user.name"
-                            required
-                            autocomplete="name"
-                            placeholder="Nom complet"
-                        />
+                        <Input id="name" name="name" :default-value="user.name" required autocomplete="name" placeholder="Nom complet" />
                         <InputError :message="errors.name" />
                     </div>
 
@@ -129,14 +117,14 @@ function handleAvatarChange(e: Event) {
                     </div>
 
                     <!-- Alerte de vérification d'email -->
-                    <div v-if="mustVerifyEmail && user.email_verified_at === null" class="rounded-md bg-yellow-50 border border-yellow-200 p-4">
+                    <div v-if="mustVerifyEmail && user.email_verified_at === null" class="rounded-md border border-yellow-200 bg-yellow-50 p-4">
                         <p class="text-sm text-yellow-800">
                             Votre adresse email n'est pas vérifiée.
                             <Link
                                 :href="send().url"
                                 method="post"
                                 as="button"
-                                class="rounded-md text-sm text-yellow-900 underline hover:text-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
+                                class="rounded-md text-sm text-yellow-900 underline hover:text-yellow-700 focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:outline-none"
                             >
                                 Cliquez ici pour renvoyer l'email de vérification.
                             </Link>
@@ -149,9 +137,7 @@ function handleAvatarChange(e: Event) {
 
                     <!-- Avatar upload -->
                     <div class="grid gap-3">
-                        <Label for="avatar" class="text-sm font-medium text-muted-foreground">
-                            Avatar
-                        </Label>
+                        <Label for="avatar" class="text-sm font-medium text-muted-foreground"> Avatar </Label>
                         <Input
                             id="avatar"
                             name="avatar"

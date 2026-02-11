@@ -3,8 +3,9 @@ import BarChart from '@/components/Charts/BarChart.vue';
 import LineChart from '@/components/Charts/LineChart.vue';
 import PieChart from '@/components/Charts/PieChart.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
+import * as dashboardRoutes from '@/routes';
 import type { BreadcrumbItem } from '@/types';
-import { router } from '@inertiajs/vue3';
+import { Form } from '@inertiajs/vue3';
 import { AlertCircle, Calendar, Clock, Users } from 'lucide-vue-next';
 import { computed, ref } from 'vue';
 
@@ -25,7 +26,6 @@ const props = defineProps<{
     filterType: 'day' | 'week' | 'month';
 }>();
 
-const processing = ref(false);
 const date = ref(props.selectedDate || new Date().toISOString().slice(0, 10));
 const month = ref(props.selectedMonth || new Date().toISOString().slice(0, 7));
 const week = ref(props.selectedWeek || new Date().toISOString().slice(0, 10));
@@ -59,25 +59,6 @@ const hasWeeklyData = computed(() => props.weeklyPresence.some((d) => d.present 
 const hasMonthlyData = computed(() => props.monthlyTrend.some((m) => m.rate > 0));
 const hasAbsenceReasons = computed(() => props.absenceReasons.some((r) => r.value > 0));
 
-function filterData() {
-    processing.value = true;
-    router.get(
-        route('dashboard'),
-        {
-            date: date.value,
-            month: month.value,
-            week: week.value,
-            user: selectedUser.value,
-            filterType: filterType.value,
-        },
-        {
-            preserveState: true,
-            replace: true,
-            onFinish: () => (processing.value = false),
-        },
-    );
-}
-
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Dashboard Sup_Admin',
@@ -90,10 +71,15 @@ const breadcrumbs: BreadcrumbItem[] = [
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="p-2">
             <!-- Filtres -->
-            <form @submit.prevent="filterData" class="mb-6 flex flex-col items-center gap-4 md:flex-row">
+            <Form v-bind="dashboardRoutes.dashboard.form()" v-slot="{ processing }" class="mb-6 flex flex-col items-center gap-4 md:flex-row">
                 <div class="flex items-center gap-2">
                     <label for="filterType" class="font-medium">Type de filtre :</label>
-                    <select id="filterType" v-model="filterType" class="rounded-lg border border-input px-4 py-2 focus:ring-2 focus:ring-ring">
+                    <select
+                        id="filterType"
+                        name="filterType"
+                        :value="filterType"
+                        class="rounded-lg border border-input px-4 py-2 focus:ring-2 focus:ring-ring"
+                    >
                         <option value="day">Jour</option>
                         <option value="week">Semaine</option>
                         <option value="month">Mois</option>
@@ -103,8 +89,9 @@ const breadcrumbs: BreadcrumbItem[] = [
                     <label for="date" class="font-medium">Jour :</label>
                     <input
                         id="date"
+                        name="date"
                         type="date"
-                        v-model="date"
+                        :value="date"
                         class="rounded-lg border border-input px-4 py-2 focus:ring-2 focus:ring-ring"
                         :max="new Date().toISOString().split('T')[0]"
                     />
@@ -113,8 +100,9 @@ const breadcrumbs: BreadcrumbItem[] = [
                     <label for="month" class="font-medium">Mois :</label>
                     <input
                         id="month"
+                        name="month"
                         type="month"
-                        v-model="month"
+                        :value="month"
                         class="rounded-lg border border-input px-4 py-2 focus:ring-2 focus:ring-ring"
                         :max="new Date().toISOString().slice(0, 7)"
                     />
@@ -123,15 +111,16 @@ const breadcrumbs: BreadcrumbItem[] = [
                     <label for="week" class="font-medium">Semaine :</label>
                     <input
                         id="week"
+                        name="week"
                         type="date"
-                        v-model="week"
+                        :value="week"
                         class="rounded-lg border border-input px-4 py-2 focus:ring-2 focus:ring-ring"
                         :max="new Date().toISOString().split('T')[0]"
                     />
                 </div>
                 <div class="flex items-center gap-2">
                     <label for="user" class="font-medium">Utilisateur :</label>
-                    <select id="user" v-model="selectedUser" class="rounded-lg border border-input px-4 py-2 focus:ring-2 focus:ring-ring">
+                    <select id="user" name="user" :value="selectedUser" class="rounded-lg border border-input px-4 py-2 focus:ring-2 focus:ring-ring">
                         <option value="">Tous</option>
                         <option v-for="user in props.users" :key="user" :value="user">{{ user }}</option>
                     </select>
@@ -151,7 +140,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                         ></path>
                     </svg>
                 </button>
-            </form>
+            </Form>
 
             <!-- Cartes de stats -->
             <div class="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -397,12 +386,15 @@ const breadcrumbs: BreadcrumbItem[] = [
 .border-input {
     border-color: hsl(var(--input));
 }
+
 .bg-primary {
     background-color: hsl(var(--primary));
 }
+
 .text-primary-foreground {
     color: hsl(var(--primary-foreground));
 }
+
 .hover\:bg-primary\/90:hover {
     background-color: hsl(var(--primary) / 0.9);
 }

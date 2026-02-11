@@ -7,11 +7,11 @@ import { type BreadcrumbItem } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Head, Link, Form } from '@inertiajs/vue3';
+import { Form, Head, Link } from '@inertiajs/vue3';
 import { ArrowLeft, LoaderCircle } from 'lucide-vue-next';
 
-import * as userRoutes from '@/routes/users';
 import UserController from '@/actions/App/Http/Controllers/Admin/UserController';
+import * as userRoutes from '@/routes/users';
 
 // Configuration des breadcrumbs
 const breadcrumbs: BreadcrumbItem[] = [
@@ -130,12 +130,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                         </div>
 
                         <!-- Bouton Submit -->
-                        <Button
-                            type="submit"
-                            :tabindex="5"
-                            :disabled="processing"
-                            class="w-full"
-                        >
+                        <Button type="submit" :tabindex="5" :disabled="processing" class="w-full">
                             <LoaderCircle v-if="processing" class="mr-2 h-4 w-4 animate-spin" />
                             {{ processing ? 'Création en cours...' : 'Create account' }}
                         </Button>

@@ -1,222 +1,222 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../wayfinder'
+import { queryParams, type RouteDefinition, type RouteFormDefinition, type RouteQueryOptions } from './../../../../../wayfinder';
 /**
-* @see \App\Http\Controllers\Settings\DBBackupController::index
-* @see app/Http/Controllers/Settings/DBBackupController.php:20
-* @route '/settings/dbbackup'
-*/
+ * @see \App\Http\Controllers\Settings\DBBackupController::index
+ * @see app/Http/Controllers/Settings/DBBackupController.php:20
+ * @route '/settings/dbbackup'
+ */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: index.url(options),
     method: 'get',
-})
+});
 
 index.definition = {
-    methods: ["get","head"],
+    methods: ['get', 'head'],
     url: '/settings/dbbackup',
-} satisfies RouteDefinition<["get","head"]>
+} satisfies RouteDefinition<['get', 'head']>;
 
 /**
-* @see \App\Http\Controllers\Settings\DBBackupController::index
-* @see app/Http/Controllers/Settings/DBBackupController.php:20
-* @route '/settings/dbbackup'
-*/
+ * @see \App\Http\Controllers\Settings\DBBackupController::index
+ * @see app/Http/Controllers/Settings/DBBackupController.php:20
+ * @route '/settings/dbbackup'
+ */
 index.url = (options?: RouteQueryOptions) => {
-    return index.definition.url + queryParams(options)
-}
+    return index.definition.url + queryParams(options);
+};
 
 /**
-* @see \App\Http\Controllers\Settings\DBBackupController::index
-* @see app/Http/Controllers/Settings/DBBackupController.php:20
-* @route '/settings/dbbackup'
-*/
+ * @see \App\Http\Controllers\Settings\DBBackupController::index
+ * @see app/Http/Controllers/Settings/DBBackupController.php:20
+ * @route '/settings/dbbackup'
+ */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: index.url(options),
     method: 'get',
-})
+});
 
 /**
-* @see \App\Http\Controllers\Settings\DBBackupController::index
-* @see app/Http/Controllers/Settings/DBBackupController.php:20
-* @route '/settings/dbbackup'
-*/
+ * @see \App\Http\Controllers\Settings\DBBackupController::index
+ * @see app/Http/Controllers/Settings/DBBackupController.php:20
+ * @route '/settings/dbbackup'
+ */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: index.url(options),
     method: 'head',
-})
+});
 
 /**
-* @see \App\Http\Controllers\Settings\DBBackupController::index
-* @see app/Http/Controllers/Settings/DBBackupController.php:20
-* @route '/settings/dbbackup'
-*/
+ * @see \App\Http\Controllers\Settings\DBBackupController::index
+ * @see app/Http/Controllers/Settings/DBBackupController.php:20
+ * @route '/settings/dbbackup'
+ */
 const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: index.url(options),
     method: 'get',
-})
+});
 
 /**
-* @see \App\Http\Controllers\Settings\DBBackupController::index
-* @see app/Http/Controllers/Settings/DBBackupController.php:20
-* @route '/settings/dbbackup'
-*/
+ * @see \App\Http\Controllers\Settings\DBBackupController::index
+ * @see app/Http/Controllers/Settings/DBBackupController.php:20
+ * @route '/settings/dbbackup'
+ */
 indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: index.url(options),
     method: 'get',
-})
+});
 
 /**
-* @see \App\Http\Controllers\Settings\DBBackupController::index
-* @see app/Http/Controllers/Settings/DBBackupController.php:20
-* @route '/settings/dbbackup'
-*/
+ * @see \App\Http\Controllers\Settings\DBBackupController::index
+ * @see app/Http/Controllers/Settings/DBBackupController.php:20
+ * @route '/settings/dbbackup'
+ */
 indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: index.url({
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'HEAD',
             ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
+        },
     }),
     method: 'get',
-})
+});
 
-index.form = indexForm
+index.form = indexForm;
 
 /**
-* @see \App\Http\Controllers\Settings\DBBackupController::download
-* @see app/Http/Controllers/Settings/DBBackupController.php:41
-* @route '/settings/dbbackup/download'
-*/
+ * @see \App\Http\Controllers\Settings\DBBackupController::download
+ * @see app/Http/Controllers/Settings/DBBackupController.php:41
+ * @route '/settings/dbbackup/download'
+ */
 export const download = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: download.url(options),
     method: 'get',
-})
+});
 
 download.definition = {
-    methods: ["get","head"],
+    methods: ['get', 'head'],
     url: '/settings/dbbackup/download',
-} satisfies RouteDefinition<["get","head"]>
+} satisfies RouteDefinition<['get', 'head']>;
 
 /**
-* @see \App\Http\Controllers\Settings\DBBackupController::download
-* @see app/Http/Controllers/Settings/DBBackupController.php:41
-* @route '/settings/dbbackup/download'
-*/
+ * @see \App\Http\Controllers\Settings\DBBackupController::download
+ * @see app/Http/Controllers/Settings/DBBackupController.php:41
+ * @route '/settings/dbbackup/download'
+ */
 download.url = (options?: RouteQueryOptions) => {
-    return download.definition.url + queryParams(options)
-}
+    return download.definition.url + queryParams(options);
+};
 
 /**
-* @see \App\Http\Controllers\Settings\DBBackupController::download
-* @see app/Http/Controllers/Settings/DBBackupController.php:41
-* @route '/settings/dbbackup/download'
-*/
+ * @see \App\Http\Controllers\Settings\DBBackupController::download
+ * @see app/Http/Controllers/Settings/DBBackupController.php:41
+ * @route '/settings/dbbackup/download'
+ */
 download.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: download.url(options),
     method: 'get',
-})
+});
 
 /**
-* @see \App\Http\Controllers\Settings\DBBackupController::download
-* @see app/Http/Controllers/Settings/DBBackupController.php:41
-* @route '/settings/dbbackup/download'
-*/
+ * @see \App\Http\Controllers\Settings\DBBackupController::download
+ * @see app/Http/Controllers/Settings/DBBackupController.php:41
+ * @route '/settings/dbbackup/download'
+ */
 download.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: download.url(options),
     method: 'head',
-})
+});
 
 /**
-* @see \App\Http\Controllers\Settings\DBBackupController::download
-* @see app/Http/Controllers/Settings/DBBackupController.php:41
-* @route '/settings/dbbackup/download'
-*/
+ * @see \App\Http\Controllers\Settings\DBBackupController::download
+ * @see app/Http/Controllers/Settings/DBBackupController.php:41
+ * @route '/settings/dbbackup/download'
+ */
 const downloadForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: download.url(options),
     method: 'get',
-})
+});
 
 /**
-* @see \App\Http\Controllers\Settings\DBBackupController::download
-* @see app/Http/Controllers/Settings/DBBackupController.php:41
-* @route '/settings/dbbackup/download'
-*/
+ * @see \App\Http\Controllers\Settings\DBBackupController::download
+ * @see app/Http/Controllers/Settings/DBBackupController.php:41
+ * @route '/settings/dbbackup/download'
+ */
 downloadForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: download.url(options),
     method: 'get',
-})
+});
 
 /**
-* @see \App\Http\Controllers\Settings\DBBackupController::download
-* @see app/Http/Controllers/Settings/DBBackupController.php:41
-* @route '/settings/dbbackup/download'
-*/
+ * @see \App\Http\Controllers\Settings\DBBackupController::download
+ * @see app/Http/Controllers/Settings/DBBackupController.php:41
+ * @route '/settings/dbbackup/download'
+ */
 downloadForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: download.url({
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'HEAD',
             ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
+        },
     }),
     method: 'get',
-})
+});
 
-download.form = downloadForm
+download.form = downloadForm;
 
 /**
-* @see \App\Http\Controllers\Settings\DBBackupController::create
-* @see app/Http/Controllers/Settings/DBBackupController.php:57
-* @route '/settings/dbbackup/create'
-*/
+ * @see \App\Http\Controllers\Settings\DBBackupController::create
+ * @see app/Http/Controllers/Settings/DBBackupController.php:57
+ * @route '/settings/dbbackup/create'
+ */
 export const create = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: create.url(options),
     method: 'post',
-})
+});
 
 create.definition = {
-    methods: ["post"],
+    methods: ['post'],
     url: '/settings/dbbackup/create',
-} satisfies RouteDefinition<["post"]>
+} satisfies RouteDefinition<['post']>;
 
 /**
-* @see \App\Http\Controllers\Settings\DBBackupController::create
-* @see app/Http/Controllers/Settings/DBBackupController.php:57
-* @route '/settings/dbbackup/create'
-*/
+ * @see \App\Http\Controllers\Settings\DBBackupController::create
+ * @see app/Http/Controllers/Settings/DBBackupController.php:57
+ * @route '/settings/dbbackup/create'
+ */
 create.url = (options?: RouteQueryOptions) => {
-    return create.definition.url + queryParams(options)
-}
+    return create.definition.url + queryParams(options);
+};
 
 /**
-* @see \App\Http\Controllers\Settings\DBBackupController::create
-* @see app/Http/Controllers/Settings/DBBackupController.php:57
-* @route '/settings/dbbackup/create'
-*/
+ * @see \App\Http\Controllers\Settings\DBBackupController::create
+ * @see app/Http/Controllers/Settings/DBBackupController.php:57
+ * @route '/settings/dbbackup/create'
+ */
 create.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: create.url(options),
     method: 'post',
-})
+});
 
 /**
-* @see \App\Http\Controllers\Settings\DBBackupController::create
-* @see app/Http/Controllers/Settings/DBBackupController.php:57
-* @route '/settings/dbbackup/create'
-*/
+ * @see \App\Http\Controllers\Settings\DBBackupController::create
+ * @see app/Http/Controllers/Settings/DBBackupController.php:57
+ * @route '/settings/dbbackup/create'
+ */
 const createForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: create.url(options),
     method: 'post',
-})
+});
 
 /**
-* @see \App\Http\Controllers\Settings\DBBackupController::create
-* @see app/Http/Controllers/Settings/DBBackupController.php:57
-* @route '/settings/dbbackup/create'
-*/
+ * @see \App\Http\Controllers\Settings\DBBackupController::create
+ * @see app/Http/Controllers/Settings/DBBackupController.php:57
+ * @route '/settings/dbbackup/create'
+ */
 createForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: create.url(options),
     method: 'post',
-})
+});
 
-create.form = createForm
+create.form = createForm;
 
-const DBBackupController = { index, download, create }
+const DBBackupController = { index, download, create };
 
-export default DBBackupController
+export default DBBackupController;

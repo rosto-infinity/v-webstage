@@ -33,8 +33,8 @@ class PresenceRequest extends FormRequest
                 'before_or_equal:today',
             ],
             'heure_arrivee' => [
-                'required_if:absent,false',
                 'nullable',
+                'required_if:absent,false',
                 'date_format:H:i',
                 function ($attribute, $value, $fail): void {
                     if ($value && $this->absent) {
@@ -44,6 +44,7 @@ class PresenceRequest extends FormRequest
             ],
             'heure_depart' => [
                 'nullable',
+                'required_if:absent,false',
                 'date_format:H:i',
                 'after:heure_arrivee',
                 function ($attribute, $value, $fail): void {
@@ -102,6 +103,16 @@ class PresenceRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
+        // Normaliser les formats d'heure (assurer HH:mm car 'H:i' attend les zéros initiaux)
+        // Les navigateurs envoient généralement HH:mm mais on s'assure de la compatibilité
+        if ($this->heure_arrivee && preg_match('/^(\d):(\d{2})$/', $this->heure_arrivee, $matches)) {
+            $this->merge(['heure_arrivee' => '0'.$matches[1].':'.$matches[2]]);
+        }
+
+        if ($this->heure_depart && preg_match('/^(\d):(\d{2})$/', $this->heure_depart, $matches)) {
+            $this->merge(['heure_depart' => '0'.$matches[1].':'.$matches[2]]);
+        }
+
         // Si absent, on force les valeurs à null/false
         if ($this->absent) {
             $this->merge([

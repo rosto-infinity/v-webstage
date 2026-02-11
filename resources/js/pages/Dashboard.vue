@@ -3,7 +3,8 @@ import BarChart from '@/components/Charts/BarChart.vue';
 import LineChart from '@/components/Charts/LineChart.vue';
 import PieChart from '@/components/Charts/PieChart.vue';
 import AppLayoutUser from '@/layouts/AppLayoutUser.vue';
-import { Head, Link, router } from '@inertiajs/vue3';
+import * as dashboardRoutes from '@/routes';
+import { Form, Head, Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 import type { BreadcrumbItem } from '@/types';
@@ -33,10 +34,6 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: '/dashboard',
     },
 ];
-
-function filterByDate() {
-    router.get(route('user.dashboard'), { date: date.value }, { preserveState: true, replace: true });
-}
 </script>
 
 <template>
@@ -45,11 +42,11 @@ function filterByDate() {
     <AppLayoutUser :breadcrumbs="breadcrumbs">
         <div class="flex h-full flex-1 flex-col gap-6 p-4">
             <!-- Filtre par date -->
-            <form @submit.prevent="filterByDate" class="mb-6 flex items-center gap-2">
+            <Form v-bind="dashboardRoutes.dashboard.form()" v-slot="{ processing }" class="mb-6 flex items-center gap-2">
                 <label for="date" class="font-medium">Date :</label>
-                <input id="date" type="date" v-model="date" class="input" />
-                <button type="submit" class="btn btn-primary">Filtrer</button>
-            </form>
+                <input id="date" name="date" type="date" :value="date" class="input" />
+                <button type="submit" class="btn btn-primary" :disabled="processing">Filtrer</button>
+            </Form>
 
             <!-- Cartes statistiques -->
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">

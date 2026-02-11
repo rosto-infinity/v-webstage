@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import InputError from '@/components/InputError.vue';
+import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/AppLayout.vue';
 import type { BreadcrumbItem } from '@/types';
-import { computed } from 'vue';
-import { Head, Link, Form } from '@inertiajs/vue3';
+import { Form, Head, Link } from '@inertiajs/vue3';
 import { ArrowLeft, LoaderCircle } from 'lucide-vue-next';
+import { computed } from 'vue';
 
-import * as userRoutes from '@/routes/users';
 import UserController from '@/actions/App/Http/Controllers/Admin/UserController';
+import * as userRoutes from '@/routes/users';
 
 // Typage TypeScript strict
 interface User {
@@ -137,7 +137,10 @@ const breadcrumbs: BreadcrumbItem[] = [
                             leave-from-class="opacity-100 translate-y-0"
                             leave-to-class="opacity-0 translate-y-1"
                         >
-                            <div v-if="wasSuccessful" class="rounded-md bg-green-50 p-4 text-sm text-green-700 dark:bg-green-900/20 dark:text-green-400">
+                            <div
+                                v-if="wasSuccessful"
+                                class="rounded-md bg-green-50 p-4 text-sm text-green-700 dark:bg-green-900/20 dark:text-green-400"
+                            >
                                 ✓ Utilisateur mis à jour avec succès
                             </div>
                         </transition>
@@ -162,11 +165,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                             >
                                 Réinitialiser
                             </button>
-                            <Button
-                                type="submit"
-                                :disabled="processing"
-                                class="gap-2"
-                            >
+                            <Button type="submit" :disabled="processing" class="gap-2">
                                 <LoaderCircle v-if="processing" class="h-4 w-4 animate-spin" />
                                 {{ processing ? 'Enregistrement...' : 'Mettre à jour' }}
                             </Button>

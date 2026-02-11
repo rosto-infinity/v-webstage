@@ -75,7 +75,7 @@
                             Ajouter
                         </Link>
                     </Button>
-                    
+
                     <!-- Export PDF Global -->
                     <a :href="route('presences.downloadAll')">
                         <Button class="cursor-pointer">
@@ -83,21 +83,16 @@
                             PDF Tous
                         </Button>
                     </a>
-                    
+
                     <!-- Export PDF par Utilisateur (avec filtres) -->
-                    <Button 
-                        @click="exportUserPdf" 
-                        :disabled="!selectedUserForExport"
-                        class="cursor-pointer"
-                        variant="secondary"
-                    >
+                    <Button @click="exportUserPdf" :disabled="!selectedUserForExport" class="cursor-pointer" variant="secondary">
                         <FileText class="h-5 w-5" />
                         PDF Utilisateur
                     </Button>
-                    
+
                     <!-- Export PDF avec Période -->
-                    <Button 
-                        @click="exportUserPdfWithPeriod" 
+                    <Button
+                        @click="exportUserPdfWithPeriod"
                         :disabled="!selectedUserForExport || !filterDateFrom || !filterDateTo"
                         class="cursor-pointer"
                         variant="outline"
@@ -105,7 +100,7 @@
                         <CalendarRange class="h-5 w-5" />
                         PDF Période
                     </Button>
-                    
+
                     <!-- Export ZIP tous les utilisateurs -->
                     <a :href="route('presences.users.pdf.zip')">
                         <Button class="cursor-pointer" variant="outline">
@@ -113,7 +108,7 @@
                             ZIP Tous
                         </Button>
                     </a>
-                    
+
                     <!-- Export Excel -->
                     <a :href="route('presences.excel')">
                         <Button class="cursor-pointer">
@@ -137,74 +132,45 @@
                         <Search class="mx-2 h-5 w-5 text-muted-foreground" />
                     </div>
                 </div>
-                
-                <select 
-                    v-model="filterStatus" 
-                    @change="setCurrentPage(1)" 
-                    class="input rounded-md bg-violet-200 p-1"
-                >
+
+                <select v-model="filterStatus" @change="setCurrentPage(1)" class="input rounded-md bg-violet-200 p-1">
                     <option value="all">Tous</option>
                     <option value="present">Présents</option>
                     <option value="absent">Absents</option>
                     <option value="late">Retard</option>
                 </select>
-                
+
                 <label class="flex items-center gap-2">
-                    De : 
-                    <input 
-                        type="date" 
-                        v-model="filterDateFrom" 
-                        class="input rounded-md p-1" 
-                    />
+                    De :
+                    <input type="date" v-model="filterDateFrom" class="input rounded-md p-1" />
                 </label>
-                
+
                 <label class="flex items-center gap-2">
-                    À : 
-                    <input 
-                        type="date" 
-                        v-model="filterDateTo" 
-                        class="input rounded-md p-1" 
-                    />
+                    À :
+                    <input type="date" v-model="filterDateTo" class="input rounded-md p-1" />
                 </label>
-                
-                <select 
-                    v-model="selectedUser" 
-                    @change="handleUserChange" 
-                    class="input rounded-md bg-violet-200 p-1"
-                >
+
+                <select v-model="selectedUser" @change="handleUserChange" class="input rounded-md bg-violet-200 p-1">
                     <option value="">Tous les utilisateurs</option>
-                    <option 
-                        v-for="user in usersWithIds" 
-                        :key="user.id" 
-                        :value="user.name"
-                    >
+                    <option v-for="user in usersWithIds" :key="user.id" :value="user.name">
                         {{ user.name }}
                     </option>
                 </select>
             </div>
 
             <!-- Info utilisateur sélectionné -->
-            <div 
-                v-if="selectedUserForExport" 
-                class="mb-4 rounded-lg border-2 border-primary/30 bg-primary/5 p-4"
-            >
+            <div v-if="selectedUserForExport" class="mb-4 rounded-lg border-2 border-primary/30 bg-primary/5 p-4">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-3">
                         <UserCircle class="h-8 w-8 text-primary" />
                         <div>
-                            <p class="font-semibold text-lg">{{ selectedUserForExport.name }}</p>
+                            <p class="text-lg font-semibold">{{ selectedUserForExport.name }}</p>
                             <p class="text-sm text-muted-foreground">{{ selectedUserForExport.email }}</p>
                         </div>
                     </div>
                     <div class="flex items-center gap-2">
-                        <Badge type="success">
-                            {{ filteredAndSortedData.length }} présence(s)
-                        </Badge>
-                        <Button 
-                            @click="clearUserSelection" 
-                            variant="ghost" 
-                            size="sm"
-                        >
+                        <Badge type="success"> {{ filteredAndSortedData.length }} présence(s) </Badge>
+                        <Button @click="clearUserSelection" variant="ghost" size="sm">
                             <X class="h-4 w-4" />
                         </Button>
                     </div>
@@ -217,38 +183,22 @@
                     <thead class="bg-muted">
                         <tr>
                             <th @click="handleSort('date')" class="th-sort px-4 py-2">
-                                Date 
-                                <SortIcon 
-                                    field="date" 
-                                    :sortField="sortField" 
-                                    :direction="sortDirection" 
-                                />
+                                Date
+                                <SortIcon field="date" :sortField="sortField" :direction="sortDirection" />
                             </th>
                             <th class="px-4 py-2">Nom</th>
                             <th class="px-4 py-2">E‑mail</th>
                             <th @click="handleSort('arrival_time')" class="th-sort px-4 py-2">
-                                Arrivée 
-                                <SortIcon 
-                                    field="arrival_time" 
-                                    :sortField="sortField" 
-                                    :direction="sortDirection" 
-                                />
+                                Arrivée
+                                <SortIcon field="arrival_time" :sortField="sortField" :direction="sortDirection" />
                             </th>
                             <th @click="handleSort('departure_time')" class="th-sort px-4 py-2">
-                                Départ 
-                                <SortIcon 
-                                    field="departure_time" 
-                                    :sortField="sortField" 
-                                    :direction="sortDirection" 
-                                />
+                                Départ
+                                <SortIcon field="departure_time" :sortField="sortField" :direction="sortDirection" />
                             </th>
                             <th @click="handleSort('late_minutes')" class="th-sort px-4 py-2">
-                                Retard 
-                                <SortIcon 
-                                    field="late_minutes" 
-                                    :sortField="sortField" 
-                                    :direction="sortDirection" 
-                                />
+                                Retard
+                                <SortIcon field="late_minutes" :sortField="sortField" :direction="sortDirection" />
                             </th>
                             <th class="px-4 py-2">Statut</th>
                             <th class="px-4 py-2">Motif</th>
@@ -256,11 +206,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr 
-                            v-for="r in paginatedData" 
-                            :key="r.id" 
-                            class="border-t hover:bg-muted/50"
-                        >
+                        <tr v-for="r in paginatedData" :key="r.id" class="border-t hover:bg-muted/50">
                             <td class="px-4 py-2">
                                 {{ new Date(r.date).toLocaleDateString('fr-FR') }}
                             </td>
@@ -269,9 +215,7 @@
                             <td class="px-4 py-2">{{ r.arrival_time ?? '-' }}</td>
                             <td class="px-4 py-2">{{ r.departure_time ?? '-' }}</td>
                             <td class="px-4 py-2">
-                                <Badge :type="r.late_minutes > 0 ? 'warning' : 'success'">
-                                    {{ r.late_minutes }} min
-                                </Badge>
+                                <Badge :type="r.late_minutes > 0 ? 'warning' : 'success'"> {{ r.late_minutes }} min </Badge>
                             </td>
                             <td class="px-4 py-2">
                                 <Badge v-if="r.absent" type="destructive">Absent</Badge>
@@ -282,24 +226,16 @@
                                 <Badge v-if="r.absent && r.absence_reason" type="secondary">
                                     {{ r.absence_reason }}
                                 </Badge>
-                                <Badge v-else-if="r.absent" type="destructive">
-                                    Sans motif
-                                </Badge>
+                                <Badge v-else-if="r.absent" type="destructive"> Sans motif </Badge>
                                 <span v-else>-</span>
                             </td>
                             <td class="px-4 py-2">
-                                <Link 
-                                    :href="route('presences.edit', { id: r.id })" 
-                                    class="text-primary hover:underline"
-                                >
+                                <Link :href="route('presences.edit', { id: r.id })" class="text-primary hover:underline">
                                     <Pen class="inline h-4 w-4" /> Editer
                                 </Link>
                             </td>
                             <td class="px-4 py-2">
-                                <button 
-                                    @click="deletePresence(r.id)" 
-                                    class="text-destructive hover:underline"
-                                >
+                                <button @click="deletePresence(r.id)" class="text-destructive hover:underline">
                                     <Trash2 class="inline h-4 w-4" /> Suppr
                                 </button>
                             </td>
@@ -312,28 +248,16 @@
             <div class="flex items-center justify-between py-4">
                 <div>
                     <span class="text-muted-foreground">Afficher</span>
-                    <select 
-                        v-model="itemsPerPage" 
-                        @change="setCurrentPage(1)" 
-                        class="input mx-2"
-                    >
+                    <select v-model="itemsPerPage" @change="setCurrentPage(1)" class="input mx-2">
                         <option v-for="n of [5, 10, 20, 50]" :key="n">{{ n }}</option>
                     </select>
-                    <span class="text-muted-foreground">
-                        sur {{ filteredAndSortedData.length }}
-                    </span>
+                    <span class="text-muted-foreground"> sur {{ filteredAndSortedData.length }} </span>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button 
-                        :disabled="currentPage === 1" 
-                        @click="setCurrentPage(currentPage - 1)" 
-                        class="btn btn-outline disabled:opacity-50"
-                    >
+                    <button :disabled="currentPage === 1" @click="setCurrentPage(currentPage - 1)" class="btn btn-outline disabled:opacity-50">
                         <ChevronLeft class="h-4 w-4" />
                     </button>
-                    <span class="text-muted-foreground">
-                        Page {{ currentPage }} / {{ totalPages }}
-                    </span>
+                    <span class="text-muted-foreground"> Page {{ currentPage }} / {{ totalPages }} </span>
                     <button
                         :disabled="currentPage === totalPages"
                         @click="setCurrentPage(currentPage + 1)"
@@ -397,7 +321,7 @@ interface Presence {
 // ✅ CORRECTION : Ajouter allUsers dans les props
 const props = defineProps<{
     presenceCount: number;
-    allUsers: User[];  // ✅ AJOUT
+    allUsers: User[]; // ✅ AJOUT
 }>();
 
 // Messages flash
@@ -474,7 +398,7 @@ function exportUserPdf() {
         alert('Veuillez sélectionner un utilisateur');
         return;
     }
-    
+
     const url = route('presences.user.pdf', { user: selectedUserForExport.value.id });
     window.open(url, '_blank');
 }
@@ -485,12 +409,12 @@ function exportUserPdfWithPeriod() {
         alert('Veuillez sélectionner un utilisateur');
         return;
     }
-    
+
     if (!filterDateFrom.value || !filterDateTo.value) {
         alert('Veuillez sélectionner une période (Date de et Date à)');
         return;
     }
-    
+
     const url = route('presences.user.pdf.period', {
         user: selectedUserForExport.value.id,
         startDate: filterDateFrom.value,
@@ -505,9 +429,7 @@ const filteredAndSortedData = computed(() => {
         .filter((r) => {
             const term = searchTerm.value.toLowerCase();
             const matchName = r.user.name.toLowerCase().includes(term);
-            const dateFilter =
-                (!filterDateFrom.value || r.date >= filterDateFrom.value) &&
-                (!filterDateTo.value || r.date <= filterDateTo.value);
+            const dateFilter = (!filterDateFrom.value || r.date >= filterDateFrom.value) && (!filterDateTo.value || r.date <= filterDateTo.value);
             const userFilter = selectedUser.value === '' || r.user.name === selectedUser.value;
             return (
                 matchName &&
@@ -574,9 +496,7 @@ function calculerMinutesRetard(arrivee: string | null, normale = '08:00'): numbe
 }
 
 // Breadcrumbs
-const breadcrumbs: BreadcrumbItem[] = [
-    { title: 'Présences : Sup_Admin', href: userRoutes.index().url },
-];
+const breadcrumbs: BreadcrumbItem[] = [{ title: 'Présences : Sup_Admin', href: userRoutes.index().url }];
 </script>
 <style scoped>
 .th-sort {

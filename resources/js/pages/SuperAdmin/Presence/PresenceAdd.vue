@@ -202,7 +202,7 @@ import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 import { ArrowLeft, Clock } from 'lucide-vue-next';
 import { computed, watch } from 'vue';
 
-import  * as presenceRoutes from '@/routes/presences';
+import * as presenceRoutes from '@/routes/presences';
 // Typage TypeScript
 interface PresenceForm {
     user_id: number | null;

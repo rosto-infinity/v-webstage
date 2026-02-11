@@ -10,13 +10,7 @@ import HeadingSmall from '@/components/HeadingSmall.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 // Import des routes Wayfinder
@@ -93,10 +87,7 @@ const destroy = (id: number) => {
 
         <SettingsLayout>
             <div class="flex max-w-4xl flex-col space-y-6">
-                <HeadingSmall 
-                    title="Liens des réseaux sociaux" 
-                    description="Gérez vos profils et liens de réseaux sociaux" 
-                />
+                <HeadingSmall title="Liens des réseaux sociaux" description="Gérez vos profils et liens de réseaux sociaux" />
 
                 <!-- Messages flash -->
                 <Transition
@@ -105,10 +96,7 @@ const destroy = (id: number) => {
                     leave-active-class="transition ease-in-out duration-300"
                     leave-to-class="opacity-0"
                 >
-                    <div 
-                        v-if="flash?.success" 
-                        class="rounded-lg border border-green-400 bg-green-50 px-4 py-3 text-sm text-green-700"
-                    >
+                    <div v-if="flash?.success" class="rounded-lg border border-green-400 bg-green-50 px-4 py-3 text-sm text-green-700">
                         {{ flash.success }}
                     </div>
                 </Transition>
@@ -128,11 +116,7 @@ const destroy = (id: number) => {
                                     <SelectValue placeholder="Sélectionner..." />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem 
-                                        v-for="platform in platforms" 
-                                        :key="platform.value"
-                                        :value="platform.value"
-                                    >
+                                    <SelectItem v-for="platform in platforms" :key="platform.value" :value="platform.value">
                                         {{ platform.label }}
                                     </SelectItem>
                                 </SelectContent>
@@ -156,13 +140,7 @@ const destroy = (id: number) => {
                         </div>
 
                         <div class="flex items-end space-y-2">
-                            <Button 
-                                type="submit" 
-                                :disabled="processing"
-                                class="w-full"
-                            >
-                                Ajouter
-                            </Button>
+                            <Button type="submit" :disabled="processing" class="w-full"> Ajouter </Button>
                         </div>
                     </div>
 
@@ -172,19 +150,17 @@ const destroy = (id: number) => {
                         leave-active-class="transition ease-in-out"
                         leave-to-class="opacity-0"
                     >
-                        <p v-if="recentlySuccessful" class="text-sm text-green-600">
-                            Média social ajouté avec succès !
-                        </p>
+                        <p v-if="recentlySuccessful" class="text-sm text-green-600">Média social ajouté avec succès !</p>
                     </Transition>
                 </Form>
 
                 <!-- Liste des médias -->
                 <div class="space-y-3">
                     <h3 class="text-sm font-medium text-muted-foreground">Vos liens sociaux</h3>
-                    
-                    <div 
-                        v-for="media in socialMedias" 
-                        :key="media.id" 
+
+                    <div
+                        v-for="media in socialMedias"
+                        :key="media.id"
                         class="rounded-lg border bg-card p-4 shadow-sm transition-shadow hover:shadow-md"
                     >
                         <!-- Mode affichage -->
@@ -192,16 +168,14 @@ const destroy = (id: number) => {
                             <div class="flex items-center justify-between">
                                 <div class="flex-1">
                                     <div class="flex items-center gap-2">
-                                        <span class="font-medium capitalize text-foreground">
+                                        <span class="font-medium text-foreground capitalize">
                                             {{ media.platform }}
                                         </span>
-                                        <span v-if="media.display_name" class="text-sm text-muted-foreground">
-                                            - {{ media.display_name }}
-                                        </span>
+                                        <span v-if="media.display_name" class="text-sm text-muted-foreground"> - {{ media.display_name }} </span>
                                     </div>
-                                    <a 
-                                        :href="media.url" 
-                                        target="_blank" 
+                                    <a
+                                        :href="media.url"
+                                        target="_blank"
                                         rel="noopener noreferrer"
                                         class="mt-1 block truncate text-sm text-primary hover:underline"
                                     >
@@ -209,20 +183,8 @@ const destroy = (id: number) => {
                                     </a>
                                 </div>
                                 <div class="flex gap-2">
-                                    <Button 
-                                        @click="edit(media)" 
-                                        variant="outline"
-                                        size="sm"
-                                    >
-                                        Modifier
-                                    </Button>
-                                    <Button 
-                                        @click="destroy(media.id)" 
-                                        variant="destructive"
-                                        size="sm"
-                                    >
-                                        Supprimer
-                                    </Button>
+                                    <Button @click="edit(media)" variant="outline" size="sm"> Modifier </Button>
+                                    <Button @click="destroy(media.id)" variant="destructive" size="sm"> Supprimer </Button>
                                 </div>
                             </div>
                         </div>
@@ -244,11 +206,7 @@ const destroy = (id: number) => {
                                             <SelectValue />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            <SelectItem 
-                                                v-for="platform in platforms" 
-                                                :key="platform.value"
-                                                :value="platform.value"
-                                            >
+                                            <SelectItem v-for="platform in platforms" :key="platform.value" :value="platform.value">
                                                 {{ platform.label }}
                                             </SelectItem>
                                         </SelectContent>
@@ -273,30 +231,14 @@ const destroy = (id: number) => {
                                 </div>
 
                                 <div class="flex items-end gap-2">
-                                    <Button 
-                                        type="submit" 
-                                        :disabled="processing"
-                                        size="sm"
-                                    >
-                                        Enregistrer
-                                    </Button>
-                                    <Button 
-                                        type="button"
-                                        @click="cancelEdit"
-                                        variant="outline"
-                                        size="sm"
-                                    >
-                                        Annuler
-                                    </Button>
+                                    <Button type="submit" :disabled="processing" size="sm"> Enregistrer </Button>
+                                    <Button type="button" @click="cancelEdit" variant="outline" size="sm"> Annuler </Button>
                                 </div>
                             </div>
                         </Form>
                     </div>
 
-                    <div 
-                        v-if="socialMedias.length === 0" 
-                        class="rounded-lg border border-dashed p-8 text-center text-muted-foreground"
-                    >
+                    <div v-if="socialMedias.length === 0" class="rounded-lg border border-dashed p-8 text-center text-muted-foreground">
                         <p>Aucun lien social ajouté pour le moment.</p>
                         <p class="mt-1 text-sm">Ajoutez votre premier lien ci-dessus !</p>
                     </div>

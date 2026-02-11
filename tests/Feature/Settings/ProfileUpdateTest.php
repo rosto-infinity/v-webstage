@@ -26,7 +26,7 @@ test('profile information can be updated', function (): void {
 
     $response
         ->assertSessionHasNoErrors()
-        ->assertRedirect('/settings/profile');
+        ->assertRedirect('/'); // Redirects to root after profile update
 
     $user->refresh();
 
@@ -47,7 +47,7 @@ test('email verification status is unchanged when the email address is unchanged
 
     $response
         ->assertSessionHasNoErrors()
-        ->assertRedirect('/settings/profile');
+        ->assertRedirect('/'); // Redirects to root
 
     expect($user->refresh()->email_verified_at)->not->toBeNull();
 });

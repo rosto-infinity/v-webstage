@@ -19,7 +19,7 @@ class AbsenceReasonFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->word(), // Exemple de champ
+            'name' => $this->faker->text(20), // Generate random text
         ];
     }
 }

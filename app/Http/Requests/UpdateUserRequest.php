@@ -56,12 +56,12 @@ final class UpdateUserRequest extends FormRequest
             'name.required' => 'Le nom est obligatoire.',
             'name.string' => 'Le nom doit être une chaîne de caractères.',
             'name.max' => 'Le nom ne peut pas dépasser :max caractères.',
-            
+
             'email.required' => 'L\'adresse e-mail est obligatoire.',
             'email.email' => 'L\'adresse e-mail doit être valide (format: user@domain.com).',
             'email.regex' => 'L\'adresse e-mail doit respecter le format: nnnn@dddd.ddd',
             'email.unique' => 'Cette adresse e-mail est déjà utilisée par un autre utilisateur.',
-            
+
             'password.string' => 'Le mot de passe doit être une chaîne de caractères.',
             'password.min' => 'Le mot de passe doit contenir au moins :min caractères.',
             'password.confirmed' => 'La confirmation du mot de passe ne correspond pas.',

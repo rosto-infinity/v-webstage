@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
+import * as presenceRoutes from '@/routes/presences';
 import type { BreadcrumbItem } from '@/types';
 import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 import { watch } from 'vue';
-import * as presenceRoutes from '@/routes/presences';
 
 interface PresenceData {
     id: number;
@@ -99,170 +99,181 @@ const breadcrumbs: BreadcrumbItem[] = [
 </script>
 
 <template>
-    <Head title="Modifier la présence" />
+    <Head :title="`Modifier Présence #${props.presence.id}`" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="mx-auto max-w-7xl p-6">
-            <Link
-                :href="presenceRoutes.users().url"
-                prefetch
-                class="mb-6 inline-flex items-center gap-2 rounded-lg bg-muted px-4 py-2 text-foreground transition-colors hover:bg-muted/80"
-            >
-                ← Retour à la liste
-            </Link>
+        <div class="w-full p-4 sm:p-6">
+            <!-- Header avec bouton retour -->
+            <div class="mb-6 flex items-center justify-between">
+                <h1 class="text-2xl font-bold text-foreground">Modifier la fiche de présence #{{ props.presence.id }}</h1>
+                <Link
+                    :href="presenceRoutes.users().url"
+                    class="inline-flex items-center gap-2 rounded-lg border px-4 py-2 text-sm transition-colors hover:bg-muted"
+                >
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    Retour
+                </Link>
+            </div>
 
-            <div class="rounded-xl border border-border bg-card p-6 shadow-sm">
-                <h2 class="mb-6 border-b border-border pb-4 text-2xl font-bold text-foreground">
-                    Modifier la fiche de présence #{{ props.presence.id }}
-                </h2>
-
-                <form @submit.prevent="submit" class="grid grid-cols-1 gap-6 md:grid-cols-2">
-                    <!-- Informations étudiant -->
-                    <div class="space-y-4 rounded-lg bg-muted p-4 md:col-span-2">
-                        <h3 class="font-medium text-foreground">Informations étudiant</h3>
-
-                        <div>
-                            <label class="mb-1 block text-sm font-medium text-foreground">
-                                Étudiant <span class="text-destructive">*</span>
-                            </label>
-                            <select
-                                v-model="form.user_id"
-                                class="w-full rounded-lg border border-input px-4 py-2 focus:ring-2 focus:ring-ring"
-                                :class="{ 'border-destructive': form.errors.user_id }"
-                                required
-                            >
-                                <option value="" disabled>Sélectionnez un étudiant</option>
-                                <option v-for="user in props.users" :key="user.id" :value="user.id">
-                                    {{ user.name }} ({{ user.email }})
-                                </option>
-                            </select>
-                            <p v-if="form.errors.user_id" class="mt-1 text-sm text-destructive">
-                                {{ form.errors.user_id }}
-                            </p>
-                        </div>
+            <!-- Formulaire -->
+            <form @submit.prevent="submit" class="w-full space-y-6">
+                <!-- Informations étudiant -->
+                <div class="rounded-lg border bg-card p-6">
+                    <h3 class="mb-4 text-lg font-semibold">Informations étudiant</h3>
+                    <div>
+                        <label class="mb-2 block text-sm font-medium">Étudiant <span class="text-destructive">*</span></label>
+                        <select
+                            v-model="form.user_id"
+                            class="w-full rounded-lg border px-4 py-2.5 focus:border-primary focus:ring-2 focus:ring-primary"
+                            :class="{ 'border-destructive': form.errors.user_id }"
+                        >
+                            <option value="" disabled>Sélectionnez un étudiant</option>
+                            <option v-for="user in props.users" :key="user.id" :value="user.id">{{ user.name }} ({{ user.email }})</option>
+                        </select>
+                        <p v-if="form.errors.user_id" class="mt-1 text-sm text-destructive">{{ form.errors.user_id }}</p>
                     </div>
+                </div>
 
+                <!-- Grille responsive: 1 colonne mobile, 2 colonnes tablette+ -->
+                <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
                     <!-- Horaires -->
-                    <div class="space-y-4 rounded-lg bg-muted p-4">
-                        <h3 class="font-medium text-foreground">Horaires</h3>
+                    <div class="rounded-lg border bg-card p-6">
+                        <h3 class="mb-4 text-lg font-semibold">Horaires</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="mb-2 block text-sm font-medium">Date <span class="text-destructive">*</span></label>
+                                <input
+                                    v-model="form.date"
+                                    type="date"
+                                    class="w-full rounded-lg border px-4 py-2.5 focus:border-primary focus:ring-2 focus:ring-primary"
+                                    :class="{ 'border-destructive': form.errors.date }"
+                                />
+                                <p v-if="form.errors.date" class="mt-1 text-sm text-destructive">{{ form.errors.date }}</p>
+                            </div>
 
-                        <div>
-                            <label class="mb-1 block text-sm font-medium text-foreground">
-                                Date <span class="text-destructive">*</span>
-                            </label>
-                            <input
-                                v-model="form.date"
-                                type="date"
-                                class="w-full rounded-lg border border-input px-4 py-2 focus:ring-2 focus:ring-ring"
-                                :class="{ 'border-destructive': form.errors.date }"
-                                required
-                            />
-                            <p v-if="form.errors.date" class="mt-1 text-sm text-destructive">
-                                {{ form.errors.date }}
-                            </p>
-                        </div>
+                            <div>
+                                <label class="mb-2 block text-sm font-medium">
+                                    Heure d'arrivée <span v-if="!form.absent" class="text-destructive">*</span>
+                                </label>
+                                <input
+                                    v-model="form.heure_arrivee"
+                                    type="time"
+                                    :disabled="form.absent"
+                                    class="w-full rounded-lg border px-4 py-2.5 focus:border-primary focus:ring-2 focus:ring-primary disabled:cursor-not-allowed disabled:bg-muted/50"
+                                    :class="{ 'border-destructive': form.errors.heure_arrivee }"
+                                />
+                                <p v-if="form.errors.heure_arrivee" class="mt-1 text-sm text-destructive">{{ form.errors.heure_arrivee }}</p>
+                            </div>
 
-                        <div>
-                            <label class="mb-1 block text-sm font-medium text-foreground">
-                                Heure d'arrivée
-                                <span v-if="!form.absent" class="text-destructive">*</span>
-                            </label>
-                            <input
-                                v-model="form.heure_arrivee"
-                                type="time"
-                                :disabled="form.absent"
-                                class="w-full rounded-lg border border-input px-4 py-2 focus:ring-2 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
-                                :class="{ 'border-destructive': form.errors.heure_arrivee }"
-                            />
-                            <p v-if="form.errors.heure_arrivee" class="mt-1 text-sm text-destructive">
-                                {{ form.errors.heure_arrivee }}
-                            </p>
-                        </div>
-
-                        <div>
-                            <label class="mb-1 block text-sm font-medium text-foreground">
-                                Heure de départ
-                            </label>
-                            <input
-                                v-model="form.heure_depart"
-                                type="time"
-                                :disabled="form.absent"
-                                class="w-full rounded-lg border border-input px-4 py-2 focus:ring-2 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
-                                :class="{ 'border-destructive': form.errors.heure_depart }"
-                            />
-                            <p v-if="form.errors.heure_depart" class="mt-1 text-sm text-destructive">
-                                {{ form.errors.heure_depart }}
-                            </p>
+                            <div>
+                                <label class="mb-2 block text-sm font-medium">Heure de départ</label>
+                                <input
+                                    v-model="form.heure_depart"
+                                    type="time"
+                                    :disabled="form.absent"
+                                    :min="form.heure_arrivee || undefined"
+                                    class="w-full rounded-lg border px-4 py-2.5 focus:border-primary focus:ring-2 focus:ring-primary disabled:cursor-not-allowed disabled:bg-muted/50"
+                                    :class="{ 'border-destructive': form.errors.heure_depart }"
+                                />
+                                <p v-if="form.errors.heure_depart" class="mt-1 text-sm text-destructive">{{ form.errors.heure_depart }}</p>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Statut -->
-                    <div class="space-y-4 rounded-lg bg-muted p-4">
-                        <h3 class="font-medium text-foreground">Statut</h3>
-
-                        <div>
-                            <label class="flex items-center gap-2 text-sm font-medium text-foreground">
+                    <div class="rounded-lg border bg-card p-6">
+                        <h3 class="mb-4 text-lg font-semibold">Statut</h3>
+                        <div class="space-y-4">
+                            <!-- Absent -->
+                            <label class="flex cursor-pointer items-center gap-3 rounded-lg border p-4 transition-colors hover:bg-muted">
                                 <input
                                     v-model="form.absent"
                                     type="checkbox"
-                                    class="rounded border-input text-primary focus:ring-ring"
+                                    class="h-5 w-5 rounded border-gray-300 text-primary focus:ring-2 focus:ring-primary"
                                 />
-                                Absent(e)
+                                <div>
+                                    <div class="font-medium">Absent</div>
+                                    <div class="text-sm text-muted-foreground">L'étudiant était absent ce jour</div>
+                                </div>
                             </label>
-                        </div>
 
-                        <div v-if="!form.absent">
-                            <label class="flex items-center gap-2 text-sm font-medium text-foreground">
+                            <!-- En retard -->
+                            <label class="flex cursor-pointer items-center gap-3 rounded-lg border p-4 transition-colors hover:bg-muted">
                                 <input
                                     v-model="form.en_retard"
                                     type="checkbox"
-                                    class="rounded border-input text-primary focus:ring-ring"
+                                    :disabled="form.absent"
+                                    class="h-5 w-5 rounded border-gray-300 text-primary focus:ring-2 focus:ring-primary disabled:cursor-not-allowed disabled:opacity-50"
                                 />
-                                En retard
+                                <div>
+                                    <div class="font-medium">En retard</div>
+                                    <div class="text-sm text-muted-foreground">
+                                        {{ form.minutes_retard > 0 ? form.minutes_retard + ' minutes' : 'Calculé automatiquement' }}
+                                    </div>
+                                </div>
                             </label>
-                        </div>
 
-                        <div v-if="form.en_retard && !form.absent">
-                            <label class="mb-1 block text-sm font-medium text-foreground">
-                                Minutes de retard <span class="text-destructive">*</span>
-                            </label>
-                            <input
-                                v-model.number="form.minutes_retard"
-                                type="number"
-                                min="0"
-                                max="300"
-                                step="1"
-                                class="w-full rounded-lg border border-input px-4 py-2 focus:ring-2 focus:ring-ring"
-                                :class="{ 'border-destructive': form.errors.minutes_retard }"
-                            />
-                            <p v-if="form.errors.minutes_retard" class="mt-1 text-sm text-destructive">
-                                {{ form.errors.minutes_retard }}
-                            </p>
-                            <p class="mt-1 text-xs text-muted-foreground">
-                                Calculé automatiquement : {{ form.minutes_retard }} minutes
-                            </p>
+                            <!-- Minutes de retard (readonly) -->
+                            <div v-if="form.en_retard && !form.absent">
+                                <label class="mb-2 block text-sm font-medium">Minutes de retard</label>
+                                <input
+                                    v-model="form.minutes_retard"
+                                    type="number"
+                                    readonly
+                                    class="w-full cursor-not-allowed rounded-lg border bg-muted/50 px-4 py-2.5"
+                                />
+                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Boutons d'action -->
-                    <div class="flex justify-end gap-4 border-t border-border pt-4 md:col-span-2">
-                        <Link
-                            :href="presenceRoutes.users().url"
-                            class="rounded-lg border border-input px-6 py-2 text-foreground transition-colors hover:bg-muted"
+                <!-- Motif d'absence (pleine largeur si absent) -->
+                <div v-if="form.absent" class="rounded-lg border border-orange-200 bg-orange-50 p-6 dark:border-orange-800 dark:bg-orange-950/20">
+                    <h3 class="mb-4 text-lg font-semibold text-orange-900 dark:text-orange-100">Motif d'absence</h3>
+                    <div>
+                        <label class="mb-2 block text-sm font-medium">Raison <span class="text-destructive">*</span></label>
+                        <select
+                            v-model="form.absence_reason_id"
+                            class="w-full rounded-lg border px-4 py-2.5 focus:border-primary focus:ring-2 focus:ring-primary"
+                            :class="{ 'border-destructive': form.errors.absence_reason_id }"
                         >
-                            Annuler
-                        </Link>
-                        <button
-                            type="submit"
-                            :disabled="form.processing"
-                            class="rounded-lg bg-primary px-6 py-2 text-primary-foreground transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
-                        >
-                            <span v-if="form.processing">Enregistrement...</span>
-                            <span v-else>Enregistrer les modifications</span>
-                        </button>
+                            <option value="" disabled>Sélectionnez un motif</option>
+                            <option value="1">Maladie</option>
+                            <option value="2">Rendez-vous médical</option>
+                            <option value="3">Problème familial</option>
+                            <option value="4">Autre</option>
+                        </select>
+                        <p v-if="form.errors.absence_reason_id" class="mt-1 text-sm text-destructive">{{ form.errors.absence_reason_id }}</p>
                     </div>
-                </form>
-            </div>
+                </div>
+
+                <!-- Boutons d'action -->
+                <div class="flex flex-col gap-3 sm:flex-row sm:justify-end">
+                    <Link
+                        :href="presenceRoutes.users().url"
+                        class="inline-flex items-center justify-center rounded-lg border px-6 py-2.5 text-sm font-medium transition-colors hover:bg-muted"
+                    >
+                        Annuler
+                    </Link>
+                    <button
+                        type="submit"
+                        :disabled="form.processing"
+                        class="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                        <svg v-if="form.processing" class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path
+                                class="opacity-75"
+                                fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                            ></path>
+                        </svg>
+                        {{ form.processing ? 'Enregistrement...' : 'Enregistrer les modifications' }}
+                    </button>
+                </div>
+            </form>
         </div>
     </AppLayout>
 </template>

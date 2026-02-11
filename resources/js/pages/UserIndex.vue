@@ -4,7 +4,6 @@ import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/vue3';
 import PlaceholderPattern from '../components/PlaceholderPattern.vue';
 // Import des routes Wayfinder
-import * as userRoutes from '@/routes/users';
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Users',

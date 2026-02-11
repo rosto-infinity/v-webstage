@@ -1,25 +1,17 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import Pagination from '@/components/Pagination.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem, type PaginationLink } from '@/types';
 import { Head, Link, router } from '@inertiajs/vue3';
 import { Calendar, Clock, Pen, Trash2, UserPlus, Users } from 'lucide-vue-next';
+import { ref } from 'vue';
 
 // ✅ Imports shadcn Dialog
-import {
-    Dialog,
-    DialogClose,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,  
-} from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
-import * as userRoutes from '@/routes/users';
 import * as presenceRoutes from '@/routes/presences';
+import * as userRoutes from '@/routes/users';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -149,13 +141,9 @@ function cancelDelete() {
                 <h2 class="text-lg font-medium">Liste des utilisateurs</h2>
                 <span class="flex gap-1 rounded-sm bg-primary px-2 pt-2 text-white">
                     <UserPlus />
-                    <Link class="btn btn-primary mb-4" :href="userRoutes.create().url" prefetch>
-                        Add Users
-                    </Link>
+                    <Link class="btn btn-primary mb-4" :href="userRoutes.create().url" prefetch> Add Users </Link>
                 </span>
-                <span class="text-sm text-muted-foreground">
-                    Total: {{ totalUsers }} utilisateur(s)
-                </span>
+                <span class="text-sm text-muted-foreground"> Total: {{ totalUsers }} utilisateur(s) </span>
             </div>
 
             <!-- Tableau des utilisateurs -->
@@ -163,29 +151,17 @@ function cancelDelete() {
                 <table class="min-w-full divide-y divide-border">
                     <thead>
                         <tr>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium tracking-wider text-muted-foreground uppercase">
-                                ID
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium tracking-wider text-muted-foreground uppercase">
-                                Nom
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium tracking-wider text-muted-foreground uppercase">
-                                Email
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium tracking-wider text-muted-foreground uppercase">
-                                Statut
-                            </th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium tracking-wider text-muted-foreground uppercase">ID</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium tracking-wider text-muted-foreground uppercase">Nom</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium tracking-wider text-muted-foreground uppercase">Email</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium tracking-wider text-muted-foreground uppercase">Statut</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium tracking-wider text-muted-foreground uppercase">
                                 Actions
                             </th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-border">
-                        <tr
-                            v-for="user in props.users.data"
-                            :key="user.id"
-                            class="transition-colors duration-150 hover:bg-muted/50"
-                        >
+                        <tr v-for="user in props.users.data" :key="user.id" class="transition-colors duration-150 hover:bg-muted/50">
                             <td class="px-6 py-4 text-sm font-medium whitespace-nowrap">
                                 {{ user.id }}
                             </td>
@@ -199,20 +175,12 @@ function cancelDelete() {
                                 <span
                                     class="inline-flex rounded-full px-2 text-xs leading-5 font-semibold"
                                     :class="{
-                                        'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200':
-                                            user.status === 'active',
-                                        'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200':
-                                            user.status === 'inactive',
+                                        'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200': user.status === 'active',
+                                        'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200': user.status === 'inactive',
                                         'bg-muted text-muted-foreground': !user.status,
                                     }"
                                 >
-                                    {{
-                                        user.status === 'active'
-                                            ? 'Actif'
-                                            : user.status === 'inactive'
-                                              ? 'Inactif'
-                                              : 'N/A'
-                                    }}
+                                    {{ user.status === 'active' ? 'Actif' : user.status === 'inactive' ? 'Inactif' : 'N/A' }}
                                 </span>
                             </td>
                             <td class="px-6 py-4 text-sm font-medium whitespace-nowrap">
@@ -220,7 +188,7 @@ function cancelDelete() {
                                     <!-- ✅ Bouton Éditer -->
                                     <Link
                                         :href="userRoutes.edit(toNumber(user.id)).url"
-                                        class="inline-flex items-center gap-1 rounded-md bg-primary px-3 py-1 text-primary-foreground hover:bg-primary/90 transition-colors"
+                                        class="inline-flex items-center gap-1 rounded-md bg-primary px-3 py-1 text-primary-foreground transition-colors hover:bg-primary/90"
                                     >
                                         <Pen class="h-4 w-4" />
                                         Éditer
@@ -229,7 +197,7 @@ function cancelDelete() {
                                     <!-- ✅ Bouton Supprimer (ouvre le dialog) -->
                                     <button
                                         @click="openDeleteDialog(user)"
-                                        class="inline-flex items-center gap-1 rounded-md bg-destructive px-3 py-1 text-destructive-foreground hover:bg-destructive/90 transition-colors"
+                                        class="inline-flex items-center gap-1 rounded-md bg-destructive px-3 py-1 text-destructive-foreground transition-colors hover:bg-destructive/90"
                                     >
                                         <Trash2 class="h-4 w-4" />
                                         Suppr.
@@ -267,7 +235,7 @@ function cancelDelete() {
                             <p>
                                 Êtes-vous sûr de vouloir supprimer <strong>{{ selectedUserName }}</strong> ?
                             </p>
-                            <p class="text-sm text-red-600 dark:text-red-400 font-medium">
+                            <p class="text-sm font-medium text-red-600 dark:text-red-400">
                                 ⚠️ Cette action est irréversible. L'utilisateur et toutes ses données seront supprimés définitivement.
                             </p>
                         </DialogDescription>
@@ -275,23 +243,10 @@ function cancelDelete() {
 
                     <DialogFooter class="gap-2 sm:gap-3">
                         <DialogClose as-child>
-                            <Button
-                                type="button"
-                                variant="secondary"
-                                :disabled="isDeleting"
-                                @click="cancelDelete"
-                            >
-                                Annuler
-                            </Button>
+                            <Button type="button" variant="secondary" :disabled="isDeleting" @click="cancelDelete"> Annuler </Button>
                         </DialogClose>
 
-                        <Button
-                            type="button"
-                            variant="destructive"
-                            :disabled="isDeleting"
-                            @click="confirmDelete"
-                            class="gap-2"
-                        >
+                        <Button type="button" variant="destructive" :disabled="isDeleting" @click="confirmDelete" class="gap-2">
                             <span v-if="isDeleting" class="animate-spin">⏳</span>
                             {{ isDeleting ? 'Suppression...' : 'Supprimer définitivement' }}
                         </Button>
