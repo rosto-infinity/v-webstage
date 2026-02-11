@@ -1,8 +1,8 @@
-import DBBackupController from './DBBackupController';
-import PasswordController from './PasswordController';
-import ProfileController from './ProfileController';
-import SocialMediaController from './SocialMediaController';
-import StageController from './StageController';
+import ProfileController from './ProfileController'
+import PasswordController from './PasswordController'
+import SocialMediaController from './SocialMediaController'
+import StageController from './StageController'
+import DBBackupController from './DBBackupController'
 
 const Settings = {
     ProfileController: Object.assign(ProfileController, ProfileController),
@@ -10,6 +10,6 @@ const Settings = {
     SocialMediaController: Object.assign(SocialMediaController, SocialMediaController),
     StageController: Object.assign(StageController, StageController),
     DBBackupController: Object.assign(DBBackupController, DBBackupController),
-};
+}
 
-export default Settings;
+export default Settings

@@ -13,14 +13,16 @@ interface Props {
     email: string;
 }
 
-const props = defineProps<Props>();
+const { token, email } = defineProps<Props>();
 </script>
 
 <template>
     <AuthLayout title="Reset password" description="Please enter your new password below">
+
         <Head title="Reset password" />
 
-        <Form v-bind="passwordRoutes.store.form()" :reset-on-error="['password', 'password_confirmation']" v-slot="{ errors, processing }">
+        <Form v-bind="passwordRoutes.store.form()" :reset-on-error="['password', 'password_confirmation']"
+            v-slot="{ errors, processing }">
             <input type="hidden" name="token" :value="token" />
             <input type="hidden" name="email" :value="email" />
 
@@ -33,28 +35,15 @@ const props = defineProps<Props>();
 
                 <div class="grid gap-2">
                     <Label for="password">Password</Label>
-                    <Input
-                        id="password"
-                        name="password"
-                        type="password"
-                        autocomplete="new-password"
-                        class="mt-1 block w-full"
-                        autofocus
-                        placeholder="Password"
-                    />
+                    <Input id="password" name="password" type="password" autocomplete="new-password"
+                        class="mt-1 block w-full" autofocus placeholder="Password" />
                     <InputError :message="errors.password" />
                 </div>
 
                 <div class="grid gap-2">
                     <Label for="password_confirmation"> Confirm Password </Label>
-                    <Input
-                        id="password_confirmation"
-                        name="password_confirmation"
-                        type="password"
-                        autocomplete="new-password"
-                        class="mt-1 block w-full"
-                        placeholder="Confirm password"
-                    />
+                    <Input id="password_confirmation" name="password_confirmation" type="password"
+                        autocomplete="new-password" class="mt-1 block w-full" placeholder="Confirm password" />
                     <InputError :message="errors.password_confirmation" />
                 </div>
 

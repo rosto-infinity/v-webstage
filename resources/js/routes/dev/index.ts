@@ -1,87 +1,87 @@
-import { queryParams, type RouteDefinition, type RouteFormDefinition, type RouteQueryOptions } from './../../wayfinder';
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
 /**
- * @see \Inertia\Controller::__invoke
- * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
- * @route '/dev-app'
- */
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @route '/dev-app'
+*/
 export const app = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: app.url(options),
     method: 'get',
-});
+})
 
 app.definition = {
-    methods: ['get', 'head'],
+    methods: ["get","head"],
     url: '/dev-app',
-} satisfies RouteDefinition<['get', 'head']>;
+} satisfies RouteDefinition<["get","head"]>
 
 /**
- * @see \Inertia\Controller::__invoke
- * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
- * @route '/dev-app'
- */
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @route '/dev-app'
+*/
 app.url = (options?: RouteQueryOptions) => {
-    return app.definition.url + queryParams(options);
-};
+    return app.definition.url + queryParams(options)
+}
 
 /**
- * @see \Inertia\Controller::__invoke
- * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
- * @route '/dev-app'
- */
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @route '/dev-app'
+*/
 app.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: app.url(options),
     method: 'get',
-});
+})
 
 /**
- * @see \Inertia\Controller::__invoke
- * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
- * @route '/dev-app'
- */
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @route '/dev-app'
+*/
 app.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: app.url(options),
     method: 'head',
-});
+})
 
 /**
- * @see \Inertia\Controller::__invoke
- * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
- * @route '/dev-app'
- */
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @route '/dev-app'
+*/
 const appForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: app.url(options),
     method: 'get',
-});
+})
 
 /**
- * @see \Inertia\Controller::__invoke
- * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
- * @route '/dev-app'
- */
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @route '/dev-app'
+*/
 appForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: app.url(options),
     method: 'get',
-});
+})
 
 /**
- * @see \Inertia\Controller::__invoke
- * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
- * @route '/dev-app'
- */
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @route '/dev-app'
+*/
 appForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: app.url({
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'HEAD',
             ...(options?.query ?? options?.mergeQuery ?? {}),
-        },
+        }
     }),
     method: 'get',
-});
+})
 
-app.form = appForm;
+app.form = appForm
 
 const dev = {
     app: Object.assign(app, app),
-};
+}
 
-export default dev;
+export default dev

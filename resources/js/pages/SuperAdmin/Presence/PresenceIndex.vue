@@ -1,16 +1,14 @@
 <template>
+
     <Head title="Présences" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <!-- Message flash -->
-        <div
-            v-if="showFlash"
-            :class="[
-                'fixed top-4 right-4 z-50 max-w-md rounded-lg p-4 shadow-lg transition-all duration-300',
-                flashType === 'success'
-                    ? 'bg-success/10 border-success text-success-foreground'
-                    : 'border-destructive bg-destructive/10 text-destructive-foreground',
-            ]"
-        >
+        <div v-if="showFlash" :class="[
+            'fixed top-4 right-4 z-50 max-w-md rounded-lg p-4 shadow-lg transition-all duration-300',
+            flashType === 'success'
+                ? 'bg-success/10 border-success text-success-foreground'
+                : 'border-destructive bg-destructive/10 text-destructive-foreground',
+        ]">
             <div class="flex items-start justify-between gap-4">
                 <div class="flex-1">
                     <h3 class="font-medium">{{ flashType === 'success' ? 'Succès' : 'Erreur' }}</h3>
@@ -45,7 +43,7 @@
                     <p class="text-sm text-muted-foreground">Absents</p>
                     <p class="text-2xl font-bold">{{ absentCount }}</p>
                     <p v-if="absentCount > 0" class="text-xs text-destructive">
-                        {{ data.filter((p) => p.absent && !p.absence_reason).length }} sans motif
+                        {{data.filter((p) => p.absent && !p.absence_reason).length}} sans motif
                     </p>
                 </div>
             </div>
@@ -55,7 +53,7 @@
                     <p class="text-sm text-muted-foreground">Retards</p>
                     <p class="text-2xl font-bold">{{ lateCount }}</p>
                     <p v-if="lateCount > 0" class="text-warning text-xs">
-                        Moyenne: {{ Math.round(data.reduce((a, b) => a + b.late_minutes, 0) / lateCount) }}min
+                        Moyenne: {{Math.round(data.reduce((a, b) => a + b.late_minutes, 0) / lateCount)}}min
                     </p>
                 </div>
             </div>
@@ -85,18 +83,16 @@
                     </a>
 
                     <!-- Export PDF par Utilisateur (avec filtres) -->
-                    <Button @click="exportUserPdf" :disabled="!selectedUserForExport" class="cursor-pointer" variant="secondary">
+                    <Button @click="exportUserPdf" :disabled="!selectedUserForExport" class="cursor-pointer"
+                        variant="secondary">
                         <FileText class="h-5 w-5" />
                         PDF Utilisateur
                     </Button>
 
                     <!-- Export PDF avec Période -->
-                    <Button
-                        @click="exportUserPdfWithPeriod"
-                        :disabled="!selectedUserForExport || !filterDateFrom || !filterDateTo"
-                        class="cursor-pointer"
-                        variant="outline"
-                    >
+                    <Button @click="exportUserPdfWithPeriod"
+                        :disabled="!selectedUserForExport || !filterDateFrom || !filterDateTo" class="cursor-pointer"
+                        variant="outline">
                         <CalendarRange class="h-5 w-5" />
                         PDF Période
                     </Button>
@@ -123,12 +119,8 @@
             <div class="mb-4 flex flex-col gap-4 md:flex-row">
                 <div class="relative flex-1">
                     <div class="flex">
-                        <input
-                            v-model="searchTerm"
-                            @input="setCurrentPage(1)"
-                            placeholder="Rechercher nom/email"
-                            class="input w-full rounded-md border-1 border-violet-400 pl-10"
-                        />
+                        <input v-model="searchTerm" @input="setCurrentPage(1)" placeholder="Rechercher nom/email"
+                            class="input w-full rounded-md border-1 border-violet-400 pl-10" />
                         <Search class="mx-2 h-5 w-5 text-muted-foreground" />
                     </div>
                 </div>
@@ -215,7 +207,8 @@
                             <td class="px-4 py-2">{{ r.arrival_time ?? '-' }}</td>
                             <td class="px-4 py-2">{{ r.departure_time ?? '-' }}</td>
                             <td class="px-4 py-2">
-                                <Badge :type="r.late_minutes > 0 ? 'warning' : 'success'"> {{ r.late_minutes }} min </Badge>
+                                <Badge :type="r.late_minutes > 0 ? 'warning' : 'success'"> {{ r.late_minutes }} min
+                                </Badge>
                             </td>
                             <td class="px-4 py-2">
                                 <Badge v-if="r.absent" type="destructive">Absent</Badge>
@@ -230,7 +223,8 @@
                                 <span v-else>-</span>
                             </td>
                             <td class="px-4 py-2">
-                                <Link :href="route('presences.edit', { id: r.id })" class="text-primary hover:underline">
+                                <Link :href="route('presences.edit', { id: r.id })"
+                                    class="text-primary hover:underline">
                                     <Pen class="inline h-4 w-4" /> Editer
                                 </Link>
                             </td>
@@ -254,15 +248,13 @@
                     <span class="text-muted-foreground"> sur {{ filteredAndSortedData.length }} </span>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button :disabled="currentPage === 1" @click="setCurrentPage(currentPage - 1)" class="btn btn-outline disabled:opacity-50">
+                    <button :disabled="currentPage === 1" @click="setCurrentPage(currentPage - 1)"
+                        class="btn btn-outline disabled:opacity-50">
                         <ChevronLeft class="h-4 w-4" />
                     </button>
                     <span class="text-muted-foreground"> Page {{ currentPage }} / {{ totalPages }} </span>
-                    <button
-                        :disabled="currentPage === totalPages"
-                        @click="setCurrentPage(currentPage + 1)"
-                        class="btn btn-outline disabled:opacity-50"
-                    >
+                    <button :disabled="currentPage === totalPages" @click="setCurrentPage(currentPage + 1)"
+                        class="btn btn-outline disabled:opacity-50">
                         <ChevronRight class="h-4 w-4" />
                     </button>
                 </div>
@@ -370,9 +362,6 @@ const sortDirection = ref<'asc' | 'desc'>('desc');
 
 // ✅ CORRECTION : Utiliser allUsers depuis les props
 const usersWithIds = computed(() => props.allUsers);
-
-// Liste des noms d'utilisateurs (pour compatibilité)
-const users = computed(() => usersWithIds.value.map((u) => u.name));
 
 // Gérer la sélection d'utilisateur
 function handleUserChange() {
