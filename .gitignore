@@ -8,6 +8,7 @@
 /storage/pail
 /vendor
 .env
+ Agents-docs  
 .env.backup
 .env.testing
 .env.production
