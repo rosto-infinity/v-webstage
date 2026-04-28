@@ -54,7 +54,7 @@ Route::middleware(['auth', 'verified', 'role:superadmin'])->group(function (): v
         Route::get('/excel', [PresenceController::class, 'excel'])->name('presences.excel');
         Route::get('/download-all', [PresenceController::class, 'downloadAll'])->name('presences.downloadAll');
 
-        // Nouvelles routes pour PDF par utilisateur
+        // --Nouvelles routes pour PDF par utilisateur
         Route::get('/users/{user}/pdf', [PresenceController::class, 'downloadUserPdf'])
             ->name('presences.user.pdf');
 
