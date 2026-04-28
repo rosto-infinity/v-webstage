@@ -5,8 +5,8 @@ import { useMotion } from '@vueuse/motion';
 import { Facebook, Github, Globe, Instagram, Linkedin, Loader2, ShieldAlert, Trophy, Twitter, Youtube } from 'lucide-vue-next';
 import { onMounted, ref } from 'vue';
 import FooterSite from './statiqpages/FooterSite.vue';
-import * as routes from '@/routes';
-import * as conditions from '@/routes/conditions';
+import { dashboard, login } from '@/routes';
+import conditions from '@/routes/conditions';
 
 // État de chargement
 const isLoading = ref(true);
@@ -152,7 +152,7 @@ defineProps<{
                 <AppearanceTabs />
                 <Link
                     v-if="$page.props.auth.user"
-                    :href="routes.dashboard().url"
+                    :href="dashboard().url"
                     prefetch
                     class="inline-block rounded-lg border border-primary/20 px-5 py-2 text-sm leading-normal text-primary transition-colors hover:bg-primary/10 dark:hover:bg-primary/20"
                 >
@@ -160,7 +160,7 @@ defineProps<{
                 </Link>
                 <template v-else>
                     <Link
-                        :href="routes.login().url"
+                        :href="login().url"
                         prefetch
                         class="dark:bg-primary-dark dark:hover:bg-primary-dark/90 inline-block rounded-lg bg-primary px-5 py-2 text-sm leading-normal text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
                     >

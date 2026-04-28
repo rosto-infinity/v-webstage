@@ -3,7 +3,7 @@ import BarChart from '@/components/Charts/BarChart.vue';
 import LineChart from '@/components/Charts/LineChart.vue';
 import PieChart from '@/components/Charts/PieChart.vue';
 import AppLayoutUser from '@/layouts/AppLayoutUser.vue';
-import * as dashboardRoutes from '@/routes';
+import { dashboard as dashboardRoute } from '@/routes';
 import { superadmin } from '@/routes/dashboard';
 import { Form, Head, Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
@@ -43,7 +43,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     <AppLayoutUser :breadcrumbs="breadcrumbs">
         <div class="flex h-full flex-1 flex-col gap-6 p-4">
             <!-- Filtre par date -->
-            <Form v-bind="dashboardRoutes.dashboard.form()" v-slot="{ processing }" class="mb-6 flex items-center gap-2">
+            <Form v-bind="dashboardRoute.form()" v-slot="{ processing }" class="mb-6 flex items-center gap-2">
                 <label for="date" class="font-medium">Date :</label>
                 <input id="date" name="date" type="date" :value="date" class="input" />
                 <button type="submit" class="btn btn-primary" :disabled="processing">Filtrer</button>
