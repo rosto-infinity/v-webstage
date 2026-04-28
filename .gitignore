@@ -1,3 +1,4 @@
+ /Agents-docs  
 /.phpunit.cache
 /bootstrap/ssr
 /node_modules
@@ -8,7 +9,6 @@
 /storage/pail
 /vendor
 .env
- Agents-docs  
 .env.backup
 .env.testing
 .env.production
