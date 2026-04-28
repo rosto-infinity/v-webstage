@@ -1,38 +1,38 @@
 # webStage
 
-**webStage** est une application de suivi de présence développée avec Laravel 12, Inertia.js, Vue 3, Tailwind CSS v4, et Chart.js.
+**webStage** est une application de suivi de présence développée avec Laravel 13, Inertia.js v3, Vue 3, Tailwind CSS v4, et Chart.js.
 
 ---
 
 ## 📦 Technologies
 
-- **Back‑end** :
-  - PHP ≥ 8.3
-  - Laravel 12
-  - Inertia.js via `inertiajs/inertia-laravel`
-  - Wayfinder (routage côté client)
-- **Front‑end** :
-  - Vue.js 3
-  - @inertiajs/vue3
-  - Tailwind CSS v4
-  - Chart.js (^4.4.9) via `chart.js`
-  - lucide-vue-next (icônes)
+- **Back-end** :
+  - PHP ≥ 8.3
+  - Laravel 13.4+
+  - Inertia.js v3 (inertiajs/inertia-laravel ^3.0)
+  - Wayfinder (routage côté client) ^0.1.14
+  - DomPDF ^3.1
+  - Maatwebsite Excel ^3.1
+- **Front-end** :
+  - Vue.js ^3.5.13
+  - @inertiajs/vue3 ^3.0.0
+  - Tailwind CSS v4.2.4
+  - Chart.js ^4.5.0 via `chart.js` et `vue-chartjs` ^5.3.2
+  - lucide-vue-next ^0.468.0 (icônes)
 - **Outils & dev** :
-  - Vite, Laravel Vite Plugin
+  - Vite ^8.0.10, Laravel Vite Plugin ^3.0.0
   - TypeScript ^5.2.2
-  - tailwind‑merge, cla$$x
-  - fakerphp/faker, pestphp/pest, mockery/mockery, laravel/pint…
-  - sail, collision, …etc.
-  - **Environnemnt & dev** :
-    - Linux mint
-    - Sever Nginx
-    - Docker (optionnel)
+  - tailwind-merge ^3.2.0, clsx ^2.1.1
+  - fakerphp/faker ^1.23, pestphp/pest ^4.1, mockery/mockery ^1.6, laravel/pint ^1.18…
+  - sail ^1.41, collision ^8.6, …etc.
+  - **Environnement & dev** :
+    - Linux Mint
+    - Serveur Nginx
+    - Docker (via Laravel Sail)
     - Composer
-    - Node.js (npm)
-    - MySQL (ou MariaDB)
-    - SQLite (optionnel pour dev)
-    - MySQL 8.0
-
+    - Node.js (>= v22.19.0)
+    - MySQL 8.0 (ou MariaDB)
+    - SQLite (pour les tests)
 
 ---
 
@@ -50,6 +50,10 @@ $table->integer('late_minutes')->default(0);
 $table->boolean('absent')->default(false);
 $table->boolean('late')->default(false);
 $table->timestamps();
+```
+
+---
+
 ## 🚀 Installation
 
 Clone le dépôt :
@@ -89,65 +93,51 @@ php artisan db:seed
 Compile les assets et démarre le serveur :
 
 ```bash
-npm run dev       # ou npm run prod pour production
+npm run dev
+# Dans un autre terminal
 php artisan serve
 ```
 
+---
+
 ## 🧩 Fonctionnalités
 
-- Authentification Laravel native
-- CRUD des présences (utilisateurs, status, dates, heures, retard…)
-- Dashboard avec statistiques graphiques :
-  - Camembert des présences du jour
-  - Bar chart hebdomadaire
-  - Line chart mensuel
-  - Motifs d’absence (mois en cours)
-  - Export Excel / PDF des présences
-- Interface responsive grâce à Tailwind v4
-- Navigation fluide avec Inertia.js + Ziggy
+- Authentification Laravel native (Inertia v3)
+- CRUD complet des présences (utilisateurs, status, dates, heures, retards…)
+- Dashboard interactif avec statistiques graphiques :
+  - Répartition des présences du jour (Pie Chart)
+  - Statistiques hebdomadaires (Bar Chart)
+  - Tendance mensuelle (Line Chart)
+- Export des données en format Excel et PDF
+- Export ZIP de tous les PDFs utilisateurs
+- Interface moderne et responsive avec Tailwind CSS v4
+- Navigation fluide et typée avec **Wayfinder**
+
+---
 
 ## 💡 Utilisation
 
-- **Présences** : accès via `/presences`
-- **Ajout** : lien "Ajouter présence", form avec sélection d’utilisateur
-- **Dashboard** : accessible via `/dashboard`, présente les graphiques
+- **Présences** : accès via le menu latéral ou `/presences`
+- **Dashboard** : statistiques en temps réel avec filtrage par date
+- **Administration** : gestion des utilisateurs et des sauvegardes de base de données
+
+---
 
 ## 🧪 Tests & qualité
 
-- Tests unitaires et features avec Pest via `php artisan test`
-- Formatting par Laravel Pint
-- Qualité du code contrôlée par Composer et `npm run lint`
+- Tests unitaires et features avec **Pest**
+- Analyse statique avec **PHPStan** et **Larastan**
+- Refactorisation automatisée avec **Rector**
+- Formatage du code avec **Laravel Pint** et **Prettier**
+
+---
 
 ## 📄 Licence
 
 MIT License - voir le fichier LICENSE.
 
-## 🧭 À venir
-
-- Authentification avancée (rôles, permissions)
-- Notification email automatique
-- Filtrage avancé, recherche dynamique, pagination infinie
+---
 
 ## 📞 Contact
-  - **Waffo lele rostand**
-  - **+2376 915 848 19**
- 
-**webStage** est une application de suivi de présence développée avec Laravel 12, Inertia.js, Vue 3, Tailwind CSS v4 et Chart.js. Elle permet de gérer les présences des utilisateurs, d'afficher des statistiques sous forme de graphiques et offre une interface responsive.
-
-### Principales Fonctionnalités
-- Authentification Laravel native
-- CRUD des présences (utilisateurs, statut, dates, heures, retards, etc.)
-- Dashboard avec statistiques graphiques (camembert des présences du jour, graphique à barres hebdomadaire, graphique linéaire mensuel, motifs d'absence)
-- Export Excel / PDF des présences
-- Interface responsive grâce à Tailwind v4
-- Navigation fluide avec Inertia.js + Wayfinder
-
-### Pile Technologique
-- Back-end : PHP ≥ 8.3, Laravel 12, Inertia.js, Wayfinder
-- Front-end : Vue.js 3, @inertiajs/vue3, Tailwind CSS v4, Chart.js, lucide-vue-next
-- Outils et développement : Vite, TypeScript, tailwind-merge, cla$$x, fakerphp/faker, pestphp/pest, mockery/mockery, laravel/pint, etc.
-- Environnement de développement : Linux Mint, Nginx, Docker (optionnel), Composer, Node.js (npm), MySQL (ou MariaDB), SQLite (optionnel)
-
-### Licence
-MIT License
-
+- **Waffo lele rostand**
+- **+2376 915 848 19**
