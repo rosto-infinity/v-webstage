@@ -20,7 +20,7 @@
   - Chart.js ^4.5.0 via `chart.js` et `vue-chartjs` ^5.3.2
   - lucide-vue-next ^0.468.0 (icônes)
 - **Outils & dev** :
-  - Vite ^8.0.10, Laravel Vite Plugin ^3.0.0
+  - Vite ^6.0.0, Laravel Vite Plugin ^3.0.0
   - TypeScript ^5.2.2
   - tailwind-merge ^3.2.0, clsx ^2.1.1
   - fakerphp/faker ^1.23, pestphp/pest ^4.1, mockery/mockery ^1.6, laravel/pint ^1.18…
@@ -30,7 +30,7 @@
     - Serveur Nginx
     - Docker (via Laravel Sail)
     - Composer
-    - Node.js (>= v22.19.0)
+    - Node.js (>= v20.0.0)
     - MySQL 8.0 (ou MariaDB)
     - SQLite (pour les tests)
 
