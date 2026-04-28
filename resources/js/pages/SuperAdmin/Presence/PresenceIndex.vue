@@ -68,14 +68,14 @@
                 </div>
                 <div class="flex flex-wrap gap-2">
                     <Button>
-                        <Link :href="presencesRoutes.add().url" class="flex gap-1">
+                        <Link :href="addPresenceRoute().url" class="flex gap-1">
                             <Pen class="h-5 w-5" />
                             Ajouter
                         </Link>
                     </Button>
 
                     <!-- Export PDF Global -->
-                    <a :href="presencesRoutes.downloadAll().url">
+                    <a :href="pdfPresenceRoute().url">
                         <Button class="cursor-pointer">
                             <Download class="h-5 w-5" />
                             PDF Tous
@@ -98,7 +98,7 @@
                     </Button>
 
                     <!-- Export ZIP tous les utilisateurs -->
-                    <a :href="presencesRoutes.users.pdf.zip().url">
+                    <a :href="zipPresenceRoute().url">
                         <Button class="cursor-pointer" variant="outline">
                             <Archive class="h-5 w-5" />
                             ZIP Tous
@@ -106,7 +106,7 @@
                     </a>
 
                     <!-- Export Excel -->
-                    <a :href="presencesRoutes.excel().url">
+                    <a :href="excelPresenceRoute().url">
                         <Button class="cursor-pointer">
                             <Download class="h-5 w-5" />
                             Excel
@@ -180,13 +180,13 @@
                             </th>
                             <th class="px-4 py-2">Nom</th>
                             <th class="px-4 py-2">E‑mail</th>
-                            <th @click="handleSort('arrival_time')" class="th-sort px-4 py-2">
+                            <th @click="handleSort('heure_arrivee')" class="th-sort px-4 py-2">
                                 Arrivée
-                                <SortIcon field="arrival_time" :sortField="sortField" :direction="sortDirection" />
+                                <SortIcon field="heure_arrivee" :sortField="sortField" :direction="sortDirection" />
                             </th>
-                            <th @click="handleSort('departure_time')" class="th-sort px-4 py-2">
+                            <th @click="handleSort('heure_depart')" class="th-sort px-4 py-2">
                                 Départ
-                                <SortIcon field="departure_time" :sortField="sortField" :direction="sortDirection" />
+                                <SortIcon field="heure_depart" :sortField="sortField" :direction="sortDirection" />
                             </th>
                             <th @click="handleSort('late_minutes')" class="th-sort px-4 py-2">
                                 Retard
@@ -204,8 +204,8 @@
                             </td>
                             <td class="px-4 py-2">{{ r.user.name }}</td>
                             <td class="px-4 py-2">{{ r.user.email }}</td>
-                            <td class="px-4 py-2">{{ r.arrival_time ?? '-' }}</td>
-                            <td class="px-4 py-2">{{ r.departure_time ?? '-' }}</td>
+                            <td class="px-4 py-2">{{ r.heure_arrivee ?? '-' }}</td>
+                            <td class="px-4 py-2">{{ r.heure_depart ?? '-' }}</td>
                             <td class="px-4 py-2">
                                 <Badge :type="r.late_minutes > 0 ? 'warning' : 'success'"> {{ r.late_minutes }} min
                                 </Badge>
@@ -223,7 +223,7 @@
                                 <span v-else>-</span>
                             </td>
                             <td class="px-4 py-2">
-                                <Link :href="presencesRoutes.edit({ id: r.id }).url"
+                                <Link :href="editPresenceRoute(r.id).url"
                                     class="text-primary hover:underline">
                                     <Pen class="inline h-4 w-4" /> Editer
                                 </Link>
@@ -289,8 +289,20 @@ import {
 import { computed, ref, watch } from 'vue';
 
 // Import des routes Wayfinder
-import * as userRoutes from '@/routes/users';
-import presencesRoutes from '@/routes/presences';
+import { 
+    index as usersIndexRoute 
+} from '@/routes/users';
+import { 
+    add as addPresenceRoute,
+    edit as editPresenceRoute, 
+    destroy as deletePresenceRoute, 
+    excel as excelPresenceRoute,
+    downloadAll as pdfPresenceRoute
+} from '@/routes/presences';
+
+import { pdf as userPdfPresenceRoute } from '@/routes/presences/user';
+import { period as userPdfPeriodPresenceRoute } from '@/routes/presences/user/pdf';
+import { zip as zipPresenceRoute } from '@/routes/presences/users/pdf';
 
 // Typage amélioré
 interface User {
@@ -302,8 +314,8 @@ interface User {
 interface Presence {
     id: number;
     date: string;
-    arrival_time: string | null;
-    departure_time: string | null;
+    heure_arrivee: string | null;
+    heure_depart: string | null;
     late_minutes: number;
     absent: boolean;
     late: boolean;
@@ -311,10 +323,10 @@ interface Presence {
     absence_reason: string | null;
 }
 
-// ✅ CORRECTION : Ajouter allUsers dans les props
 const props = defineProps<{
     presenceCount: number;
-    allUsers: User[]; // ✅ AJOUT
+    allUsers: { data: User[] };
+    presences: { data: any[] };
 }>();
 
 // Messages flash
@@ -338,14 +350,12 @@ watch(
 );
 
 // Initialisation des données
-const page = usePage();
-const rawPresences = (page.props as any).presences as Omit<Presence, 'late_minutes' | 'late'>[];
 const data = ref<Presence[]>(
-    rawPresences.map((r) => ({
+    props.presences.data.map((r) => ({
         ...r,
-        late_minutes: calculerMinutesRetard(r.arrival_time),
-        late: calculerMinutesRetard(r.arrival_time) > 0,
-        absence_reason: (r as any).absence_reason || null,
+        late_minutes: calculerMinutesRetard(r.heure_arrivee),
+        late: calculerMinutesRetard(r.heure_arrivee) > 0,
+        absence_reason: r.absence_reason || null,
     })),
 );
 
@@ -361,8 +371,7 @@ const itemsPerPage = ref(10);
 const sortField = ref<keyof Presence>('date');
 const sortDirection = ref<'asc' | 'desc'>('desc');
 
-// ✅ CORRECTION : Utiliser allUsers depuis les props
-const usersWithIds = computed(() => props.allUsers);
+const usersWithIds = computed(() => props.allUsers.data);
 
 // Gérer la sélection d'utilisateur
 function handleUserChange() {
@@ -389,7 +398,7 @@ function exportUserPdf() {
         return;
     }
 
-    const url = presencesRoutes.user.pdf({ user: selectedUserForExport.value.id }).url;
+    const url = userPdfPresenceRoute({ user: selectedUserForExport.value.id }).url;
     window.open(url, '_blank');
 }
 
@@ -405,7 +414,7 @@ function exportUserPdfWithPeriod() {
         return;
     }
 
-    const url = presencesRoutes.user.pdf.period({
+    const url = userPdfPeriodPresenceRoute({
         user: selectedUserForExport.value.id,
         startDate: filterDateFrom.value,
         endDate: filterDateTo.value,
@@ -469,7 +478,7 @@ function setCurrentPage(n: number) {
 
 function deletePresence(id: number) {
     if (confirm('Êtes-vous sûr de vouloir supprimer cette présence ?')) {
-        router.delete(presencesRoutes.destroy({ presence: id }).url, {
+        router.delete(deletePresenceRoute({ presence: id }).url, {
             onSuccess: () => {
                 data.value = data.value.filter((p) => p.id !== id);
             },
@@ -486,7 +495,7 @@ function calculerMinutesRetard(arrivee: string | null, normale = '08:00'): numbe
 }
 
 // Breadcrumbs
-const breadcrumbs: BreadcrumbItem[] = [{ title: 'Présences : Sup_Admin', href: userRoutes.index().url }];
+const breadcrumbs: BreadcrumbItem[] = [{ title: 'Présences : Sup_Admin', href: usersIndexRoute().url }];
 </script>
 <style scoped>
 .th-sort {

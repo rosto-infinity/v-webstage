@@ -104,14 +104,27 @@ class PresenceRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         // Normaliser les formats d'heure (assurer HH:mm car 'H:i' attend les zéros initiaux)
-        // Les navigateurs envoient généralement HH:mm mais on s'assure de la compatibilité
-        if ($this->heure_arrivee && preg_match('/^(\d):(\d{2})$/', $this->heure_arrivee, $matches)) {
-            $this->merge(['heure_arrivee' => '0'.$matches[1].':'.$matches[2]]);
-        }
+        // et retirer les secondes (HH:mm:ss -> HH:mm) envoyées par les champs input type="time" avec step="1"
+        $normalizeTime = function ($time) {
+            if (! $time) return $time;
+            
+            // Enlever les secondes s'il y en a (ex: 09:35:33 -> 09:35)
+            if (preg_match('/^(\d{1,2}:\d{2}):\d{2}$/', $time, $matches)) {
+                $time = $matches[1];
+            }
+            
+            // Ajouter un 0 initial si l'heure n'a qu'un chiffre (ex: 9:35 -> 09:35)
+            if (preg_match('/^(\d):(\d{2})$/', $time, $matches)) {
+                $time = '0'.$matches[1].':'.$matches[2];
+            }
+            
+            return $time;
+        };
 
-        if ($this->heure_depart && preg_match('/^(\d):(\d{2})$/', $this->heure_depart, $matches)) {
-            $this->merge(['heure_depart' => '0'.$matches[1].':'.$matches[2]]);
-        }
+        $this->merge([
+            'heure_arrivee' => $normalizeTime($this->heure_arrivee),
+            'heure_depart' => $normalizeTime($this->heure_depart),
+        ]);
 
         // Si absent, on force les valeurs à null/false
         if ($this->absent) {

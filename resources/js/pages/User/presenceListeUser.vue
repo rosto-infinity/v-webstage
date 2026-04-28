@@ -5,8 +5,9 @@ import AppLayoutUser from '@/layouts/AppLayoutUser.vue';
 import type { BreadcrumbItem } from '@/types';
 import { Head, usePage } from '@inertiajs/vue3';
 import { Calendar, CalendarCheck, Clock, Download, Users } from 'lucide-vue-next';
-import * as routes from '@/routes';
-import * as downloadpdf from '@/routes/downloadpdf';
+import { list as presenceListRoute } from '@/routes';
+import { presence as downloadPdfPresenceRoute } from '@/routes/downloadpdf';
+import { computed, ref, watch } from 'vue';
 
 interface Presence {
     id: number;
@@ -76,12 +77,12 @@ const absentCount = computed(() => data.value.filter((r) => r.absent).length);
 const lateCount = computed(() => data.value.filter((r) => r.late).length);
 
 const exportPdf = () => {
-    window.location.href = downloadpdf.presence().url;
+    window.location.href = downloadPdfPresenceRoute().url;
 };
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Mes Présences',
-        href: routes.list().url,
+        href: presenceListRoute().url,
     },
 ];
 </script>

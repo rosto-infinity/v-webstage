@@ -2,7 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 import user from './user'
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::excel
-* @see app/Http/Controllers/Admin/PresenceController.php:193
+* @see app/Http/Controllers/Admin/PresenceController.php:151
 * @route '/presences/excel'
 */
 export const excel = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -17,7 +17,7 @@ excel.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::excel
-* @see app/Http/Controllers/Admin/PresenceController.php:193
+* @see app/Http/Controllers/Admin/PresenceController.php:151
 * @route '/presences/excel'
 */
 excel.url = (options?: RouteQueryOptions) => {
@@ -26,7 +26,7 @@ excel.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::excel
-* @see app/Http/Controllers/Admin/PresenceController.php:193
+* @see app/Http/Controllers/Admin/PresenceController.php:151
 * @route '/presences/excel'
 */
 excel.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -36,7 +36,7 @@ excel.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::excel
-* @see app/Http/Controllers/Admin/PresenceController.php:193
+* @see app/Http/Controllers/Admin/PresenceController.php:151
 * @route '/presences/excel'
 */
 excel.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -46,7 +46,7 @@ excel.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::excel
-* @see app/Http/Controllers/Admin/PresenceController.php:193
+* @see app/Http/Controllers/Admin/PresenceController.php:151
 * @route '/presences/excel'
 */
 const excelForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -56,7 +56,7 @@ const excelForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::excel
-* @see app/Http/Controllers/Admin/PresenceController.php:193
+* @see app/Http/Controllers/Admin/PresenceController.php:151
 * @route '/presences/excel'
 */
 excelForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -66,7 +66,7 @@ excelForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::excel
-* @see app/Http/Controllers/Admin/PresenceController.php:193
+* @see app/Http/Controllers/Admin/PresenceController.php:151
 * @route '/presences/excel'
 */
 excelForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -83,7 +83,7 @@ excel.form = excelForm
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::downloadAll
-* @see app/Http/Controllers/Admin/PresenceController.php:203
+* @see app/Http/Controllers/Admin/PresenceController.php:161
 * @route '/presences/download-all'
 */
 export const downloadAll = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -98,7 +98,7 @@ downloadAll.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::downloadAll
-* @see app/Http/Controllers/Admin/PresenceController.php:203
+* @see app/Http/Controllers/Admin/PresenceController.php:161
 * @route '/presences/download-all'
 */
 downloadAll.url = (options?: RouteQueryOptions) => {
@@ -107,7 +107,7 @@ downloadAll.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::downloadAll
-* @see app/Http/Controllers/Admin/PresenceController.php:203
+* @see app/Http/Controllers/Admin/PresenceController.php:161
 * @route '/presences/download-all'
 */
 downloadAll.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -117,7 +117,7 @@ downloadAll.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::downloadAll
-* @see app/Http/Controllers/Admin/PresenceController.php:203
+* @see app/Http/Controllers/Admin/PresenceController.php:161
 * @route '/presences/download-all'
 */
 downloadAll.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -127,7 +127,7 @@ downloadAll.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::downloadAll
-* @see app/Http/Controllers/Admin/PresenceController.php:203
+* @see app/Http/Controllers/Admin/PresenceController.php:161
 * @route '/presences/download-all'
 */
 const downloadAllForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -137,7 +137,7 @@ const downloadAllForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::downloadAll
-* @see app/Http/Controllers/Admin/PresenceController.php:203
+* @see app/Http/Controllers/Admin/PresenceController.php:161
 * @route '/presences/download-all'
 */
 downloadAllForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -147,7 +147,7 @@ downloadAllForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> 
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::downloadAll
-* @see app/Http/Controllers/Admin/PresenceController.php:203
+* @see app/Http/Controllers/Admin/PresenceController.php:161
 * @route '/presences/download-all'
 */
 downloadAllForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -164,7 +164,7 @@ downloadAll.form = downloadAllForm
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::users
-* @see app/Http/Controllers/Admin/PresenceController.php:31
+* @see app/Http/Controllers/Admin/PresenceController.php:34
 * @route '/presences/users'
 */
 export const users = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -179,7 +179,7 @@ users.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::users
-* @see app/Http/Controllers/Admin/PresenceController.php:31
+* @see app/Http/Controllers/Admin/PresenceController.php:34
 * @route '/presences/users'
 */
 users.url = (options?: RouteQueryOptions) => {
@@ -188,7 +188,7 @@ users.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::users
-* @see app/Http/Controllers/Admin/PresenceController.php:31
+* @see app/Http/Controllers/Admin/PresenceController.php:34
 * @route '/presences/users'
 */
 users.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -198,7 +198,7 @@ users.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::users
-* @see app/Http/Controllers/Admin/PresenceController.php:31
+* @see app/Http/Controllers/Admin/PresenceController.php:34
 * @route '/presences/users'
 */
 users.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -208,7 +208,7 @@ users.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::users
-* @see app/Http/Controllers/Admin/PresenceController.php:31
+* @see app/Http/Controllers/Admin/PresenceController.php:34
 * @route '/presences/users'
 */
 const usersForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -218,7 +218,7 @@ const usersForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::users
-* @see app/Http/Controllers/Admin/PresenceController.php:31
+* @see app/Http/Controllers/Admin/PresenceController.php:34
 * @route '/presences/users'
 */
 usersForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -228,7 +228,7 @@ usersForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::users
-* @see app/Http/Controllers/Admin/PresenceController.php:31
+* @see app/Http/Controllers/Admin/PresenceController.php:34
 * @route '/presences/users'
 */
 usersForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -245,7 +245,7 @@ users.form = usersForm
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::add
-* @see app/Http/Controllers/Admin/PresenceController.php:78
+* @see app/Http/Controllers/Admin/PresenceController.php:59
 * @route '/presences/add'
 */
 export const add = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -260,7 +260,7 @@ add.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::add
-* @see app/Http/Controllers/Admin/PresenceController.php:78
+* @see app/Http/Controllers/Admin/PresenceController.php:59
 * @route '/presences/add'
 */
 add.url = (options?: RouteQueryOptions) => {
@@ -269,7 +269,7 @@ add.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::add
-* @see app/Http/Controllers/Admin/PresenceController.php:78
+* @see app/Http/Controllers/Admin/PresenceController.php:59
 * @route '/presences/add'
 */
 add.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -279,7 +279,7 @@ add.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::add
-* @see app/Http/Controllers/Admin/PresenceController.php:78
+* @see app/Http/Controllers/Admin/PresenceController.php:59
 * @route '/presences/add'
 */
 add.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -289,7 +289,7 @@ add.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::add
-* @see app/Http/Controllers/Admin/PresenceController.php:78
+* @see app/Http/Controllers/Admin/PresenceController.php:59
 * @route '/presences/add'
 */
 const addForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -299,7 +299,7 @@ const addForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::add
-* @see app/Http/Controllers/Admin/PresenceController.php:78
+* @see app/Http/Controllers/Admin/PresenceController.php:59
 * @route '/presences/add'
 */
 addForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -309,7 +309,7 @@ addForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::add
-* @see app/Http/Controllers/Admin/PresenceController.php:78
+* @see app/Http/Controllers/Admin/PresenceController.php:59
 * @route '/presences/add'
 */
 addForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -326,7 +326,7 @@ add.form = addForm
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::store
-* @see app/Http/Controllers/Admin/PresenceController.php:97
+* @see app/Http/Controllers/Admin/PresenceController.php:76
 * @route '/presences/store'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -341,7 +341,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::store
-* @see app/Http/Controllers/Admin/PresenceController.php:97
+* @see app/Http/Controllers/Admin/PresenceController.php:76
 * @route '/presences/store'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -350,7 +350,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::store
-* @see app/Http/Controllers/Admin/PresenceController.php:97
+* @see app/Http/Controllers/Admin/PresenceController.php:76
 * @route '/presences/store'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -360,7 +360,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::store
-* @see app/Http/Controllers/Admin/PresenceController.php:97
+* @see app/Http/Controllers/Admin/PresenceController.php:76
 * @route '/presences/store'
 */
 const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -370,7 +370,7 @@ const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::store
-* @see app/Http/Controllers/Admin/PresenceController.php:97
+* @see app/Http/Controllers/Admin/PresenceController.php:76
 * @route '/presences/store'
 */
 storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -382,7 +382,7 @@ store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::edit
-* @see app/Http/Controllers/Admin/PresenceController.php:132
+* @see app/Http/Controllers/Admin/PresenceController.php:100
 * @route '/presences/{id}/edit'
 */
 export const edit = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -397,7 +397,7 @@ edit.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::edit
-* @see app/Http/Controllers/Admin/PresenceController.php:132
+* @see app/Http/Controllers/Admin/PresenceController.php:100
 * @route '/presences/{id}/edit'
 */
 edit.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -424,7 +424,7 @@ edit.url = (args: { id: string | number } | [id: string | number ] | string | nu
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::edit
-* @see app/Http/Controllers/Admin/PresenceController.php:132
+* @see app/Http/Controllers/Admin/PresenceController.php:100
 * @route '/presences/{id}/edit'
 */
 edit.get = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -434,7 +434,7 @@ edit.get = (args: { id: string | number } | [id: string | number ] | string | nu
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::edit
-* @see app/Http/Controllers/Admin/PresenceController.php:132
+* @see app/Http/Controllers/Admin/PresenceController.php:100
 * @route '/presences/{id}/edit'
 */
 edit.head = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -444,7 +444,7 @@ edit.head = (args: { id: string | number } | [id: string | number ] | string | n
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::edit
-* @see app/Http/Controllers/Admin/PresenceController.php:132
+* @see app/Http/Controllers/Admin/PresenceController.php:100
 * @route '/presences/{id}/edit'
 */
 const editForm = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -454,7 +454,7 @@ const editForm = (args: { id: string | number } | [id: string | number ] | strin
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::edit
-* @see app/Http/Controllers/Admin/PresenceController.php:132
+* @see app/Http/Controllers/Admin/PresenceController.php:100
 * @route '/presences/{id}/edit'
 */
 editForm.get = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -464,7 +464,7 @@ editForm.get = (args: { id: string | number } | [id: string | number ] | string 
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::edit
-* @see app/Http/Controllers/Admin/PresenceController.php:132
+* @see app/Http/Controllers/Admin/PresenceController.php:100
 * @route '/presences/{id}/edit'
 */
 editForm.head = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -481,7 +481,7 @@ edit.form = editForm
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::update
-* @see app/Http/Controllers/Admin/PresenceController.php:159
+* @see app/Http/Controllers/Admin/PresenceController.php:116
 * @route '/presences/{id}'
 */
 export const update = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -496,7 +496,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::update
-* @see app/Http/Controllers/Admin/PresenceController.php:159
+* @see app/Http/Controllers/Admin/PresenceController.php:116
 * @route '/presences/{id}'
 */
 update.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -523,7 +523,7 @@ update.url = (args: { id: string | number } | [id: string | number ] | string | 
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::update
-* @see app/Http/Controllers/Admin/PresenceController.php:159
+* @see app/Http/Controllers/Admin/PresenceController.php:116
 * @route '/presences/{id}'
 */
 update.patch = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -533,7 +533,7 @@ update.patch = (args: { id: string | number } | [id: string | number ] | string 
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::update
-* @see app/Http/Controllers/Admin/PresenceController.php:159
+* @see app/Http/Controllers/Admin/PresenceController.php:116
 * @route '/presences/{id}'
 */
 const updateForm = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -548,7 +548,7 @@ const updateForm = (args: { id: string | number } | [id: string | number ] | str
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::update
-* @see app/Http/Controllers/Admin/PresenceController.php:159
+* @see app/Http/Controllers/Admin/PresenceController.php:116
 * @route '/presences/{id}'
 */
 updateForm.patch = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -565,7 +565,7 @@ update.form = updateForm
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::destroy
-* @see app/Http/Controllers/Admin/PresenceController.php:182
+* @see app/Http/Controllers/Admin/PresenceController.php:139
 * @route '/presences/{presence}'
 */
 export const destroy = (args: { presence: number | { id: number } } | [presence: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -580,7 +580,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::destroy
-* @see app/Http/Controllers/Admin/PresenceController.php:182
+* @see app/Http/Controllers/Admin/PresenceController.php:139
 * @route '/presences/{presence}'
 */
 destroy.url = (args: { presence: number | { id: number } } | [presence: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -613,7 +613,7 @@ destroy.url = (args: { presence: number | { id: number } } | [presence: number |
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::destroy
-* @see app/Http/Controllers/Admin/PresenceController.php:182
+* @see app/Http/Controllers/Admin/PresenceController.php:139
 * @route '/presences/{presence}'
 */
 destroy.delete = (args: { presence: number | { id: number } } | [presence: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -623,7 +623,7 @@ destroy.delete = (args: { presence: number | { id: number } } | [presence: numbe
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::destroy
-* @see app/Http/Controllers/Admin/PresenceController.php:182
+* @see app/Http/Controllers/Admin/PresenceController.php:139
 * @route '/presences/{presence}'
 */
 const destroyForm = (args: { presence: number | { id: number } } | [presence: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -638,7 +638,7 @@ const destroyForm = (args: { presence: number | { id: number } } | [presence: nu
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::destroy
-* @see app/Http/Controllers/Admin/PresenceController.php:182
+* @see app/Http/Controllers/Admin/PresenceController.php:139
 * @route '/presences/{presence}'
 */
 destroyForm.delete = (args: { presence: number | { id: number } } | [presence: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
