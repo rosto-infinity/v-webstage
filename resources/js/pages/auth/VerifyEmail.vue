@@ -2,13 +2,10 @@
 import TextLink from '@/components/TextLink.vue';
 import { Button } from '@/components/ui/button';
 import AuthLayout from '@/layouts/AuthLayout.vue';
+import { logout } from '@/routes';
 import * as verificationRoutes from '@/routes/verification';
 import { Form, Head } from '@inertiajs/vue3';
 import { LoaderCircle } from 'lucide-vue-next';
-
-defineProps<{
-    status?: string;
-}>();
 </script>
 
 <template>
@@ -25,7 +22,7 @@ defineProps<{
                 Resend verification email
             </Button>
 
-            <TextLink :href="route('logout')" method="post" as="button" class="mx-auto block text-sm"> Log out </TextLink>
+            <TextLink :href="logout().url" method="post" as="button" class="mx-auto block text-sm"> Log out </TextLink>
         </Form>
     </AuthLayout>
 </template>

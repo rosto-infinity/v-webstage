@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthLayout from '@/layouts/AuthLayout.vue';
+import { login } from '@/routes';
 import * as passwordRoutes from '@/routes/password';
 import { Form, Head } from '@inertiajs/vue3';
 import { LoaderCircle } from 'lucide-vue-next';
@@ -30,7 +31,7 @@ defineProps<{
             </div>
 
             <div class="flex items-center justify-end gap-4">
-                <TextLink :href="route('login')" class="text-sm underline-offset-4 hover:underline"> Back to login </TextLink>
+                <TextLink :href="login().url" class="text-sm underline-offset-4 hover:underline"> Back to login </TextLink>
 
                 <Button type="submit" :disabled="processing">
                     <LoaderCircle v-if="processing" class="h-4 w-4 animate-spin" />

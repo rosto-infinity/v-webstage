@@ -160,7 +160,7 @@ const breadcrumbs: BreadcrumbItem[] = [
             </div>
 
             <div class="mt-8">
-                <Link v-if="isSuperAdmin" :href="route('dashboard.superadmin')" prefetch class="btn btn-primary text-red-700">
+                <Link v-if="isSuperAdmin" :href="dashboardRoutes.superadmin().url" prefetch class="btn btn-primary text-red-700">
                     Accéder au dashboard Super Admin
                 </Link>
             </div>

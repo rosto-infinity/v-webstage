@@ -20,20 +20,20 @@
                         <h3 class="mb-4 text-lg font-semibold text-violet-800 dark:text-primary">À propos</h3>
                         <ul class="space-y-2">
                             <li>
-                                <Link :href="route('home')" prefetch class="transition hover:text-primary dark:hover:text-violet-400"> Accueil </Link>
+                                <Link :href="routes.home().url" prefetch class="transition hover:text-primary dark:hover:text-violet-400"> Accueil </Link>
                             </li>
                             <li>
-                                <Link :href="route('about')" prefetch class="transition hover:text-primary dark:hover:text-violet-400">
+                                <Link :href="routes.about().url" prefetch class="transition hover:text-primary dark:hover:text-violet-400">
                                     À propos de nous
                                 </Link>
                             </li>
                             <li>
-                                <Link :href="route('guide.stage')" prefetch class="transition hover:text-primary dark:hover:text-violet-400"
+                                <Link :href="guide.stage().url" prefetch class="transition hover:text-primary dark:hover:text-violet-400"
                                     >Guide du stage</Link
                                 >
                             </li>
                             <li>
-                                <Link :href="route('genie.logiciel')" prefetch class="transition hover:text-primary dark:hover:text-violet-400"
+                                <Link :href="genie.logiciel().url" prefetch class="transition hover:text-primary dark:hover:text-violet-400"
                                     >Génie logiciel</Link
                                 >
                             </li>
@@ -45,15 +45,15 @@
                         <h3 class="mb-4 text-lg font-semibold text-violet-800 dark:text-primary">Ressources</h3>
                         <ul class="space-y-2">
                             <li>
-                                <Link :href="route('dev.app')" prefetch class="transition hover:text-primary dark:hover:text-violet-400"
+                                <Link :href="dev.app().url" prefetch class="transition hover:text-primary dark:hover:text-violet-400"
                                     >Développement d'applications</Link
                                 >
                             </li>
                             <li>
-                                <Link :href="route('faq')" prefetch class="transition hover:text-primary dark:hover:text-violet-400">FAQ</Link>
+                                <Link :href="routes.faq().url" prefetch class="transition hover:text-primary dark:hover:text-violet-400">FAQ</Link>
                             </li>
                             <li>
-                                <Link :href="route('conditions.stage')" prefetch class="transition hover:text-primary dark:hover:text-violet-400"
+                                <Link :href="conditions.stage().url" prefetch class="transition hover:text-primary dark:hover:text-violet-400"
                                     >Conditions du stage</Link
                                 >
                             </li>
@@ -65,7 +65,7 @@
                         <h3 class="mb-4 text-lg font-semibold text-violet-800 dark:text-primary">Legal</h3>
                         <ul class="space-y-2">
                             <li>
-                                <Link :href="route('conditions.stage')" prefetch class="transition hover:text-primary dark:hover:text-violet-400"
+                                <Link :href="conditions.stage().url" prefetch class="transition hover:text-primary dark:hover:text-violet-400"
                                     >Conditions générales</Link
                                 >
                             </li>
@@ -183,6 +183,12 @@
 
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
+import * as routes from '@/routes';
+import * as conditions from '@/routes/conditions';
+import * as guide from '@/routes/guide';
+import * as genie from '@/routes/genie';
+import * as dev from '@/routes/dev';
+
 const currentYear = new Date().getFullYear();
 </script>
 

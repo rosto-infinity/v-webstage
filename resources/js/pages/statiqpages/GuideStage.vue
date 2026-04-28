@@ -4,7 +4,10 @@ import { Head, Link } from '@inertiajs/vue3';
 import { ChevronDown, ChevronUp, FileText, Home, Info, LayoutDashboard, List, Mail, Shield } from 'lucide-vue-next';
 import { h, ref } from 'vue';
 import FooterSite from './FooterSite.vue';
-// import FooterSite from './FooterSite.vue';
+import * as routes from '@/routes';
+import * as guide from '@/routes/guide';
+import * as dev from '@/routes/dev';
+import * as genie from '@/routes/genie';
 
 interface Section {
     id: string;
@@ -141,7 +144,7 @@ const currentDate = new Date().toLocaleDateString('fr-FR');
         <nav class="mx-auto mb-0 w-full max-w-[335px] text-sm not-has-[nav]:hidden lg:max-w-4xl">
             <nav class="flex items-center justify-center gap-4 py-6">
                 <Link
-                    :href="route('home')"
+                    :href="routes.home().url"
                     prefetch
                     class="inline-block rounded-lg bg-primary px-5 py-2 text-sm leading-normal text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
                 >
@@ -149,7 +152,7 @@ const currentDate = new Date().toLocaleDateString('fr-FR');
                 </Link>
                 <Link
                     v-if="$page.props.auth.user"
-                    :href="route('dashboard')"
+                    :href="routes.dashboard().url"
                     prefetch
                     class="inline-block rounded-lg border border-primary/20 px-5 py-2 text-sm leading-normal text-primary transition-colors hover:bg-primary/10"
                 >
@@ -157,7 +160,7 @@ const currentDate = new Date().toLocaleDateString('fr-FR');
                 </Link>
                 <template v-else>
                     <Link
-                        :href="route('login')"
+                        :href="routes.login().url"
                         prefetch
                         class="inline-block rounded-lg bg-primary px-5 py-2 text-sm leading-normal text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
                     >
@@ -195,7 +198,7 @@ const currentDate = new Date().toLocaleDateString('fr-FR');
                     <!-- Conditions du Stage -->
 
                     <Link
-                        :href="route('about')"
+                        :href="routes.about().url"
                         class="flex items-center text-violet-700 transition hover:text-violet-900 dark:text-violet-400 dark:hover:text-violet-300"
                     >
                         <svg class="mr-2 h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -210,7 +213,7 @@ const currentDate = new Date().toLocaleDateString('fr-FR');
                     </Link>
                     <!-- Guide du Stage -->
                     <Link
-                        :href="route('guide.stage')"
+                        :href="guide.stage().url"
                         class="flex items-center text-violet-700 transition hover:text-violet-900 dark:text-violet-400 dark:hover:text-violet-300"
                     >
                         <svg class="mr-2 h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -225,7 +228,7 @@ const currentDate = new Date().toLocaleDateString('fr-FR');
                     </Link>
                     <!-- Développement d'App -->
                     <Link
-                        :href="route('dev.app')"
+                        :href="dev.app().url"
                         class="flex items-center text-violet-700 transition hover:text-violet-900 dark:text-violet-400 dark:hover:text-violet-300"
                     >
                         <svg class="mr-2 h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -235,7 +238,7 @@ const currentDate = new Date().toLocaleDateString('fr-FR');
                     </Link>
                     <!-- Génie Logiciel -->
                     <Link
-                        :href="route('genie.logiciel')"
+                        :href="genie.logiciel().url"
                         class="flex items-center text-violet-700 transition hover:text-violet-900 dark:text-violet-400 dark:hover:text-violet-300"
                     >
                         <svg class="mr-2 h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -245,7 +248,7 @@ const currentDate = new Date().toLocaleDateString('fr-FR');
                     </Link>
                     <!-- FAQ -->
                     <Link
-                        :href="route('faq')"
+                        :href="routes.faq().url"
                         class="flex items-center text-violet-700 transition hover:text-violet-900 dark:text-violet-400 dark:hover:text-violet-300"
                     >
                         <svg class="mr-2 h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -317,7 +320,7 @@ const currentDate = new Date().toLocaleDateString('fr-FR');
             <p class="text-sm text-slate-600 dark:text-slate-400">Dernière mise à jour : {{ currentDate }}</p>
             <div class="mt-4 flex justify-center space-x-6">
                 <Link
-                    href="/"
+                    :href="routes.home().url"
                     class="text-primary-700 dark:text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 text-sm font-medium transition-colors"
                 >
                     Retour au site

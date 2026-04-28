@@ -1,5 +1,6 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
 import user from './user'
+import users_nested from './users'
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::excel
 * @see app/Http/Controllers/Admin/PresenceController.php:193
@@ -657,7 +658,7 @@ const presences = {
     excel: Object.assign(excel, excel),
     downloadAll: Object.assign(downloadAll, downloadAll),
     user: Object.assign(user, user),
-    users: Object.assign(users, users),
+    users: Object.assign(users, users_nested),
     add: Object.assign(add, add),
     store: Object.assign(store, store),
     edit: Object.assign(edit, edit),

@@ -2,9 +2,11 @@
 import AppearanceTabs from '@/components/AppearanceTabs.vue';
 import { Head, InfiniteScroll, Link } from '@inertiajs/vue3';
 import { useMotion } from '@vueuse/motion';
-import { Facebook, Github, Globe, Instagram, Linkedin, ShieldAlert, Twitter, Youtube } from 'lucide-vue-next';
+import { Facebook, Github, Globe, Instagram, Linkedin, Loader2, ShieldAlert, Trophy, Twitter, Youtube } from 'lucide-vue-next';
 import { onMounted, ref } from 'vue';
 import FooterSite from './statiqpages/FooterSite.vue';
+import * as routes from '@/routes';
+import * as conditions from '@/routes/conditions';
 
 // État de chargement
 const isLoading = ref(true);
@@ -117,35 +119,26 @@ onMounted(() => {
 defineProps<{
     totalUsers: number;
     users: {
-        id: number;
-        name: string;
-        email: string;
-        avatar: string;
-        socialMedias: {
+        data: {
             id: number;
-            platform: string;
-            url: string;
-            display_name: string;
+            name: string;
+            email: string;
+            avatar: string;
+            socialMedias: {
+                id: number;
+                platform: string;
+                url: string;
+                display_name: string;
+            }[];
         }[];
-    }[];
+    };
 }>();
 </script>
 
 <template>
-    <!-- Écran de chargement -->
-    <Transition name="fade">
-        <div v-if="isLoading" class="dark:bg-background-dark fixed inset-0 z-50 flex flex-col items-center justify-center gap-6 bg-background">
-            <div
-                ref="spinner"
-                class="dark:border-primary-dark h-16 w-16 animate-spin rounded-full border-4 border-primary border-t-transparent"
-            ></div>
-            <p class="dark:text-muted-foreground-dark text-lg font-medium text-muted-foreground">Chargement en cours...</p>
-        </div>
-    </Transition>
 
     <!-- Contenu principal -->
     <div
-        v-show="!isLoading"
         class="dark:from-background-dark/10 dark:to-background-dark min-h-screen bg-gradient-to-b from-background/10 to-background"
     >
         <Head title="Welcome">
@@ -159,7 +152,7 @@ defineProps<{
                 <AppearanceTabs />
                 <Link
                     v-if="$page.props.auth.user"
-                    :href="route('dashboard')"
+                    :href="routes.dashboard().url"
                     prefetch
                     class="inline-block rounded-lg border border-primary/20 px-5 py-2 text-sm leading-normal text-primary transition-colors hover:bg-primary/10 dark:hover:bg-primary/20"
                 >
@@ -167,7 +160,7 @@ defineProps<{
                 </Link>
                 <template v-else>
                     <Link
-                        :href="route('login')"
+                        :href="routes.login().url"
                         prefetch
                         class="dark:bg-primary-dark dark:hover:bg-primary-dark/90 inline-block rounded-lg bg-primary px-5 py-2 text-sm leading-normal text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
                     >
@@ -200,7 +193,7 @@ defineProps<{
                 <div class="mt-12 flex items-center justify-center gap-4 sm:flex-row">
                     <Link
                         ref="ctaButton"
-                        :href="route('conditions.stage')"
+                        :href="conditions.stage().url"
                         prefetch
                         class="btn dark:bg-violet-600-dark dark:hover:shadow-lg-dark rounded-lg border-1 border-primary bg-primary px-8 py-3 text-base font-medium text-white transition-all duration-300 hover:shadow-lg"
                     >

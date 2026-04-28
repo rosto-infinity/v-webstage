@@ -4,6 +4,7 @@ import { type BreadcrumbItem } from '@/types';
 import { Head, router, usePage } from '@inertiajs/vue3';
 import { Download } from 'lucide-vue-next';
 import { computed } from 'vue';
+import * as routes from '@/routes';
 
 import Button from '@/components/ui/button/Button.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
@@ -12,7 +13,7 @@ import SettingsLayout from '@/layouts/settings/Layout.vue';
 const breadcrumbItems: BreadcrumbItem[] = [
     {
         title: 'DB Backup settings',
-        href: '/settings/dbbackup',
+        href: routes.dbbackup().url,
     },
 ];
 
@@ -44,11 +45,11 @@ const formatDate = (timestamp: number) => {
 };
 
 const downloadBackup = (path: string) => {
-    window.location.href = route('dbbackup.download', { path });
+    window.location.href = routes.dbbackup.download({ query: { path } }).url;
 };
 
 const createBackup = () => {
-    router.post(route('dbbackup.create'));
+    router.post(routes.dbbackup.create().url);
 };
 </script>
 

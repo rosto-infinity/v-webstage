@@ -7,21 +7,22 @@ import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
 import { Folder, Home, LayoutGrid } from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
+import * as routes from '@/routes';
 
 const mainNavItems: NavItem[] = [
     {
         title: 'Home',
-        href: '/',
+        href: routes.home().url,
         icon: Home, // Icône appropriée pour un tableau de bord
     },
     {
         title: 'Dashboard',
-        href: '/dashboard',
+        href: routes.dashboard().url,
         icon: LayoutGrid, // Icône appropriée pour un tableau de bord
     },
     {
         title: 'Mes Présences',
-        href: '/dashboard/presence-list-user',
+        href: routes.list().url,
     },
 ];
 
@@ -40,7 +41,7 @@ const footerNavItems: NavItem[] = [
             <SidebarMenu>
                 <SidebarMenuItem>
                     <SidebarMenuButton size="lg" as-child>
-                        <Link :href="route('dashboard')" prefetch>
+                        <Link :href="routes.dashboard().url" prefetch>
                             <AppLogo />
                         </Link>
                     </SidebarMenuButton>

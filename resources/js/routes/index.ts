@@ -1,4 +1,14 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../wayfinder'
+import dashboard_nested from './dashboard'
+import admin_nested from './admin'
+import presences_nested from './presences'
+import users_nested from './users'
+import guide_nested from './guide'
+import dev_nested from './dev'
+import genie_nested from './genie'
+import conditions_nested from './conditions'
+import dbbackup_nested from './dbbackup'
+import profile_nested from './profile'
 /**
 * @see \App\Http\Controllers\HomeController::home
 * @see app/Http/Controllers/HomeController.php:18
@@ -1086,3 +1096,16 @@ notfoundForm.head = (args: { any: string | number } | [any: string | number ] | 
 })
 
 notfound.form = notfoundForm
+
+export { superadmin } from './dashboard'
+export const admin = admin_nested
+export const presences = presences_nested
+export const users = users_nested
+export const guide = guide_nested
+export const dev = dev_nested
+export const genie = genie_nested
+export const conditions = conditions_nested
+export const profile = profile_nested
+
+Object.assign(dashboard, dashboard_nested)
+Object.assign(dbbackup, dbbackup_nested)

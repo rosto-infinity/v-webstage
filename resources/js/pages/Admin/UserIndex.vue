@@ -4,11 +4,13 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem, type PaginationLink } from '@/types';
 import { Head, Link } from '@inertiajs/vue3';
 import { Calendar, Clock, UserPlus, Users } from 'lucide-vue-next';
+import * as userRoutes from '@/routes/users';
+import * as presencesRoutes from '@/routes/presences';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Users List : Sup_Admin',
-        href: '/presences/users',
+        href: presencesRoutes.users().url,
     },
 ];
 
@@ -88,7 +90,7 @@ defineProps<{
                 <h2 class="text-lg font-medium text-gray-900 dark:text-white">Liste des utilisateurs</h2>
                 <span class="flex gap-1 rounded-sm bg-green-900 px-2 pt-2 text-white">
                     <UserPlus />
-                    <Link class="btn btn-primary mb-4" :href="route('users.create')">Add Users</Link>
+                    <Link class="btn btn-primary mb-4" :href="userRoutes.create().url">Add Users</Link>
                 </span>
                 <span class="text-sm text-gray-500 dark:text-gray-400"> Total: {{ totalUsers }} utilisateur(s) </span>
             </div>
@@ -146,7 +148,7 @@ defineProps<{
 
             <div class="mt-4">
                 <Link
-                    :href="route('presences')"
+                    :href="presencesRoutes.users().url"
                     prefetch
                     class="inline-flex items-center rounded-md bg-gray-600 px-4 py-2 text-white hover:bg-gray-700 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600"
                 >

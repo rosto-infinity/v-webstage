@@ -8,7 +8,7 @@
         <nav class="mx-auto mb-0 w-full max-w-[335px] text-sm not-has-[nav]:hidden lg:max-w-4xl">
             <nav class="flex items-center justify-center gap-4 py-6">
                 <Link
-                    :href="route('home')"
+                    :href="routes.home().url"
                     prefetch
                     class="inline-block rounded-lg bg-primary px-5 py-2 text-sm leading-normal text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
                 >
@@ -16,7 +16,7 @@
                 </Link>
                 <Link
                     v-if="$page.props.auth.user"
-                    :href="route('dashboard')"
+                    :href="routes.dashboard().url"
                     prefetch
                     class="inline-block rounded-lg border border-primary/20 px-5 py-2 text-sm leading-normal text-primary transition-colors hover:bg-primary/10"
                 >
@@ -24,7 +24,7 @@
                 </Link>
                 <template v-else>
                     <Link
-                        :href="route('login')"
+                        :href="routes.login().url"
                         prefetch
                         class="inline-block rounded-lg bg-primary px-5 py-2 text-sm leading-normal text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
                     >
@@ -55,7 +55,7 @@
 
                     <!-- À propos -->
                     <Link
-                        :href="route('about')"
+                        :href="routes.about().url"
                         class="flex items-center text-violet-700 transition hover:text-violet-900 dark:text-violet-400 dark:hover:text-violet-300"
                     >
                         <svg class="mr-2 h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -70,7 +70,7 @@
                     </Link>
                     <!-- Guide du Stage -->
                     <Link
-                        :href="route('guide.stage')"
+                        :href="guide.stage().url"
                         class="flex items-center text-violet-700 transition hover:text-violet-900 dark:text-violet-400 dark:hover:text-violet-300"
                     >
                         <svg class="mr-2 h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -85,7 +85,7 @@
                     </Link>
                     <!-- Développement d'App -->
                     <Link
-                        :href="route('dev.app')"
+                        :href="dev.app().url"
                         class="flex items-center text-violet-700 transition hover:text-violet-900 dark:text-violet-400 dark:hover:text-violet-300"
                     >
                         <svg class="mr-2 h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -95,7 +95,7 @@
                     </Link>
                     <!-- Génie Logiciel -->
                     <Link
-                        :href="route('genie.logiciel')"
+                        :href="genie.logiciel().url"
                         class="flex items-center text-violet-700 transition hover:text-violet-900 dark:text-violet-400 dark:hover:text-violet-300"
                     >
                         <svg class="mr-2 h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -105,7 +105,7 @@
                     </Link>
                     <!-- FAQ -->
                     <Link
-                        :href="route('faq')"
+                        :href="routes.faq().url"
                         class="flex items-center text-violet-700 transition hover:text-violet-900 dark:text-violet-400 dark:hover:text-violet-300"
                     >
                         <svg class="mr-2 h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -170,7 +170,7 @@
             <p class="text-sm text-slate-600 dark:text-slate-400">Dernière mise à jour : {{ currentDate }}</p>
             <div class="mt-4 flex justify-center space-x-6">
                 <Link
-                    href="/"
+                    :href="routes.home().url"
                     class="text-sm font-medium text-violet-700 transition-colors hover:text-violet-600 dark:text-violet-500 dark:hover:text-violet-400"
                 >
                     Retour au site
@@ -188,9 +188,12 @@
 </template>
 
 <script setup lang="ts">
-import { Head, Link } from '@inertiajs/vue3';
 import { Code, Database, GitBranch, Home, Layout, LayoutDashboard, PenTool, Settings, Shield, Smartphone } from 'lucide-vue-next';
 import FooterSite from './FooterSite.vue';
+import * as routes from '@/routes';
+import * as guide from '@/routes/guide';
+import * as dev from '@/routes/dev';
+import * as genie from '@/routes/genie';
 
 const modules = [
     {

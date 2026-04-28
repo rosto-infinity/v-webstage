@@ -79,3 +79,9 @@ zipForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 })
 
 zip.form = zipForm
+
+const pdf = {
+    zip: Object.assign(zip, zip),
+}
+
+export default pdf

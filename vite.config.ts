@@ -5,7 +5,8 @@ import laravel from 'laravel-vite-plugin';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
 
-export default defineConfig({
+export default defineConfig(
+    ({ command, mode }) => ({
     plugins: [
         laravel({
             input: ['resources/js/app.ts'],
@@ -26,6 +27,9 @@ export default defineConfig({
             },
         }),
     ],
+    define: {
+        __BUNDLED_DEV__: JSON.stringify(command === 'serve'),
+    },
      resolve: {
         alias: {
             '@': '/resources/js',
@@ -36,4 +40,5 @@ export default defineConfig({
             '@types': '/resources/js/types',
         },
     },
-});
+})
+);

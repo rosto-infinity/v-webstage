@@ -4,6 +4,7 @@ import { computed, h, onMounted, ref, watch } from 'vue';
 import { Head, Link } from '@inertiajs/vue3';
 import { Calendar, CheckCircle, ChevronDown, ChevronUp, FileText, Info } from 'lucide-vue-next';
 import FooterSite from './FooterSite.vue';
+import * as routes from '@/routes';
 interface Section {
     id: string;
     title: string;
@@ -117,7 +118,7 @@ watch(stageJsonLd, injectJsonLd);
         <nav class="mx-auto mb-0 w-full max-w-[335px] text-sm not-has-[nav]:hidden lg:max-w-4xl">
             <nav class="flex items-center justify-center gap-4 py-6">
                 <Link
-                    :href="route('home')"
+                    :href="routes.home().url"
                     prefetch
                     class="inline-block rounded-lg bg-primary px-5 py-2 text-sm leading-normal text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
                 >
@@ -125,7 +126,7 @@ watch(stageJsonLd, injectJsonLd);
                 </Link>
                 <Link
                     v-if="$page.props.auth.user"
-                    :href="route('dashboard')"
+                    :href="routes.dashboard().url"
                     prefetch
                     class="inline-block rounded-lg border border-primary/20 px-5 py-2 text-sm leading-normal text-primary transition-colors hover:bg-primary/10"
                 >
@@ -133,7 +134,7 @@ watch(stageJsonLd, injectJsonLd);
                 </Link>
                 <template v-else>
                     <Link
-                        :href="route('login')"
+                        :href="routes.login().url"
                         prefetch
                         class="inline-block rounded-lg bg-primary px-5 py-2 text-sm leading-normal text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
                     >

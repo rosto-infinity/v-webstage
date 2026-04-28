@@ -68,14 +68,14 @@
                 </div>
                 <div class="flex flex-wrap gap-2">
                     <Button>
-                        <Link :href="route('presences.add')" class="flex gap-1">
+                        <Link :href="presencesRoutes.add().url" class="flex gap-1">
                             <Pen class="h-5 w-5" />
                             Ajouter
                         </Link>
                     </Button>
 
                     <!-- Export PDF Global -->
-                    <a :href="route('presences.downloadAll')">
+                    <a :href="presencesRoutes.downloadAll().url">
                         <Button class="cursor-pointer">
                             <Download class="h-5 w-5" />
                             PDF Tous
@@ -98,7 +98,7 @@
                     </Button>
 
                     <!-- Export ZIP tous les utilisateurs -->
-                    <a :href="route('presences.users.pdf.zip')">
+                    <a :href="presencesRoutes.users.pdf.zip().url">
                         <Button class="cursor-pointer" variant="outline">
                             <Archive class="h-5 w-5" />
                             ZIP Tous
@@ -106,7 +106,7 @@
                     </a>
 
                     <!-- Export Excel -->
-                    <a :href="route('presences.excel')">
+                    <a :href="presencesRoutes.excel().url">
                         <Button class="cursor-pointer">
                             <Download class="h-5 w-5" />
                             Excel
@@ -223,7 +223,7 @@
                                 <span v-else>-</span>
                             </td>
                             <td class="px-4 py-2">
-                                <Link :href="route('presences.edit', { id: r.id })"
+                                <Link :href="presencesRoutes.edit({ id: r.id }).url"
                                     class="text-primary hover:underline">
                                     <Pen class="inline h-4 w-4" /> Editer
                                 </Link>
@@ -290,6 +290,7 @@ import { computed, ref, watch } from 'vue';
 
 // Import des routes Wayfinder
 import * as userRoutes from '@/routes/users';
+import * as presencesRoutes from '@/routes/presences';
 
 // Typage amélioré
 interface User {
@@ -388,7 +389,7 @@ function exportUserPdf() {
         return;
     }
 
-    const url = route('presences.user.pdf', { user: selectedUserForExport.value.id });
+    const url = presencesRoutes.user.pdf({ user: selectedUserForExport.value.id }).url;
     window.open(url, '_blank');
 }
 
@@ -404,11 +405,11 @@ function exportUserPdfWithPeriod() {
         return;
     }
 
-    const url = route('presences.user.pdf.period', {
+    const url = presencesRoutes.user.pdf.period({
         user: selectedUserForExport.value.id,
         startDate: filterDateFrom.value,
         endDate: filterDateTo.value,
-    });
+    }).url;
     window.open(url, '_blank');
 }
 
@@ -468,7 +469,7 @@ function setCurrentPage(n: number) {
 
 function deletePresence(id: number) {
     if (confirm('Êtes-vous sûr de vouloir supprimer cette présence ?')) {
-        router.delete(route('presences.destroy', { presence: id }), {
+        router.delete(presencesRoutes.destroy({ presence: id }).url, {
             onSuccess: () => {
                 data.value = data.value.filter((p) => p.id !== id);
             },

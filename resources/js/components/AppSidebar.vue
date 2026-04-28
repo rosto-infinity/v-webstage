@@ -7,6 +7,11 @@ import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
 import { BookOpen, CalendarCheck, Folder, Home, LayoutGrid, List, Settings, UserPlus } from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
+import * as routes from '@/routes';
+import * as adminRoutes from '@/routes/admin';
+import * as dashboardRoutes from '@/routes/dashboard';
+import * as presencesRoutes from '@/routes/presences';
+import * as userRoutes from '@/routes/users';
 
 interface PageProps {
     auth: {
@@ -23,13 +28,13 @@ const userRole = props.auth?.user?.role || 'user';
 const mainNavItems: NavItem[] = [
     {
         title: 'Home',
-        href: '/',
+        href: routes.home().url,
         icon: Home, // Icône appropriée pour un tableau de bord
     },
 
     {
         title: 'Dashboard',
-        href: '/dashboard',
+        href: routes.dashboard().url,
         icon: LayoutGrid,
     },
 ];
@@ -37,12 +42,12 @@ const mainNavItems: NavItem[] = [
 const adminNavItems: NavItem[] = [
     {
         title: 'Dashboard Users',
-        href: '/admin/dashboard',
+        href: adminRoutes.dashboard().url,
         icon: LayoutGrid,
     },
     {
         title: 'Dashboard Admin',
-        href: '/gestions/users',
+        href: userRoutes.index().url,
         icon: Settings,
     },
 ];
@@ -50,22 +55,22 @@ const adminNavItems: NavItem[] = [
 const superAdminNavItems: NavItem[] = [
     {
         title: 'Dashboard Sup_Admin',
-        href: '/superadmin/dashboard',
+        href: dashboardRoutes.superadmin().url,
         icon: LayoutGrid,
     },
     {
         title: 'Presences users',
-        href: '/presences/users',
+        href: presencesRoutes.users().url,
         icon: CalendarCheck, // Mieux adapté pour la gestion des présences
     },
     {
         title: 'Add Presences',
-        href: '/presences/add',
+        href: presencesRoutes.add().url,
         icon: UserPlus, // Représente mieux l'ajout d'utilisateurs/présences
     },
     {
         title: 'Users',
-        href: '/gestions/users',
+        href: userRoutes.index().url,
         icon: List, // Plus adapté pour une liste que l'icône Users
     },
 ];
@@ -100,7 +105,7 @@ const footerNavItems: NavItem[] = [
             <SidebarMenu>
                 <SidebarMenuItem>
                     <SidebarMenuButton size="lg" as-child>
-                        <Link :href="route('dashboard')">
+                        <Link :href="routes.dashboard().url">
                             <AppLogo />
                         </Link>
                     </SidebarMenuButton>
