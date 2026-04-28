@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \Fruitcake\LaravelDebugbar\Controllers\CacheController::deleteMethod
 * @see vendor/barryvdh/laravel-debugbar/src/Controllers/CacheController.php:16
@@ -83,8 +83,6 @@ deleteMethodForm.delete = (args: { key: string | number } | [key: string | numbe
 
 deleteMethod.form = deleteMethodForm
 
-const cache = {
-    delete: Object.assign(deleteMethod, deleteMethod),
-}
+const CacheController = { deleteMethod, delete: deleteMethod }
 
-export default cache
+export default CacheController

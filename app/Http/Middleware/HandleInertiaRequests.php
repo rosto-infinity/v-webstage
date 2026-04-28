@@ -8,7 +8,7 @@ use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Override;
-use Tighten\Ziggy\Ziggy;
+
 
 class HandleInertiaRequests extends Middleware
 {
@@ -50,10 +50,6 @@ class HandleInertiaRequests extends Middleware
             'quote' => ['message' => trim((string) $message), 'author' => trim((string) $author)],
             'auth' => [
                 'user' => $request->user(),
-            ],
-            'ziggy' => [
-                ...(new Ziggy)->toArray(),
-                'location' => $request->url(),
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ];

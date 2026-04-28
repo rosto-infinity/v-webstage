@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
-* @see \Barryvdh\Debugbar\Controllers\OpenHandlerController::handle
-* @see vendor/barryvdh/laravel-debugbar/src/Controllers/OpenHandlerController.php:43
+* @see \Fruitcake\LaravelDebugbar\Controllers\OpenHandlerController::handle
+* @see vendor/barryvdh/laravel-debugbar/src/Controllers/OpenHandlerController.php:18
 * @route '/_debugbar/open'
 */
 export const handle = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -15,8 +15,8 @@ handle.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \Barryvdh\Debugbar\Controllers\OpenHandlerController::handle
-* @see vendor/barryvdh/laravel-debugbar/src/Controllers/OpenHandlerController.php:43
+* @see \Fruitcake\LaravelDebugbar\Controllers\OpenHandlerController::handle
+* @see vendor/barryvdh/laravel-debugbar/src/Controllers/OpenHandlerController.php:18
 * @route '/_debugbar/open'
 */
 handle.url = (options?: RouteQueryOptions) => {
@@ -24,8 +24,8 @@ handle.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see \Barryvdh\Debugbar\Controllers\OpenHandlerController::handle
-* @see vendor/barryvdh/laravel-debugbar/src/Controllers/OpenHandlerController.php:43
+* @see \Fruitcake\LaravelDebugbar\Controllers\OpenHandlerController::handle
+* @see vendor/barryvdh/laravel-debugbar/src/Controllers/OpenHandlerController.php:18
 * @route '/_debugbar/open'
 */
 handle.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -34,8 +34,8 @@ handle.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 /**
-* @see \Barryvdh\Debugbar\Controllers\OpenHandlerController::handle
-* @see vendor/barryvdh/laravel-debugbar/src/Controllers/OpenHandlerController.php:43
+* @see \Fruitcake\LaravelDebugbar\Controllers\OpenHandlerController::handle
+* @see vendor/barryvdh/laravel-debugbar/src/Controllers/OpenHandlerController.php:18
 * @route '/_debugbar/open'
 */
 handle.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -44,8 +44,8 @@ handle.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \Barryvdh\Debugbar\Controllers\OpenHandlerController::handle
-* @see vendor/barryvdh/laravel-debugbar/src/Controllers/OpenHandlerController.php:43
+* @see \Fruitcake\LaravelDebugbar\Controllers\OpenHandlerController::handle
+* @see vendor/barryvdh/laravel-debugbar/src/Controllers/OpenHandlerController.php:18
 * @route '/_debugbar/open'
 */
 const handleForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -54,8 +54,8 @@ const handleForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => 
 })
 
 /**
-* @see \Barryvdh\Debugbar\Controllers\OpenHandlerController::handle
-* @see vendor/barryvdh/laravel-debugbar/src/Controllers/OpenHandlerController.php:43
+* @see \Fruitcake\LaravelDebugbar\Controllers\OpenHandlerController::handle
+* @see vendor/barryvdh/laravel-debugbar/src/Controllers/OpenHandlerController.php:18
 * @route '/_debugbar/open'
 */
 handleForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -64,8 +64,8 @@ handleForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 })
 
 /**
-* @see \Barryvdh\Debugbar\Controllers\OpenHandlerController::handle
-* @see vendor/barryvdh/laravel-debugbar/src/Controllers/OpenHandlerController.php:43
+* @see \Fruitcake\LaravelDebugbar\Controllers\OpenHandlerController::handle
+* @see vendor/barryvdh/laravel-debugbar/src/Controllers/OpenHandlerController.php:18
 * @route '/_debugbar/open'
 */
 handleForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -81,8 +81,8 @@ handleForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 handle.form = handleForm
 
 /**
-* @see \Barryvdh\Debugbar\Controllers\OpenHandlerController::clockwork
-* @see vendor/barryvdh/laravel-debugbar/src/Controllers/OpenHandlerController.php:77
+* @see \Fruitcake\LaravelDebugbar\Controllers\OpenHandlerController::clockwork
+* @see vendor/barryvdh/laravel-debugbar/src/Controllers/OpenHandlerController.php:49
 * @route '/_debugbar/clockwork/{id}'
 */
 export const clockwork = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -96,8 +96,8 @@ clockwork.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \Barryvdh\Debugbar\Controllers\OpenHandlerController::clockwork
-* @see vendor/barryvdh/laravel-debugbar/src/Controllers/OpenHandlerController.php:77
+* @see \Fruitcake\LaravelDebugbar\Controllers\OpenHandlerController::clockwork
+* @see vendor/barryvdh/laravel-debugbar/src/Controllers/OpenHandlerController.php:49
 * @route '/_debugbar/clockwork/{id}'
 */
 clockwork.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -123,8 +123,8 @@ clockwork.url = (args: { id: string | number } | [id: string | number ] | string
 }
 
 /**
-* @see \Barryvdh\Debugbar\Controllers\OpenHandlerController::clockwork
-* @see vendor/barryvdh/laravel-debugbar/src/Controllers/OpenHandlerController.php:77
+* @see \Fruitcake\LaravelDebugbar\Controllers\OpenHandlerController::clockwork
+* @see vendor/barryvdh/laravel-debugbar/src/Controllers/OpenHandlerController.php:49
 * @route '/_debugbar/clockwork/{id}'
 */
 clockwork.get = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -133,8 +133,8 @@ clockwork.get = (args: { id: string | number } | [id: string | number ] | string
 })
 
 /**
-* @see \Barryvdh\Debugbar\Controllers\OpenHandlerController::clockwork
-* @see vendor/barryvdh/laravel-debugbar/src/Controllers/OpenHandlerController.php:77
+* @see \Fruitcake\LaravelDebugbar\Controllers\OpenHandlerController::clockwork
+* @see vendor/barryvdh/laravel-debugbar/src/Controllers/OpenHandlerController.php:49
 * @route '/_debugbar/clockwork/{id}'
 */
 clockwork.head = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -143,8 +143,8 @@ clockwork.head = (args: { id: string | number } | [id: string | number ] | strin
 })
 
 /**
-* @see \Barryvdh\Debugbar\Controllers\OpenHandlerController::clockwork
-* @see vendor/barryvdh/laravel-debugbar/src/Controllers/OpenHandlerController.php:77
+* @see \Fruitcake\LaravelDebugbar\Controllers\OpenHandlerController::clockwork
+* @see vendor/barryvdh/laravel-debugbar/src/Controllers/OpenHandlerController.php:49
 * @route '/_debugbar/clockwork/{id}'
 */
 const clockworkForm = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -153,8 +153,8 @@ const clockworkForm = (args: { id: string | number } | [id: string | number ] | 
 })
 
 /**
-* @see \Barryvdh\Debugbar\Controllers\OpenHandlerController::clockwork
-* @see vendor/barryvdh/laravel-debugbar/src/Controllers/OpenHandlerController.php:77
+* @see \Fruitcake\LaravelDebugbar\Controllers\OpenHandlerController::clockwork
+* @see vendor/barryvdh/laravel-debugbar/src/Controllers/OpenHandlerController.php:49
 * @route '/_debugbar/clockwork/{id}'
 */
 clockworkForm.get = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -163,8 +163,8 @@ clockworkForm.get = (args: { id: string | number } | [id: string | number ] | st
 })
 
 /**
-* @see \Barryvdh\Debugbar\Controllers\OpenHandlerController::clockwork
-* @see vendor/barryvdh/laravel-debugbar/src/Controllers/OpenHandlerController.php:77
+* @see \Fruitcake\LaravelDebugbar\Controllers\OpenHandlerController::clockwork
+* @see vendor/barryvdh/laravel-debugbar/src/Controllers/OpenHandlerController.php:49
 * @route '/_debugbar/clockwork/{id}'
 */
 clockworkForm.head = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
