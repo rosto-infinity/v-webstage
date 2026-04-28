@@ -28,12 +28,12 @@
                                 </Link>
                             </li>
                             <li>
-                                <Link :href="guide.stage().url" prefetch class="transition hover:text-primary dark:hover:text-violet-400"
+                                <Link :href="guideStage().url" prefetch class="transition hover:text-primary dark:hover:text-violet-400"
                                     >Guide du stage</Link
                                 >
                             </li>
                             <li>
-                                <Link :href="genie.logiciel().url" prefetch class="transition hover:text-primary dark:hover:text-violet-400"
+                                <Link :href="genieLogiciel().url" prefetch class="transition hover:text-primary dark:hover:text-violet-400"
                                     >Génie logiciel</Link
                                 >
                             </li>
@@ -45,7 +45,7 @@
                         <h3 class="mb-4 text-lg font-semibold text-violet-800 dark:text-primary">Ressources</h3>
                         <ul class="space-y-2">
                             <li>
-                                <Link :href="dev.app().url" prefetch class="transition hover:text-primary dark:hover:text-violet-400"
+                                <Link :href="devApp().url" prefetch class="transition hover:text-primary dark:hover:text-violet-400"
                                     >Développement d'applications</Link
                                 >
                             </li>
@@ -53,7 +53,7 @@
                                 <Link :href="faq().url" prefetch class="transition hover:text-primary dark:hover:text-violet-400">FAQ</Link>
                             </li>
                             <li>
-                                <Link :href="conditions.stage().url" prefetch class="transition hover:text-primary dark:hover:text-violet-400"
+                                <Link :href="conditionsStage().url" prefetch class="transition hover:text-primary dark:hover:text-violet-400"
                                     >Conditions du stage</Link
                                 >
                             </li>
@@ -65,7 +65,7 @@
                         <h3 class="mb-4 text-lg font-semibold text-violet-800 dark:text-primary">Legal</h3>
                         <ul class="space-y-2">
                             <li>
-                                <Link :href="conditions.stage().url" prefetch class="transition hover:text-primary dark:hover:text-violet-400"
+                                <Link :href="conditionsStage().url" prefetch class="transition hover:text-primary dark:hover:text-violet-400"
                                     >Conditions générales</Link
                                 >
                             </li>
@@ -184,10 +184,10 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
 import { home, about, faq } from '@/routes';
-import conditions from '@/routes/conditions';
-import guide from '@/routes/guide';
-import genie from '@/routes/genie';
-import dev from '@/routes/dev';
+import { stage as conditionsStage } from '@/routes/conditions';
+import { stage as guideStage } from '@/routes/guide';
+import { logiciel as genieLogiciel } from '@/routes/genie';
+import { app as devApp } from '@/routes/dev';
 
 const currentYear = new Date().getFullYear();
 </script>
