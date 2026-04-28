@@ -314,7 +314,7 @@ defineProps<{
                 </div>
             </div>
         </section>
-        <FooterSite />
+        <!-- <FooterSite /> -->
     </div>
 </template>
 
