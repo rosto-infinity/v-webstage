@@ -4,6 +4,7 @@ import LineChart from '@/components/Charts/LineChart.vue';
 import PieChart from '@/components/Charts/PieChart.vue';
 import AppLayoutUser from '@/layouts/AppLayoutUser.vue';
 import * as dashboardRoutes from '@/routes';
+import { superadmin } from '@/routes/dashboard';
 import { Form, Head, Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
@@ -160,7 +161,7 @@ const breadcrumbs: BreadcrumbItem[] = [
             </div>
 
             <div class="mt-8">
-                <Link v-if="isSuperAdmin" :href="dashboardRoutes.superadmin().url" prefetch class="btn btn-primary text-red-700">
+                <Link v-if="isSuperAdmin" :href="superadmin().url" prefetch class="btn btn-primary text-red-700">
                     Accéder au dashboard Super Admin
                 </Link>
             </div>

@@ -290,7 +290,7 @@ import { computed, ref, watch } from 'vue';
 
 // Import des routes Wayfinder
 import * as userRoutes from '@/routes/users';
-import * as presencesRoutes from '@/routes/presences';
+import presencesRoutes from '@/routes/presences';
 
 // Typage amélioré
 interface User {
