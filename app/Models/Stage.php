@@ -40,18 +40,13 @@ class Stage extends Model
 
     // Constantes pour les diplômes
     public const DIPLOMES = [
-        'CAP' => 'Certificat d\'Aptitude Professionnelle',
-        'BEP' => 'Brevet d\'Études Professionnelles',
         'BAC' => 'Baccalauréat',
-        'BAC_PRO' => 'Baccalauréat Professionnel',
         'BTS' => 'Brevet de Technicien Supérieur',
         'DUT' => 'Diplôme Universitaire de Technologie',
         'LICENCE' => 'Licence',
         'LICENCE_PRO' => 'Licence Professionnelle',
         'DQP' => 'Diplôme de Qualification Professionnelle',
         'CQP' => 'Certificat de Qualification Professionnelle',
-        'DEUST' => 'Diplôme d\'Études Universitaires Scientifiques et Techniques',
-        'BUT' => 'Bachelor Universitaire de Technologie',
         'AUTRE' => 'Autre',
     ];
 

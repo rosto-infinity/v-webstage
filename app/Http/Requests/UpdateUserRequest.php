@@ -36,10 +36,12 @@ final class UpdateUserRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'email' => [
                 'required',
-                'email:rfc,dns',  // ✅ Validation stricte RFC 5322 + DNS
-                'regex:/^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',  // ✅ Format nnnn@dddd.ddd
+                'email',
                 Rule::unique('users', 'email')->ignore($userId),
             ],
+            'type_stage' => ['required', 'string', Rule::enum(\App\Enums\TypeStage::class)],
+            'diplome' => ['required', 'string', Rule::in(array_keys(\App\Models\Stage::DIPLOMES))],
+            'year_training_id' => ['required', 'exists:year_trainings,id'],
             'password' => ['nullable', 'string', 'min:8', 'confirmed'],
         ];
     }
@@ -58,8 +60,7 @@ final class UpdateUserRequest extends FormRequest
             'name.max' => 'Le nom ne peut pas dépasser :max caractères.',
 
             'email.required' => 'L\'adresse e-mail est obligatoire.',
-            'email.email' => 'L\'adresse e-mail doit être valide (format: user@domain.com).',
-            'email.regex' => 'L\'adresse e-mail doit respecter le format: nnnn@dddd.ddd',
+            'email.email' => 'L\'adresse e-mail doit être valide.',
             'email.unique' => 'Cette adresse e-mail est déjà utilisée par un autre utilisateur.',
 
             'password.string' => 'Le mot de passe doit être une chaîne de caractères.',

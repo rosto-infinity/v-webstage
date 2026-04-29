@@ -7,6 +7,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Actions\User\GetUsersIndexDataAction;
+use App\Actions\User\StoreUserAction;
+use App\Actions\User\UpdateUserAction;
 use App\Models\Presence;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -31,15 +34,9 @@ final class UserController extends Controller
      * @param  Request  $request  Requête HTTP entrante
      * @return InertiaResponse Réponse Inertia contenant la liste des utilisateurs
      */
-    public function indexlist(Request $request): InertiaResponse
+    public function indexlist(GetUsersIndexDataAction $action): InertiaResponse
     {
-        /** @var LengthAwarePaginator<int, User> $paginatedUsers */
-        $paginatedUsers = User::latest()->paginate(7);
-
-        return Inertia::render('SuperAdmin/Users/UserIndex', [
-            'users' => $paginatedUsers,
-            'totalUsers' => User::count(),
-        ]);
+        return Inertia::render('SuperAdmin/Users/UserIndex', $action->execute());
     }
 
     /**
@@ -150,7 +147,17 @@ final class UserController extends Controller
      */
     public function create(): InertiaResponse
     {
-        return Inertia::render('SuperAdmin/Users/UserCreate');
+        return Inertia::render('SuperAdmin/Users/UserCreate', [
+            'typeStages' => array_map(fn($case) => [
+                'value' => $case->value,
+                'label' => $case->label(),
+            ], \App\Enums\TypeStage::cases()),
+            'yearTrainings' => \App\Models\YearTraining::orderByDesc('start_date')->get(['id', 'label']),
+            'diplomes' => collect(\App\Models\Stage::DIPLOMES)->map(fn($label, $value) => [
+                'value' => $value,
+                'label' => $label,
+            ])->values()->all(),
+        ]);
     }
 
     /**
@@ -158,15 +165,9 @@ final class UserController extends Controller
      *
      * @param  StoreUserRequest  $request  Requête de création validée
      */
-    public function store(StoreUserRequest $request): RedirectResponse
+    public function store(StoreUserRequest $request, StoreUserAction $action): RedirectResponse
     {
-        $data = $request->validated();
-
-        User::create([
-            'name' => (string) $data['name'],
-            'email' => (string) $data['email'],
-            'password' => Hash::make((string) $data['password']),
-        ]);
+        $action->execute($request->validated());
 
         return redirect()->route('users.index')->with('success', 'Utilisateur créé');
     }
@@ -178,8 +179,21 @@ final class UserController extends Controller
      */
     public function edit(User $user): InertiaResponse
     {
+        $user->load('stages');
+        $currentStage = $user->stages()->latest()->first();
+
         return Inertia::render('SuperAdmin/Users/UserEdit', [
             'user' => $user,
+            'currentStage' => $currentStage,
+            'typeStages' => array_map(fn($case) => [
+                'value' => $case->value,
+                'label' => $case->label(),
+            ], \App\Enums\TypeStage::cases()),
+            'yearTrainings' => \App\Models\YearTraining::orderByDesc('start_date')->get(['id', 'label']),
+            'diplomes' => collect(\App\Models\Stage::DIPLOMES)->map(fn($label, $value) => [
+                'value' => $value,
+                'label' => $label,
+            ])->values()->all(),
         ]);
     }
 
@@ -189,18 +203,9 @@ final class UserController extends Controller
      * @param  UpdateUserRequest  $request  Requête d’édition validée
      * @param  User  $user  L’utilisateur à mettre à jour
      */
-    public function update(UpdateUserRequest $request, User $user): RedirectResponse
+    public function update(UpdateUserRequest $request, User $user, UpdateUserAction $action): RedirectResponse
     {
-        $data = $request->validated();
-
-        $user->name = (string) $data['name'];
-        $user->email = (string) $data['email'];
-
-        if (! empty($data['password'] ?? '')) {
-            $user->password = Hash::make((string) $data['password']);
-        }
-
-        $user->save();
+        $action->execute($user, $request->validated());
 
         return redirect()->route('users.index')->with('success', 'Utilisateur mis à jour');
     }

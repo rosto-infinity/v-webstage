@@ -19,9 +19,10 @@ class GetPresenceIndexDataAction
      *
      * @return array<string, mixed>
      */
-    public function execute(): array
+    public function execute(?int $yearTrainingId = null): array
     {
         $activeYear = YearTraining::active()->first();
+        $selectedYearId = $yearTrainingId ?? ($activeYear?->id);
 
         $presencesQuery = Presence::query()
             ->with(['user', 'absenceReason'])
@@ -31,17 +32,18 @@ class GetPresenceIndexDataAction
             ->has('presences')
             ->orderBy('name', 'asc');
 
-        if ($activeYear) {
-            $presencesQuery->whereHas('user.stages', function ($q) use ($activeYear) {
-                $q->where('year_training_id', $activeYear->id);
+        if ($selectedYearId) {
+            $presencesQuery->whereHas('user.stages', function ($q) use ($selectedYearId) {
+                $q->where('year_training_id', $selectedYearId);
             });
-            $usersQuery->whereHas('stages', function ($q) use ($activeYear) {
-                $q->where('year_training_id', $activeYear->id);
+            $usersQuery->whereHas('stages', function ($q) use ($selectedYearId) {
+                $q->where('year_training_id', $selectedYearId);
             });
         }
 
         $presences = $presencesQuery->get();
         $allUsers = $usersQuery->get(['id', 'name', 'email']);
+        $allYears = YearTraining::orderByDesc('start_date')->get();
 
         $presentCount = $presences->where('absent', false)->count();
 
@@ -51,6 +53,8 @@ class GetPresenceIndexDataAction
             'presentCount' => $presentCount,
             'allUsers' => UserResource::collection($allUsers),
             'activeYearTraining' => $activeYear ? new YearTrainingResource($activeYear) : null,
+            'allYearTrainings' => YearTrainingResource::collection($allYears),
+            'selectedYearId' => $selectedYearId,
         ];
     }
 }

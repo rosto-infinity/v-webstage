@@ -20,8 +20,18 @@ interface User {
     email: string;
 }
 
+interface Stage {
+    type_stage: string;
+    diplome: string;
+    year_training_id: number;
+}
+
 const props = defineProps<{
     user: User;
+    currentStage?: Stage;
+    typeStages: Array<{ label: string, value: string }>;
+    yearTrainings: Array<{ id: number, label: string }>;
+    diplomes: Array<{ label: string, value: string }>;
 }>();
 
 // ✅ Conversion de l'ID en number pour Wayfinder
@@ -55,7 +65,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                 #default="{ errors, processing, isDirty, wasSuccessful }"
             >
                 <Card class="p-6">
-                    <div class="grid gap-4">
+                    <div class="grid gap-6 md:grid-cols-2">
                         <!-- Champ Nom -->
                         <div class="space-y-2">
                             <Label for="name">Nom complet</Label>
@@ -88,8 +98,62 @@ const breadcrumbs: BreadcrumbItem[] = [
                             <InputError :message="errors.email" />
                         </div>
 
+                        <!-- Type de Stage -->
+                        <div class="space-y-2">
+                            <Label for="type_stage">Type de Stage</Label>
+                            <select 
+                                id="type_stage" 
+                                name="type_stage" 
+                                :value="currentStage?.type_stage"
+                                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                :class="{ 'border-red-500': errors.type_stage }"
+                            >
+                                <option value="">Sélectionnez un type</option>
+                                <option v-for="type in typeStages" :key="type.value" :value="type.value">
+                                    {{ type.label }}
+                                </option>
+                            </select>
+                            <InputError :message="errors.type_stage" />
+                        </div>
+
+                        <!-- Diplôme -->
+                        <div class="space-y-2">
+                            <Label for="diplome">Diplôme visé</Label>
+                            <select 
+                                id="diplome" 
+                                name="diplome" 
+                                :value="currentStage?.diplome"
+                                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                :class="{ 'border-red-500': errors.diplome }"
+                            >
+                                <option value="">Sélectionnez un diplôme</option>
+                                <option v-for="diplome in diplomes" :key="diplome.value" :value="diplome.value">
+                                    {{ diplome.label }}
+                                </option>
+                            </select>
+                            <InputError :message="errors.diplome" />
+                        </div>
+
+                        <!-- Année de Formation -->
+                        <div class="space-y-2">
+                            <Label for="year_training_id">Année de Formation</Label>
+                            <select 
+                                id="year_training_id" 
+                                name="year_training_id" 
+                                :value="currentStage?.year_training_id"
+                                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                :class="{ 'border-red-500': errors.year_training_id }"
+                            >
+                                <option value="">Sélectionnez une année</option>
+                                <option v-for="year in yearTrainings" :key="year.id" :value="year.id">
+                                    {{ year.label }}
+                                </option>
+                            </select>
+                            <InputError :message="errors.year_training_id" />
+                        </div>
+
                         <!-- Section Mot de passe -->
-                        <div class="space-y-4 border-t pt-4">
+                        <div class="space-y-4 border-t pt-4 md:col-span-2">
                             <div class="space-y-1">
                                 <h3 class="text-lg font-medium">Changer le mot de passe</h3>
                                 <p class="text-sm text-muted-foreground">Laissez vide pour conserver le mot de passe actuel</p>
@@ -139,7 +203,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                         >
                             <div
                                 v-if="wasSuccessful"
-                                class="rounded-md bg-green-50 p-4 text-sm text-green-700 dark:bg-green-900/20 dark:text-green-400"
+                                class="rounded-md bg-green-50 p-4 text-sm text-green-700 dark:bg-green-900/20 dark:text-green-400 md:col-span-2"
                             >
                                 ✓ Utilisateur mis à jour avec succès
                             </div>

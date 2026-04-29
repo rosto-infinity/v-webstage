@@ -4,6 +4,8 @@ import type { BreadcrumbItem } from '@/types';
 import { Head, Link, Form } from '@inertiajs/vue3';
 import { ArrowLeft } from 'lucide-vue-next';
 import { store as storePresence, users as usersPresence, add as addPresenceRoute } from '@/routes/presences';
+import { router } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 import StudentSelector from './Partials/StudentSelector.vue';
 import PresenceFormDetails from './Partials/PresenceFormDetails.vue';
@@ -12,7 +14,17 @@ import { useForm } from '@inertiajs/vue3';
 const props = defineProps<{
     users: { data: Array<{ id: number; name: string; email: string }> };
     absenceReasons: Array<{ id: number; name: string }>;
+    allYearTrainings: { data: Array<{ id: number; label: string }> };
+    selectedYearId: number | null;
 }>();
+
+const handleYearChange = (yearId: string | number) => {
+    router.get(addPresenceRoute().url, { year_training_id: yearId }, {
+        preserveState: true,
+        preserveScroll: true,
+        replace: true
+    });
+};
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Présences Sup_Admin', href: usersPresence().url },
@@ -56,6 +68,24 @@ const submit = () => {
 
                 <form @submit.prevent="submit">
                     <div class="space-y-6">
+                        <!-- Filtre par année de formation -->
+                        <div class="space-y-2 rounded-lg border bg-muted/30 p-4">
+                            <label for="year_training" class="block text-sm font-medium text-foreground">
+                                Filtrer par année de formation
+                            </label>
+                            <select 
+                                id="year_training"
+                                :value="props.selectedYearId"
+                                @change="handleYearChange(($event.target as HTMLSelectElement).value)"
+                                class="w-full rounded-lg border border-violet-400 bg-background p-2 text-sm font-semibold transition-colors focus:ring-2 focus:ring-primary"
+                            >
+                                <option v-for="year in props.allYearTrainings.data" :key="year.id" :value="year.id">
+                                    {{ year.label }}
+                                </option>
+                            </select>
+                            <p class="text-xs text-muted-foreground">Sélectionnez une année pour mettre à jour la liste des étudiants ci-dessous.</p>
+                        </div>
+
                         <StudentSelector 
                             v-model="form.user_id" 
                             :users="props.users.data" 

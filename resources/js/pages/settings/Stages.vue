@@ -192,7 +192,7 @@ const destroy = (id: number) => {
 
                         <div class="space-y-2">
                             <Label for="images">Images du projet (3 à 5 images)</Label>
-                            <Input id="images" name="images" type="file" multiple accept="image/*" @change="handleImageChange" />
+                            <Input id="images" name="images[]" type="file" multiple accept="image/*" @change="handleImageChange" />
                             <p class="text-xs text-muted-foreground">Formats acceptés : JPEG, PNG, GIF, WebP (max 2MB par image)</p>
                             <p v-if="errors.images" class="text-xs text-destructive">
                                 {{ errors.images }}
@@ -314,7 +314,7 @@ const destroy = (id: number) => {
                                 <Label :for="`images-${stage.id}`"> Nouvelles images (optionnel - 3 à 5 images) </Label>
                                 <Input
                                     :id="`images-${stage.id}`"
-                                    name="images"
+                                    name="images[]"
                                     type="file"
                                     multiple
                                     accept="image/*"

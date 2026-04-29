@@ -49,8 +49,11 @@
                 v-model:filterDateFrom="filterDateFrom"
                 v-model:filterDateTo="filterDateTo"
                 v-model:selectedUser="selectedUser"
+                v-model:selectedYearId="currentYearId"
                 :usersWithIds="usersWithIds"
+                :allYearTrainings="allYearTrainings"
                 @update:selectedUser="handleUserChange"
+                @update:selectedYearId="handleYearTrainingChange"
                 @reset-page="setCurrentPage(1)"
             />
 
@@ -138,10 +141,18 @@ interface Presence {
     absence_reason: string | null;
 }
 
+interface YearTraining {
+    id: number;
+    label: string;
+    is_active: boolean;
+}
+
 const props = defineProps<{
     presenceCount: number;
     allUsers: { data: User[] };
     presences: { data: any[] };
+    allYearTrainings: { data: YearTraining[] };
+    selectedYearId: number | null;
 }>();
 
 // Messages flash
@@ -176,6 +187,8 @@ const sortField = ref<keyof Presence>('date');
 const sortDirection = ref<'asc' | 'desc'>('desc');
 
 const usersWithIds = computed(() => props.allUsers.data);
+const allYearTrainings = computed(() => props.allYearTrainings);
+const currentYearId = ref<number | null>(props.selectedYearId);
 
 // Méthodes utilisateur
 function handleUserChange(userName: string) {
@@ -193,6 +206,14 @@ function clearUserSelection() {
     selectedUser.value = '';
     selectedUserForExport.value = null;
     setCurrentPage(1);
+}
+
+function handleYearTrainingChange(yearId: number | string) {
+    router.get(
+        window.location.pathname,
+        { year_training_id: yearId },
+        { preserveState: false, replace: true }
+    );
 }
 
 // Exports

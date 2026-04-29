@@ -37,16 +37,17 @@ final class StoreUserRequest extends FormRequest
             ],
             'email' => [
                 'required',
-                'email:rfc,dns',  // ✅ Validation stricte RFC 5322 + DNS
-                'regex:/^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',  // ✅ Format nnnn@dddd.ddd
-                'unique:users,email',  // ✅ Unique dans la table users
+                'email',
+                'unique:users,email',
             ],
+            'type_stage' => ['required', 'string', \Illuminate\Validation\Rule::enum(\App\Enums\TypeStage::class)],
+            'diplome' => ['required', 'string', \Illuminate\Validation\Rule::in(array_keys(\App\Models\Stage::DIPLOMES))],
+            'year_training_id' => ['required', 'exists:year_trainings,id'],
             'password' => [
                 'required',
                 'string',
                 'min:8',
-                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/',  // ✅ Mot de passe fort
-                'confirmed',  // ✅ Doit correspondre à password_confirmation
+                'confirmed',
             ],
         ];
     }
@@ -68,15 +69,14 @@ final class StoreUserRequest extends FormRequest
 
             // Validation de l'email
             'email.required' => 'L\'adresse e-mail est obligatoire.',
-            'email.email' => 'L\'adresse e-mail doit être valide (format: user@domain.com).',
-            'email.regex' => 'L\'adresse e-mail doit respecter le format: nnnn@dddd.ddd',
+            'email.email' => 'L\'adresse e-mail doit être valide.',
             'email.unique' => 'Cette adresse e-mail est déjà utilisée par un autre utilisateur.',
 
             // Validation du mot de passe
             'password.required' => 'Le mot de passe est obligatoire.',
             'password.string' => 'Le mot de passe doit être une chaîne de caractères.',
             'password.min' => 'Le mot de passe doit contenir au moins :min caractères.',
-            'password.regex' => 'Le mot de passe doit contenir: une majuscule, une minuscule, un chiffre et un caractère spécial (@$!%*?&).',
+            'password.regex' => 'Le mot de passe doit être sécurisé.',
             'password.confirmed' => 'La confirmation du mot de passe ne correspond pas.',
         ];
     }

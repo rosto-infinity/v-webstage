@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Admin;
 use App\Exports\PresenceExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PresenceRequest;
+use Illuminate\Http\Request;
 use App\Actions\Presence\StorePresenceAction;
 use App\Http\Resources\PresenceResource;
 use App\Http\Resources\UserResource;
@@ -31,9 +32,10 @@ final class PresenceController extends Controller
     /**
      * Liste toutes les présences avec leurs relations.
      */
-    public function index(\App\Actions\Presence\GetPresenceIndexDataAction $action): InertiaResponse
+    public function index(Request $request, \App\Actions\Presence\GetPresenceIndexDataAction $action): InertiaResponse
     {
-        $data = $action->execute();
+        $yearTrainingId = $request->input('year_training_id') ? (int) $request->input('year_training_id') : null;
+        $data = $action->execute($yearTrainingId);
         $data['flash'] = [
             'success' => session('success'),
             'error' => session('error'),
@@ -46,17 +48,28 @@ final class PresenceController extends Controller
     /**
      * Affiche le formulaire d’ajout d’une présence.
      */
-    public function add(): InertiaResponse
+    public function add(Request $request): InertiaResponse
     {
-        $users = User::query()->where('role', '=', 'user')
-            ->orderBy('name', 'asc')
-            ->get(['id', 'name', 'email']);
+        $activeYear = \App\Models\YearTraining::active()->first();
+        $selectedYearId = $request->input('year_training_id') ? (int) $request->input('year_training_id') : ($activeYear?->id);
 
+        $usersQuery = User::query()->where('role', '=', 'user');
+
+        if ($selectedYearId) {
+            $usersQuery->whereHas('stages', function ($q) use ($selectedYearId) {
+                $q->where('year_training_id', $selectedYearId);
+            });
+        }
+
+        $users = $usersQuery->orderBy('name', 'asc')->get(['id', 'name', 'email']);
         $absenceReasons = AbsenceReason::query()->get(['id', 'name']);
+        $allYears = \App\Models\YearTraining::orderByDesc('start_date')->get();
 
         return Inertia::render('SuperAdmin/Presence/PresenceAdd', [
             'users' => UserResource::collection($users),
             'absenceReasons' => $absenceReasons,
+            'allYearTrainings' => \App\Http\Resources\YearTrainingResource::collection($allYears),
+            'selectedYearId' => $selectedYearId,
         ]);
     }
 

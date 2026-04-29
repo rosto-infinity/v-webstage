@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::period
-* @see app/Http/Controllers/Admin/PresenceController.php:197
+* @see app/Http/Controllers/Admin/PresenceController.php:210
 * @route '/presences/users/{user}/pdf/{startDate}/{endDate}'
 */
 export const period = (args: { user: number | { id: number }, startDate: string | number, endDate: string | number } | [user: number | { id: number }, startDate: string | number, endDate: string | number ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ period.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::period
-* @see app/Http/Controllers/Admin/PresenceController.php:197
+* @see app/Http/Controllers/Admin/PresenceController.php:210
 * @route '/presences/users/{user}/pdf/{startDate}/{endDate}'
 */
 period.url = (args: { user: number | { id: number }, startDate: string | number, endDate: string | number } | [user: number | { id: number }, startDate: string | number, endDate: string | number ], options?: RouteQueryOptions) => {
@@ -47,7 +47,7 @@ period.url = (args: { user: number | { id: number }, startDate: string | number,
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::period
-* @see app/Http/Controllers/Admin/PresenceController.php:197
+* @see app/Http/Controllers/Admin/PresenceController.php:210
 * @route '/presences/users/{user}/pdf/{startDate}/{endDate}'
 */
 period.get = (args: { user: number | { id: number }, startDate: string | number, endDate: string | number } | [user: number | { id: number }, startDate: string | number, endDate: string | number ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -57,7 +57,7 @@ period.get = (args: { user: number | { id: number }, startDate: string | number,
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::period
-* @see app/Http/Controllers/Admin/PresenceController.php:197
+* @see app/Http/Controllers/Admin/PresenceController.php:210
 * @route '/presences/users/{user}/pdf/{startDate}/{endDate}'
 */
 period.head = (args: { user: number | { id: number }, startDate: string | number, endDate: string | number } | [user: number | { id: number }, startDate: string | number, endDate: string | number ], options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -67,7 +67,7 @@ period.head = (args: { user: number | { id: number }, startDate: string | number
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::period
-* @see app/Http/Controllers/Admin/PresenceController.php:197
+* @see app/Http/Controllers/Admin/PresenceController.php:210
 * @route '/presences/users/{user}/pdf/{startDate}/{endDate}'
 */
 const periodForm = (args: { user: number | { id: number }, startDate: string | number, endDate: string | number } | [user: number | { id: number }, startDate: string | number, endDate: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -77,7 +77,7 @@ const periodForm = (args: { user: number | { id: number }, startDate: string | n
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::period
-* @see app/Http/Controllers/Admin/PresenceController.php:197
+* @see app/Http/Controllers/Admin/PresenceController.php:210
 * @route '/presences/users/{user}/pdf/{startDate}/{endDate}'
 */
 periodForm.get = (args: { user: number | { id: number }, startDate: string | number, endDate: string | number } | [user: number | { id: number }, startDate: string | number, endDate: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -87,7 +87,7 @@ periodForm.get = (args: { user: number | { id: number }, startDate: string | num
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::period
-* @see app/Http/Controllers/Admin/PresenceController.php:197
+* @see app/Http/Controllers/Admin/PresenceController.php:210
 * @route '/presences/users/{user}/pdf/{startDate}/{endDate}'
 */
 periodForm.head = (args: { user: number | { id: number }, startDate: string | number, endDate: string | number } | [user: number | { id: number }, startDate: string | number, endDate: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

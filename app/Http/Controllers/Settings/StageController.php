@@ -43,21 +43,19 @@ class StageController extends Controller
                     }
                 },
             ],
-            'images.*' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'images' => 'required|array|min:3|max:5',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'diplome' => ['required', Rule::in(array_keys(Stage::DIPLOMES))],
         ], [
             'titre.required' => 'Le titre est obligatoire',
-            'images.*.required' => 'Veuillez ajouter au moins 3 images',
+            'images.required' => 'Vous devez ajouter entre 3 et 5 images',
+            'images.min' => 'Vous devez ajouter au moins :min images',
+            'images.max' => 'Vous ne pouvez pas ajouter plus de :max images',
             'diplome.required' => 'Le diplôme est obligatoire',
         ]);
 
-        // Vérifier le nombre d'images
+        // Upload des images
         $images = $request->file('images');
-        if (! $images || ! is_array($images) || count($images) < 3 || count($images) > 5) {
-            return back()->withErrors([
-                'images' => 'Vous devez ajouter entre 3 et 5 images',
-            ]);
-        }
 
         // Upload des images
         $imagePaths = [];
@@ -96,8 +94,12 @@ class StageController extends Controller
                     }
                 },
             ],
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'images' => 'nullable|array|min:3|max:5',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'diplome' => ['required', Rule::in(array_keys(Stage::DIPLOMES))],
+        ], [
+            'images.min' => 'Vous devez ajouter au moins :min images',
+            'images.max' => 'Vous ne pouvez pas ajouter plus de :max images',
         ]);
 
         $data = [
@@ -109,13 +111,6 @@ class StageController extends Controller
         // Si de nouvelles images sont uploadées
         if ($request->hasFile('images')) {
             $images = $request->file('images');
-
-            // Vérifier le nombre d'images
-            if (is_array($images) && (count($images) < 3 || count($images) > 5)) {
-                return back()->withErrors([
-                    'images' => 'Vous devez ajouter entre 3 et 5 images',
-                ]);
-            }
 
             // Supprimer les anciennes images
             foreach ($stage->images as $oldImage) {
