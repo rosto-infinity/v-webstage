@@ -102,7 +102,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                                 :class="{ 'border-red-500': errors.diplome }"
                             >
                                 <option value="">Sélectionnez un diplôme</option>
-                                <option v-for="diplome in (props as any).diplomes" :key="diplome.value" :value="diplome.value">
+                                <option v-for="diplome in diplomes" :key="diplome.value" :value="diplome.value">
                                     {{ diplome.label }}
                                 </option>
                             </select>

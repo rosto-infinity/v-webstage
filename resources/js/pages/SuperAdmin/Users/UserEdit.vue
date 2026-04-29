@@ -23,12 +23,12 @@ interface User {
 interface Stage {
     type_stage: string;
     diplome: string;
-    year_training_id: number;
+    year_training_id: number | string;
 }
 
 const props = defineProps<{
     user: User;
-    currentStage?: Stage;
+    currentStage?: Stage | null;
     typeStages: Array<{ label: string, value: string }>;
     yearTrainings: Array<{ id: number, label: string }>;
     diplomes: Array<{ label: string, value: string }>;
@@ -56,7 +56,11 @@ const breadcrumbs: BreadcrumbItem[] = [
                 <p class="text-sm text-muted-foreground">ID: {{ user.id }} • Dernière modification: {{ new Date().toLocaleDateString() }}</p>
             </header>
 
-            <!-- ✅ Utiliser userId au lieu de props.user.id -->
+            <!-- 
+              Utilisation du composant <Form> d'Inertia v3 avec Wayfinder.
+              Conformément à la doc (08-Forms.md), on utilise defaultValue pour les inputs
+              et selected sur les options des selects pour l'initialisation.
+            -->
             <Form
                 v-bind="UserController.update.form(userId)"
                 class="space-y-6"
@@ -104,12 +108,17 @@ const breadcrumbs: BreadcrumbItem[] = [
                             <select 
                                 id="type_stage" 
                                 name="type_stage" 
-                                :value="currentStage?.type_stage"
                                 class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                                 :class="{ 'border-red-500': errors.type_stage }"
+                                :disabled="processing"
                             >
-                                <option value="">Sélectionnez un type</option>
-                                <option v-for="type in typeStages" :key="type.value" :value="type.value">
+                                <option value="" :selected="!currentStage?.type_stage">Sélectionnez un type</option>
+                                <option 
+                                    v-for="type in typeStages" 
+                                    :key="type.value" 
+                                    :value="type.value"
+                                    :selected="type.value === currentStage?.type_stage"
+                                >
                                     {{ type.label }}
                                 </option>
                             </select>
@@ -122,12 +131,17 @@ const breadcrumbs: BreadcrumbItem[] = [
                             <select 
                                 id="diplome" 
                                 name="diplome" 
-                                :value="currentStage?.diplome"
                                 class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                                 :class="{ 'border-red-500': errors.diplome }"
+                                :disabled="processing"
                             >
-                                <option value="">Sélectionnez un diplôme</option>
-                                <option v-for="diplome in diplomes" :key="diplome.value" :value="diplome.value">
+                                <option value="" :selected="!currentStage?.diplome">Sélectionnez un diplôme</option>
+                                <option 
+                                    v-for="diplome in diplomes" 
+                                    :key="diplome.value" 
+                                    :value="diplome.value"
+                                    :selected="diplome.value === currentStage?.diplome"
+                                >
                                     {{ diplome.label }}
                                 </option>
                             </select>
@@ -140,12 +154,17 @@ const breadcrumbs: BreadcrumbItem[] = [
                             <select 
                                 id="year_training_id" 
                                 name="year_training_id" 
-                                :value="currentStage?.year_training_id"
                                 class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                                 :class="{ 'border-red-500': errors.year_training_id }"
+                                :disabled="processing"
                             >
-                                <option value="">Sélectionnez une année</option>
-                                <option v-for="year in yearTrainings" :key="year.id" :value="year.id">
+                                <option value="" :selected="!currentStage?.year_training_id">Sélectionnez une année</option>
+                                <option 
+                                    v-for="year in yearTrainings" 
+                                    :key="year.id" 
+                                    :value="year.id"
+                                    :selected="year.id === currentStage?.year_training_id"
+                                >
                                     {{ year.label }}
                                 </option>
                             </select>
