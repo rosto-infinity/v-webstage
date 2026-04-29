@@ -2,7 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 import pdf81d01d from './pdf'
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::pdf
-* @see app/Http/Controllers/Admin/PresenceController.php:181
+* @see app/Http/Controllers/Admin/PresenceController.php:171
 * @route '/presences/users/{user}/pdf'
 */
 export const pdf = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -17,7 +17,7 @@ pdf.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::pdf
-* @see app/Http/Controllers/Admin/PresenceController.php:181
+* @see app/Http/Controllers/Admin/PresenceController.php:171
 * @route '/presences/users/{user}/pdf'
 */
 pdf.url = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -50,7 +50,7 @@ pdf.url = (args: { user: number | { id: number } } | [user: number | { id: numbe
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::pdf
-* @see app/Http/Controllers/Admin/PresenceController.php:181
+* @see app/Http/Controllers/Admin/PresenceController.php:171
 * @route '/presences/users/{user}/pdf'
 */
 pdf.get = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -60,7 +60,7 @@ pdf.get = (args: { user: number | { id: number } } | [user: number | { id: numbe
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::pdf
-* @see app/Http/Controllers/Admin/PresenceController.php:181
+* @see app/Http/Controllers/Admin/PresenceController.php:171
 * @route '/presences/users/{user}/pdf'
 */
 pdf.head = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -70,7 +70,7 @@ pdf.head = (args: { user: number | { id: number } } | [user: number | { id: numb
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::pdf
-* @see app/Http/Controllers/Admin/PresenceController.php:181
+* @see app/Http/Controllers/Admin/PresenceController.php:171
 * @route '/presences/users/{user}/pdf'
 */
 const pdfForm = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -80,7 +80,7 @@ const pdfForm = (args: { user: number | { id: number } } | [user: number | { id:
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::pdf
-* @see app/Http/Controllers/Admin/PresenceController.php:181
+* @see app/Http/Controllers/Admin/PresenceController.php:171
 * @route '/presences/users/{user}/pdf'
 */
 pdfForm.get = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -90,7 +90,7 @@ pdfForm.get = (args: { user: number | { id: number } } | [user: number | { id: n
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::pdf
-* @see app/Http/Controllers/Admin/PresenceController.php:181
+* @see app/Http/Controllers/Admin/PresenceController.php:171
 * @route '/presences/users/{user}/pdf'
 */
 pdfForm.head = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

@@ -1,5 +1,4 @@
 <template>
-
     <Head title="Présences" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <!-- Message flash -->
@@ -21,134 +20,39 @@
         </div>
 
         <!-- Statistiques -->
-        <div class="mb-8 grid grid-cols-1 gap-4 p-2 md:grid-cols-2 xl:grid-cols-4">
-            <div class="flex items-center gap-3 rounded-xl border bg-card p-5">
-                <Users class="h-6 w-6 text-primary" />
-                <div>
-                    <p class="text-sm text-muted-foreground">Total</p>
-                    <p class="text-2xl font-bold">{{ presenceCount }}</p>
-                </div>
-            </div>
-            <div class="flex items-center gap-3 rounded-xl border bg-card p-5">
-                <Calendar class="text-success h-6 w-6" />
-                <div>
-                    <p class="text-sm text-muted-foreground">Présents</p>
-                    <p class="text-2xl font-bold">{{ presentCount }}</p>
-                    <p class="text-success text-xs">({{ Math.round((presentCount / presenceCount) * 100) }}%)</p>
-                </div>
-            </div>
-            <div class="flex items-center gap-3 rounded-xl border bg-card p-5">
-                <Users class="h-6 w-6 text-destructive" />
-                <div>
-                    <p class="text-sm text-muted-foreground">Absents</p>
-                    <p class="text-2xl font-bold">{{ absentCount }}</p>
-                    <p v-if="absentCount > 0" class="text-xs text-destructive">
-                        {{data.filter((p) => p.absent && !p.absence_reason).length}} sans motif
-                    </p>
-                </div>
-            </div>
-            <div class="flex items-center gap-3 rounded-xl border bg-card p-5">
-                <Clock class="text-warning h-6 w-6" />
-                <div>
-                    <p class="text-sm text-muted-foreground">Retards</p>
-                    <p class="text-2xl font-bold">{{ lateCount }}</p>
-                    <p v-if="lateCount > 0" class="text-warning text-xs">
-                        Moyenne: {{Math.round(data.reduce((a, b) => a + b.late_minutes, 0) / lateCount)}}min
-                    </p>
-                </div>
-            </div>
-        </div>
+        <PresenceStats 
+            :presenceCount="presenceCount"
+            :presentCount="presentCount"
+            :absentCount="absentCount"
+            :lateCount="lateCount"
+            :presences="data"
+        />
 
         <div class="p-4">
             <!-- Actions -->
-            <div class="mb-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-                <div>
-                    <h1 class="text-3xl font-bold">Tableau de présence</h1>
-                    <p class="text-muted-foreground">BTS 2 Génie Logiciel / DQP</p>
-                </div>
-                <div class="flex flex-wrap gap-2">
-                    <Button>
-                        <Link :href="addPresenceRoute().url" class="flex gap-1">
-                            <Pen class="h-5 w-5" />
-                            Ajouter
-                        </Link>
-                    </Button>
-
-                    <!-- Export PDF Global -->
-                    <a :href="pdfPresenceRoute().url">
-                        <Button class="cursor-pointer">
-                            <Download class="h-5 w-5" />
-                            PDF Tous
-                        </Button>
-                    </a>
-
-                    <!-- Export PDF par Utilisateur (avec filtres) -->
-                    <Button @click="exportUserPdf" :disabled="!selectedUserForExport" class="cursor-pointer"
-                        variant="secondary">
-                        <FileText class="h-5 w-5" />
-                        PDF Utilisateur
-                    </Button>
-
-                    <!-- Export PDF avec Période -->
-                    <Button @click="exportUserPdfWithPeriod"
-                        :disabled="!selectedUserForExport || !filterDateFrom || !filterDateTo" class="cursor-pointer"
-                        variant="outline">
-                        <CalendarRange class="h-5 w-5" />
-                        PDF Période
-                    </Button>
-
-                    <!-- Export ZIP tous les utilisateurs -->
-                    <a :href="zipPresenceRoute().url">
-                        <Button class="cursor-pointer" variant="outline">
-                            <Archive class="h-5 w-5" />
-                            ZIP Tous
-                        </Button>
-                    </a>
-
-                    <!-- Export Excel -->
-                    <a :href="excelPresenceRoute().url">
-                        <Button class="cursor-pointer">
-                            <Download class="h-5 w-5" />
-                            Excel
-                        </Button>
-                    </a>
-                </div>
-            </div>
+            <PresenceActions 
+                :addRoute="addPresenceRoute().url"
+                :pdfAllRoute="pdfPresenceRoute().url"
+                :zipAllRoute="zipPresenceRoute().url"
+                :excelRoute="excelPresenceRoute().url"
+                :selectedUserForExport="selectedUserForExport"
+                :filterDateFrom="filterDateFrom"
+                :filterDateTo="filterDateTo"
+                @export-user-pdf="exportUserPdf"
+                @export-user-pdf-period="exportUserPdfWithPeriod"
+            />
 
             <!-- Filtres -->
-            <div class="mb-4 flex flex-col gap-4 md:flex-row">
-                <div class="relative flex-1">
-                    <div class="flex">
-                        <input v-model="searchTerm" @input="setCurrentPage(1)" placeholder="Rechercher nom/email"
-                            class="input w-full rounded-md border-1 border-violet-400 pl-10" />
-                        <Search class="mx-2 h-5 w-5 text-muted-foreground" />
-                    </div>
-                </div>
-
-                <select v-model="filterStatus" @change="setCurrentPage(1)" class="input rounded-md bg-violet-200 p-1">
-                    <option value="all">Tous</option>
-                    <option value="present">Présents</option>
-                    <option value="absent">Absents</option>
-                    <option value="late">Retard</option>
-                </select>
-
-                <label class="flex items-center gap-2">
-                    De :
-                    <input type="date" v-model="filterDateFrom" class="input rounded-md p-1" />
-                </label>
-
-                <label class="flex items-center gap-2">
-                    À :
-                    <input type="date" v-model="filterDateTo" class="input rounded-md p-1" />
-                </label>
-
-                <select v-model="selectedUser" @change="handleUserChange" class="input rounded-md bg-violet-200 p-1">
-                    <option value="">Tous les utilisateurs</option>
-                    <option v-for="user in usersWithIds" :key="user.id" :value="user.name">
-                        {{ user.name }}
-                    </option>
-                </select>
-            </div>
+            <PresenceFilters 
+                v-model:searchTerm="searchTerm"
+                v-model:filterStatus="filterStatus"
+                v-model:filterDateFrom="filterDateFrom"
+                v-model:filterDateTo="filterDateTo"
+                v-model:selectedUser="selectedUser"
+                :usersWithIds="usersWithIds"
+                @update:selectedUser="handleUserChange"
+                @reset-page="setCurrentPage(1)"
+            />
 
             <!-- Info utilisateur sélectionné -->
             <div v-if="selectedUserForExport" class="mb-4 rounded-lg border-2 border-primary/30 bg-primary/5 p-4">
@@ -170,128 +74,41 @@
             </div>
 
             <!-- Tableau -->
-            <div class="overflow-x-auto">
-                <table class="min-w-full table-auto rounded-xl border bg-card text-left text-sm">
-                    <thead class="bg-muted">
-                        <tr>
-                            <th @click="handleSort('date')" class="th-sort px-4 py-2">
-                                Date
-                                <SortIcon field="date" :sortField="sortField" :direction="sortDirection" />
-                            </th>
-                            <th class="px-4 py-2">Nom</th>
-                            <th class="px-4 py-2">E‑mail</th>
-                            <th @click="handleSort('heure_arrivee')" class="th-sort px-4 py-2">
-                                Arrivée
-                                <SortIcon field="heure_arrivee" :sortField="sortField" :direction="sortDirection" />
-                            </th>
-                            <th @click="handleSort('heure_depart')" class="th-sort px-4 py-2">
-                                Départ
-                                <SortIcon field="heure_depart" :sortField="sortField" :direction="sortDirection" />
-                            </th>
-                            <th @click="handleSort('late_minutes')" class="th-sort px-4 py-2">
-                                Retard
-                                <SortIcon field="late_minutes" :sortField="sortField" :direction="sortDirection" />
-                            </th>
-                            <th class="px-4 py-2">Statut</th>
-                            <th class="px-4 py-2">Motif</th>
-                            <th colspan="2" class="px-4 py-2 text-center">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="r in paginatedData" :key="r.id" class="border-t hover:bg-muted/50">
-                            <td class="px-4 py-2">
-                                {{ new Date(r.date).toLocaleDateString('fr-FR') }}
-                            </td>
-                            <td class="px-4 py-2">{{ r.user.name }}</td>
-                            <td class="px-4 py-2">{{ r.user.email }}</td>
-                            <td class="px-4 py-2">{{ r.heure_arrivee ?? '-' }}</td>
-                            <td class="px-4 py-2">{{ r.heure_depart ?? '-' }}</td>
-                            <td class="px-4 py-2">
-                                <Badge :type="r.late_minutes > 0 ? 'warning' : 'success'"> {{ r.late_minutes }} min
-                                </Badge>
-                            </td>
-                            <td class="px-4 py-2">
-                                <Badge v-if="r.absent" type="destructive">Absent</Badge>
-                                <Badge v-else-if="r.late" type="warning">En retard</Badge>
-                                <Badge v-else type="success">Présent</Badge>
-                            </td>
-                            <td class="px-4 py-2">
-                                <Badge v-if="r.absent && r.absence_reason" type="secondary">
-                                    {{ r.absence_reason }}
-                                </Badge>
-                                <Badge v-else-if="r.absent" type="destructive"> Sans motif </Badge>
-                                <span v-else>-</span>
-                            </td>
-                            <td class="px-4 py-2">
-                                <Link :href="editPresenceRoute(r.id).url"
-                                    class="text-primary hover:underline">
-                                    <Pen class="inline h-4 w-4" /> Editer
-                                </Link>
-                            </td>
-                            <td class="px-4 py-2">
-                                <button @click="deletePresence(r.id)" class="text-destructive hover:underline">
-                                    <Trash2 class="inline h-4 w-4" /> Suppr
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Pagination -->
-            <div class="flex items-center justify-between py-4">
-                <div>
-                    <span class="text-muted-foreground">Afficher</span>
-                    <select v-model="itemsPerPage" @change="setCurrentPage(1)" class="input mx-2">
-                        <option v-for="n of [5, 10, 20, 50]" :key="n">{{ n }}</option>
-                    </select>
-                    <span class="text-muted-foreground"> sur {{ filteredAndSortedData.length }} </span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <button :disabled="currentPage === 1" @click="setCurrentPage(currentPage - 1)"
-                        class="btn btn-outline disabled:opacity-50">
-                        <ChevronLeft class="h-4 w-4" />
-                    </button>
-                    <span class="text-muted-foreground"> Page {{ currentPage }} / {{ totalPages }} </span>
-                    <button :disabled="currentPage === totalPages" @click="setCurrentPage(currentPage + 1)"
-                        class="btn btn-outline disabled:opacity-50">
-                        <ChevronRight class="h-4 w-4" />
-                    </button>
-                </div>
-            </div>
+            <PresenceTable 
+                :paginatedData="paginatedData"
+                :sortField="sortField"
+                :sortDirection="sortDirection"
+                :currentPage="currentPage"
+                :totalPages="totalPages"
+                :itemsPerPage="itemsPerPage"
+                :totalFilteredItems="filteredAndSortedData.length"
+                @sort="handleSort"
+                @delete="deletePresence"
+                @edit-route="goToEdit"
+                @update:currentPage="setCurrentPage"
+                @update:itemsPerPage="updateItemsPerPage"
+            />
         </div>
     </AppLayout>
 </template>
 
 <script setup lang="ts">
 import Badge from '@/components/Badge.vue';
-import SortIcon from '@/components/SortIcon.vue';
 import Button from '@/components/ui/button/Button.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import type { BreadcrumbItem } from '@/types';
-import { Head, Link, router, usePage } from '@inertiajs/vue3';
-import {
-    Archive,
-    Calendar,
-    CalendarRange,
-    ChevronLeft,
-    ChevronRight,
-    Clock,
-    Download,
-    FileText,
-    Pen,
-    Search,
-    Trash2,
-    UserCircle,
-    Users,
-    X,
-} from 'lucide-vue-next';
+import { Head, router, usePage } from '@inertiajs/vue3';
+import { UserCircle, X } from 'lucide-vue-next';
 import { computed, ref, watch } from 'vue';
 
-// Import des routes Wayfinder
-import { 
-    index as usersIndexRoute 
-} from '@/routes/users';
+// Partials
+import PresenceStats from './Partials/PresenceStats.vue';
+import PresenceActions from './Partials/PresenceActions.vue';
+import PresenceFilters from './Partials/PresenceFilters.vue';
+import PresenceTable from './Partials/PresenceTable.vue';
+
+// Routes
+import { index as usersIndexRoute } from '@/routes/users';
 import { 
     add as addPresenceRoute,
     edit as editPresenceRoute, 
@@ -299,12 +116,10 @@ import {
     excel as excelPresenceRoute,
     downloadAll as pdfPresenceRoute
 } from '@/routes/presences';
-
 import { pdf as userPdfPresenceRoute } from '@/routes/presences/user';
 import { period as userPdfPeriodPresenceRoute } from '@/routes/presences/user/pdf';
 import { zip as zipPresenceRoute } from '@/routes/presences/users/pdf';
 
-// Typage amélioré
 interface User {
     id: number;
     name: string;
@@ -316,9 +131,9 @@ interface Presence {
     date: string;
     heure_arrivee: string | null;
     heure_depart: string | null;
-    late_minutes: number;
+    minutes_retard: number;
     absent: boolean;
-    late: boolean;
+    en_retard: boolean;
     user: User;
     absence_reason: string | null;
 }
@@ -335,29 +150,18 @@ const showFlash = ref(false);
 const flashMessage = ref('');
 const flashType = ref<'success' | 'error' | 'warning'>('success');
 
-watch(
-    flash,
-    (newVal) => {
-        const hasMessage = newVal.success || newVal.error || newVal.warning;
-        if (hasMessage) {
-            showFlash.value = true;
-            flashMessage.value = newVal.success || newVal.error || newVal.warning || '';
-            flashType.value = newVal.success ? 'success' : newVal.error ? 'error' : 'warning';
-            setTimeout(() => (showFlash.value = false), 5000);
-        }
-    },
-    { immediate: true },
-);
+watch(flash, (newVal) => {
+    const hasMessage = newVal?.success || newVal?.error || newVal?.warning;
+    if (hasMessage) {
+        showFlash.value = true;
+        flashMessage.value = newVal.success || newVal.error || newVal.warning || '';
+        flashType.value = newVal.success ? 'success' : newVal.error ? 'error' : 'warning';
+        setTimeout(() => (showFlash.value = false), 5000);
+    }
+}, { immediate: true });
 
-// Initialisation des données
-const data = ref<Presence[]>(
-    props.presences.data.map((r) => ({
-        ...r,
-        late_minutes: calculerMinutesRetard(r.heure_arrivee),
-        late: calculerMinutesRetard(r.heure_arrivee) > 0,
-        absence_reason: r.absence_reason || null,
-    })),
-);
+// Initialisation des données (directement depuis la ressource)
+const data = ref<Presence[]>(props.presences.data);
 
 // Filtres et tris
 const searchTerm = ref('');
@@ -373,10 +177,11 @@ const sortDirection = ref<'asc' | 'desc'>('desc');
 
 const usersWithIds = computed(() => props.allUsers.data);
 
-// Gérer la sélection d'utilisateur
-function handleUserChange() {
-    if (selectedUser.value) {
-        const user = usersWithIds.value.find((u) => u.name === selectedUser.value);
+// Méthodes utilisateur
+function handleUserChange(userName: string) {
+    selectedUser.value = userName;
+    if (userName) {
+        const user = usersWithIds.value.find((u) => u.name === userName);
         selectedUserForExport.value = user || null;
     } else {
         selectedUserForExport.value = null;
@@ -384,42 +189,27 @@ function handleUserChange() {
     setCurrentPage(1);
 }
 
-// Effacer la sélection d'utilisateur
 function clearUserSelection() {
     selectedUser.value = '';
     selectedUserForExport.value = null;
     setCurrentPage(1);
 }
 
-// Export PDF pour un utilisateur
+// Exports
 function exportUserPdf() {
-    if (!selectedUserForExport.value) {
-        alert('Veuillez sélectionner un utilisateur');
-        return;
-    }
-
-    const url = userPdfPresenceRoute({ user: selectedUserForExport.value.id }).url;
-    window.open(url, '_blank');
+    if (!selectedUserForExport.value) return alert('Veuillez sélectionner un utilisateur');
+    window.open(userPdfPresenceRoute({ user: selectedUserForExport.value.id }).url, '_blank');
 }
 
-// Export PDF pour un utilisateur avec période
 function exportUserPdfWithPeriod() {
-    if (!selectedUserForExport.value) {
-        alert('Veuillez sélectionner un utilisateur');
-        return;
+    if (!selectedUserForExport.value || !filterDateFrom.value || !filterDateTo.value) {
+        return alert('Veuillez sélectionner un utilisateur et une période (Date de et Date à)');
     }
-
-    if (!filterDateFrom.value || !filterDateTo.value) {
-        alert('Veuillez sélectionner une période (Date de et Date à)');
-        return;
-    }
-
-    const url = userPdfPeriodPresenceRoute({
+    window.open(userPdfPeriodPresenceRoute({
         user: selectedUserForExport.value.id,
         startDate: filterDateFrom.value,
         endDate: filterDateTo.value,
-    }).url;
-    window.open(url, '_blank');
+    }).url, '_blank');
 }
 
 // Données filtrées et triées
@@ -435,14 +225,21 @@ const filteredAndSortedData = computed(() => {
                 dateFilter &&
                 userFilter &&
                 (filterStatus.value === 'all' ||
-                    (filterStatus.value === 'present' && !r.absent && !r.late) ||
+                    (filterStatus.value === 'present' && !r.absent && !r.en_retard) ||
                     (filterStatus.value === 'absent' && r.absent) ||
-                    (filterStatus.value === 'late' && r.late))
+                    (filterStatus.value === 'late' && r.en_retard))
             );
         })
         .sort((a, b) => {
-            const aVal: any = a[sortField.value];
-            const bVal: any = b[sortField.value];
+            let aVal: any = a[sortField.value];
+            let bVal: any = b[sortField.value];
+            
+            // Nested sorting for user properties
+            if (sortField.value as string === 'user') {
+                aVal = a.user.name;
+                bVal = b.user.name;
+            }
+
             if (aVal < bVal) return sortDirection.value === 'asc' ? -1 : 1;
             if (aVal > bVal) return sortDirection.value === 'asc' ? 1 : -1;
             return 0;
@@ -456,12 +253,12 @@ const paginatedData = computed(() => {
     return filteredAndSortedData.value.slice(start, start + itemsPerPage.value);
 });
 
-// Statistiques
+// Stats issues de l'Action
 const presentCount = computed(() => data.value.filter((r) => !r.absent).length);
 const absentCount = computed(() => data.value.filter((r) => r.absent).length);
-const lateCount = computed(() => data.value.filter((r) => r.late).length);
+const lateCount = computed(() => data.value.filter((r) => r.en_retard).length);
 
-// Méthodes
+// Méthodes du tableau
 function handleSort(field: keyof Presence) {
     if (sortField.value === field) {
         sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc';
@@ -476,6 +273,15 @@ function setCurrentPage(n: number) {
     currentPage.value = n;
 }
 
+function updateItemsPerPage(n: number) {
+    itemsPerPage.value = n;
+    currentPage.value = 1;
+}
+
+function goToEdit(id: number) {
+    router.get(editPresenceRoute(id).url);
+}
+
 function deletePresence(id: number) {
     if (confirm('Êtes-vous sûr de vouloir supprimer cette présence ?')) {
         router.delete(deletePresenceRoute({ presence: id }).url, {
@@ -486,19 +292,6 @@ function deletePresence(id: number) {
     }
 }
 
-function calculerMinutesRetard(arrivee: string | null, normale = '08:00'): number {
-    if (!arrivee) return 0;
-    const [hArr, mArr] = arrivee.split(':').map(Number);
-    const [hNorm, mNorm] = normale.split(':').map(Number);
-    const diffMin = hArr * 60 + mArr - (hNorm * 60 + mNorm);
-    return diffMin > 0 ? diffMin : 0;
-}
-
 // Breadcrumbs
 const breadcrumbs: BreadcrumbItem[] = [{ title: 'Présences : Sup_Admin', href: usersIndexRoute().url }];
 </script>
-<style scoped>
-.th-sort {
-    cursor: pointer;
-}
-</style>

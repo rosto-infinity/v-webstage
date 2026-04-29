@@ -12,6 +12,7 @@ import * as adminRoutes from '@/routes/admin';
 import * as dashboardRoutes from '@/routes/dashboard';
 import * as presencesRoutes from '@/routes/presences';
 import * as userRoutes from '@/routes/users';
+import * as yearTrainingRoutes from '@/routes/year-trainings';
 
 interface PageProps {
     auth: {
@@ -72,6 +73,11 @@ const superAdminNavItems: NavItem[] = [
         title: 'Users',
         href: userRoutes.index().url,
         icon: List, // Plus adapté pour une liste que l'icône Users
+    },
+    {
+        title: 'Year Trainings',
+        href: yearTrainingRoutes.index().url,
+        icon: CalendarCheck,
     },
 ];
 

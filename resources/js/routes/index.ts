@@ -996,7 +996,7 @@ logoutForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 logout.form = logoutForm
 
 /**
-* @see routes/web.php:81
+* @see routes/web.php:83
 * @route '/{any}'
 */
 export const notfound = (args: { any: string | number } | [any: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -1010,7 +1010,7 @@ notfound.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see routes/web.php:81
+* @see routes/web.php:83
 * @route '/{any}'
 */
 notfound.url = (args: { any: string | number } | [any: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -1036,7 +1036,7 @@ notfound.url = (args: { any: string | number } | [any: string | number ] | strin
 }
 
 /**
-* @see routes/web.php:81
+* @see routes/web.php:83
 * @route '/{any}'
 */
 notfound.get = (args: { any: string | number } | [any: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -1045,7 +1045,7 @@ notfound.get = (args: { any: string | number } | [any: string | number ] | strin
 })
 
 /**
-* @see routes/web.php:81
+* @see routes/web.php:83
 * @route '/{any}'
 */
 notfound.head = (args: { any: string | number } | [any: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -1054,7 +1054,7 @@ notfound.head = (args: { any: string | number } | [any: string | number ] | stri
 })
 
 /**
-* @see routes/web.php:81
+* @see routes/web.php:83
 * @route '/{any}'
 */
 const notfoundForm = (args: { any: string | number } | [any: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1063,7 +1063,7 @@ const notfoundForm = (args: { any: string | number } | [any: string | number ] |
 })
 
 /**
-* @see routes/web.php:81
+* @see routes/web.php:83
 * @route '/{any}'
 */
 notfoundForm.get = (args: { any: string | number } | [any: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1072,7 +1072,7 @@ notfoundForm.get = (args: { any: string | number } | [any: string | number ] | s
 })
 
 /**
-* @see routes/web.php:81
+* @see routes/web.php:83
 * @route '/{any}'
 */
 notfoundForm.head = (args: { any: string | number } | [any: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

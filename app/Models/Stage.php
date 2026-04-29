@@ -15,19 +15,27 @@ class Stage extends Model
 
     protected $fillable = [
         'user_id',
+        'year_training_id',
         'titre',
         'url_github',
         'images',
         'diplome',
+        'type_stage',
     ];
 
     protected $casts = [
         'images' => 'array',
+        'type_stage' => \App\Enums\TypeStage::class,
     ];
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function yearTraining(): BelongsTo
+    {
+        return $this->belongsTo(YearTraining::class);
     }
 
     // Constantes pour les diplômes

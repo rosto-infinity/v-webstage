@@ -31,26 +31,16 @@ final class PresenceController extends Controller
     /**
      * Liste toutes les présences avec leurs relations.
      */
-    public function index(): InertiaResponse
+    public function index(\App\Actions\Presence\GetPresenceIndexDataAction $action): InertiaResponse
     {
-        $presences = Presence::query()->with(['user', 'absenceReason'])
-            ->orderByDesc('date')
-            ->get();
+        $data = $action->execute();
+        $data['flash'] = [
+            'success' => session('success'),
+            'error' => session('error'),
+            'warning' => session('warning'),
+        ];
 
-        $allUsers = User::query()->has('presences')
-            ->orderBy('name', 'asc')
-            ->get(['id', 'name', 'email']);
-
-        return Inertia::render('SuperAdmin/Presence/PresenceIndex', [
-            'presences' => PresenceResource::collection($presences),
-            'presenceCount' => Presence::query()->count(),
-            'allUsers' => UserResource::collection($allUsers),
-            'flash' => [
-                'success' => session('success'),
-                'error' => session('error'),
-                'warning' => session('warning'),
-            ],
-        ]);
+        return Inertia::render('SuperAdmin/Presence/PresenceIndex', $data);
     }
 
     /**

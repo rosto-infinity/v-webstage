@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::zip
-* @see app/Http/Controllers/Admin/PresenceController.php:233
+* @see app/Http/Controllers/Admin/PresenceController.php:223
 * @route '/presences/users/pdf/all-zip'
 */
 export const zip = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ zip.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::zip
-* @see app/Http/Controllers/Admin/PresenceController.php:233
+* @see app/Http/Controllers/Admin/PresenceController.php:223
 * @route '/presences/users/pdf/all-zip'
 */
 zip.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ zip.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::zip
-* @see app/Http/Controllers/Admin/PresenceController.php:233
+* @see app/Http/Controllers/Admin/PresenceController.php:223
 * @route '/presences/users/pdf/all-zip'
 */
 zip.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ zip.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::zip
-* @see app/Http/Controllers/Admin/PresenceController.php:233
+* @see app/Http/Controllers/Admin/PresenceController.php:223
 * @route '/presences/users/pdf/all-zip'
 */
 zip.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ zip.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::zip
-* @see app/Http/Controllers/Admin/PresenceController.php:233
+* @see app/Http/Controllers/Admin/PresenceController.php:223
 * @route '/presences/users/pdf/all-zip'
 */
 const zipForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const zipForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::zip
-* @see app/Http/Controllers/Admin/PresenceController.php:233
+* @see app/Http/Controllers/Admin/PresenceController.php:223
 * @route '/presences/users/pdf/all-zip'
 */
 zipForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ zipForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\PresenceController::zip
-* @see app/Http/Controllers/Admin/PresenceController.php:233
+* @see app/Http/Controllers/Admin/PresenceController.php:223
 * @route '/presences/users/pdf/all-zip'
 */
 zipForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

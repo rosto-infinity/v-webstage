@@ -73,6 +73,8 @@ Route::middleware(['auth', 'verified', 'role:superadmin'])->group(function (): v
             ->name('presences.destroy');
     });
 
+    Route::resource('year-trainings', \App\Http\Controllers\Admin\YearTrainingController::class);
+
 });
 
 require __DIR__.'/settings.php';
